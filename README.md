@@ -1,5 +1,5 @@
 # abm_framework
-A framework for agent-based simulation. 
+A framework for agent-based simulation. It covers grid-based simulations. 
 
 The model supports grid-based simulations and includes visualization and animation functionality. 
 
