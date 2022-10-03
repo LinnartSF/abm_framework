@@ -1,0 +1,1 @@
+path_databasefile = "./database/simulationresults.db"
