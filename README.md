@@ -7,8 +7,8 @@ Database directory contains sqlite3 database file that is meant for storing simu
 The data.py module provides functionality for executing queries in the database.
 framework.py contains classes for modelling e.g. the simulation environment and the agents themselves.
 stats.py provides visualization capabilities for visualizing simulation results.
-config.py is a configuration file that e.g. allows for path adjustments or input parameter adjustments.
-animation provides animation capabilities for animating simulation results and their trajectory throughout time.
+config.py is a configuration file that e.g. allows for path adjustments or input parameter adjustments. It e.g. specifies the filepath of the sqlite3 database used to store simulation results.
+animation.py provides animation capabilities for animating simulation results and their trajectory throughout time.
 
 
 I gave some basic introductions covering the differences between simulation methods as well as basic agent-based simulation modeling in Python -  and you can find these introductions on my blog:
