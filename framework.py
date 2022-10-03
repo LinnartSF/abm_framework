@@ -122,10 +122,3 @@ class Environment:
         else:
             #TODO implement additional order options
             pass
-
-# writing a small test
-agent = Agent(["name"],["Linnart"])
-env = Environment(1,False,3,3)
-env.add_agent(agent,1,2)
-print(env.Array)
-print(env.get_neighbourhood(agent,"moore",2,"random"))
