@@ -12,8 +12,8 @@ Module requires random module
 
 """
 
-#TODO catch and handle infeasible user input
-#TODO add additional typewriting to class atrributes
+# TODO catch and handle infeasible user input
+# TODO add additional typewriting to class atrributes
 
 __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
