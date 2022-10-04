@@ -1,1 +1,1 @@
-path_databasefile = "./database/simulationresults.db"
+path_databasefile = "./database/simulationresults"
