@@ -13,6 +13,7 @@ Data.py furthermore assumes, that the database has the following tables
    table contains data on agents states throughout simulation times, i.e. relevant properties of the agent
 - environment: 
    predefined fixed column names (columns)
+   column simtime - simulation time
    column row - row index
    column col - column index
    column agents - agent count registered in the cell
@@ -95,19 +96,19 @@ class Database:
     def truncate_table(self, tablename: str) -> None:
         """ deletes all records and data in the table """
         if self.Type == "sqlite3":
-            query = "DELETE FROM {};".format(tablename)
+            query = f"DELETE FROM {tablename};"
         else:
-            query = "TRUNCATE TABLE {};".format(tablename)
+            query = f"TRUNCATE TABLE {tablename};"
         self.Cursor.execute(query)
     
     def delete_records(self,tablename: str, condition: str = "none") -> None:
         """ deletes all those entries from the datatable in which the condition is satisfied """
-        query = "DELETE FROM {} WHERE {};".format(tablename,condition)
+        query = f"DELETE FROM {tablename} WHERE {condition};"
         self.Cursor.execute(query)
     
     def drop_table(self, tablename: str) -> None: 
         """ drops a table from the database, i.e. table is removed """
-        self.Cursor.execute("DROP TABLE {};").format(tablename)
+        self.Cursor.execute(f"DROP TABLE {tablename};")
     
 class Manager:
     """ this class provides an interface for standardized database operations relevant to ABM simulation conducted with this package """
@@ -122,6 +123,7 @@ class Manager:
                    table: str) -> None:
         """ method for adding column to specified table; WARNING: does not commit after querying! """
         self.Database.query(f"ALTER TABLE {table} ADD {colname} {coltype};")
+        self.Database.commit()
 
     def add_agentcolumn(self,
                         colname: str,
@@ -164,6 +166,7 @@ class Manager:
                       table: str) -> None:
         """ removes specified column from specified table; WARNING does not commit query """
         self.Database.query(f"ALTER TABLE {table} DROP COLUMN {colname};")
+        self.Database.commit()
 
     def remove_agentcolumn(self,
                            colname: str) -> None:
