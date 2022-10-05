@@ -197,7 +197,9 @@ class Manager:
     def reset_table(self,
                     table: str) -> None:
         """ deletes any columns that might have been added in excess of the default columns """
-        # TODO
+        self.query(f"SELECT name FROM PRAGMA_TABLE_INFO('{table}');");
+        df = self.read(-1)
+        #TODO ierate over column headers, and drop the columns
     
     def reset_tables(self) -> None:
         """ deleltes any columns that might have been added in excess of default, in agents and environment tables """
@@ -228,3 +230,10 @@ class Manager:
     def close(self) -> None:
         """ closes Database connection """
         self.Database.close()
+
+#  testing
+import config
+db = Database("sqlite3", config.path_databasefile)
+db.query("SELECT name FROM PRAGMA_TABLE_INFO('environment');")
+result = [i[0] for i in db.read(-1)]
+print(str(result))
