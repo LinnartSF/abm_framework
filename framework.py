@@ -130,3 +130,5 @@ class Environment:
         else:
             #TODO implement additional ordering options
             pass
+
+# TODO specify Population class, as an extension of the Environment class
