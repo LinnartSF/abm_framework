@@ -212,7 +212,7 @@ class Manager:
         """ deletes any columns that might have been added in excess of the default columns """
         self.query(f"SELECT name FROM PRAGMA_TABLE_INFO('{table}');")
         df = self.read(-1)
-        #TODO ierate over column headers, and drop the columns
+        #TODO iterate over column headers, and drop the columns 
     
     def reset_tables(self) -> None:
         """ deleltes any columns that might have been added in excess of default, in agents and environment tables """
@@ -232,7 +232,6 @@ class Manager:
                           agents: list) -> None:
         """ method writes attributes values of all agents in list into database, for specified simtime """
         # TODO
-        pass
 
     def write_environmentstate() -> None:
         """ description """
@@ -243,7 +242,7 @@ class Manager:
         """ closes Database connection """
         self.Database.close()
 
-#  testing
+# testing
 import config
 db = Database("sqlite3", config.path_databasefile)
 db.query("SELECT name FROM PRAGMA_TABLE_INFO('environment');")
