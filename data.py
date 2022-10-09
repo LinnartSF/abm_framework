@@ -223,8 +223,7 @@ class Manager:
                          simtime: int,
                          agent: Agent) -> None:
         """ for the given agent, attribute values are written into database for the respective simulation time """
-        attributestr = ",".join([str(i) for i in agent.Attributes.values()]) # TODO: what if value is a charachter? 
-        valuestr = str(simtime),",",attributestr
+        valuestr = str(simtime),",",self.Database(agent.Attributes.values())
         self.Database.query(f"INSERT INTO agents VALUES({valuestr});")
         self.Database.commit()
         
