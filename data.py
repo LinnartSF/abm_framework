@@ -109,6 +109,19 @@ class Database:
     def drop_table(self, tablename: str) -> None: 
         """ drops a table from the database, i.e. table is removed """
         self.Cursor.execute(f"DROP TABLE {tablename};")
+
+    def vals_to_str(vals: list) -> str:
+        """ method for converting a list of values into a SQLite friendly query strings """
+        returnstr = ""
+        for i in vals:
+            if type(i) == str: 
+                returnstr = returnstr+",'"+i+"'"
+            else:
+                if len(returnstr)>0:
+                    returnstr = returnstr+","+str(i)
+                else:
+                    returnstr = str(i)
+        return returnstr
     
 class Manager:
     """ this class provides an interface for standardized database operations relevant to ABM simulation conducted with this package """
@@ -197,7 +210,7 @@ class Manager:
     def reset_table(self,
                     table: str) -> None:
         """ deletes any columns that might have been added in excess of the default columns """
-        self.query(f"SELECT name FROM PRAGMA_TABLE_INFO('{table}');");
+        self.query(f"SELECT name FROM PRAGMA_TABLE_INFO('{table}');")
         df = self.read(-1)
         #TODO ierate over column headers, and drop the columns
     
@@ -210,7 +223,7 @@ class Manager:
                          simtime: int,
                          agent: Agent) -> None:
         """ for the given agent, attribute values are written into database for the respective simulation time """
-        attributestr = ",".join([str(i) for i in agent.Attributes.values()])
+        attributestr = ",".join([str(i) for i in agent.Attributes.values()]) # TODO: what if value is a charachter? 
         valuestr = str(simtime),",",attributestr
         self.Database.query(f"INSERT INTO agents VALUES({valuestr});")
         self.Database.commit()
