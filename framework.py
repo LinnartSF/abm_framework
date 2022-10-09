@@ -20,6 +20,7 @@ __email__ = "linnartsf@gmail.com"
 
 # required modules
 import random
+from readline import append_history_file
 
 # internal method for printing warnings
 def warning(msg: str) -> None:
@@ -88,7 +89,7 @@ class Environment:
         return self.Array[(row-1)][(col-1)]
     
     def get_neighbourhood(self,
-                          agent: Agent,
+                          agent: Agent, # agent for which neighbourhood is to be identified
                           type: str,    
                           radius: int = 1,  
                           order: str = "random"
@@ -105,7 +106,14 @@ class Environment:
             for row in range(agent.Row-radius,agent.Row+radius):
                 for col in range(agent.Col-radius,agent.Col+radius):
                     if row == agent.Row and col == agent.Col:
-                        pass
+                        # if cell capacity is greater than one then that means neighbourhood also includes the cell that the respective agent is located in
+                        if self.Cellcapacity > 1:
+                            if len(self.Array[row-1][col-1]) > 0:
+                                for o in self.Array[row-1][col-1]:
+                                    if o == agent:
+                                        pass
+                                    else: 
+                                        ls_neighbourhood.append(o) 
                     else:
                         if self.Endless == True:
                             if row < 1: row = self.Rows+row
@@ -113,12 +121,13 @@ class Environment:
                             if row > self.Rows: row = row - self.Rows
                             if col > self.Columns: col = col - self.Columns
                         if row >= 1 and row <= self.Rows and col >= 1 and col <= self.Columns:
-                            ls_neighbourhood.append(self.Array[row-1][col-1])
+                            for o in self.Array[row-1][col-1]:
+                                ls_neighbourhood.append(o) 
         elif type == "neumann":
             #TODO implement neumann neighbourhood
             pass
         if order == "random":
             ls_neighbourhood = random.shuffle(ls_neighbourhood)
         else:
-            #TODO implement additional order options
+            #TODO implement additional ordering options
             pass
