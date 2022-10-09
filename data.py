@@ -227,6 +227,9 @@ class Manager:
         self.reset_table("agents")
         self.reset_table("environment")
     
+    # TODO: specify setup functions here for setting up agent table with specified columns, environment table with specifed columns, and population (environment extensions); 
+    #       setting up population will check whether database has already been setup for environment, and if not, will do so; otherwise will just add coluns for counting agents per population
+
     # TODO: add option of only writing into certain column, specified by column name
     def write_to_table(self,
                        table: str,
@@ -272,4 +275,4 @@ import config
 db = Database("sqlite3", config.path_databasefile)
 db.query("SELECT name FROM PRAGMA_TABLE_INFO('environment');")
 result = [i[0] for i in db.read(-1)]
-print(str(result))
+print(str(result[0]))
