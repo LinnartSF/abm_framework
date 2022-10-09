@@ -143,7 +143,6 @@ class Manager:
                         coltype: str) -> None:
         """ method for adding a column to agent table in results database """
         self.add_column(colname, coltype, "agents")
-        self.Database.commit()
     
     def add_agentcolumns(self, 
                          colnames: list,
@@ -152,7 +151,6 @@ class Manager:
         if len(colnames) == len(coltypes):
             for i in range(0,len(colnames)):
                 self.add_column(colnames[i],coltypes[i],"agents")
-            self.Database.commit()
         else:
             warning("no columns added to agent table since coltypes length doesnt matches colnames length")
     
@@ -161,16 +159,14 @@ class Manager:
                               coltype: str) -> None:
         """ method for adding colum to environment table in results database """
         self.add_column(colname, coltype, "environment")
-        self.Database.commit()
     
     def add_environmentcolumns(self,
                                colnames: list,
                                coltypes: list) -> None:
-        """ method for adding several methods to environment table in results database """
+        """ method for adding additional columns to environment table in results database, in excess of default """
         if len(colnames) == len(coltypes):
             for i in range(0,len(colnames)):
                 self.add_column(colnames[i], coltypes[i], "environment")
-            self.Database.commit()
         else: 
             warning("no columns added to environment table since lengths of col names and col types list dont match")
 
@@ -185,45 +181,66 @@ class Manager:
                            colname: str) -> None:
         """ removes specified column from agents table and commits change """
         self.remove_column(colname, "agents")
-        self.Database.commit()
 
     def remove_agentcolumns(self,
                             colnames: list) -> None:
         """ removes specified column names from agents table and commits changes """
         for col in colnames:
             self.remove_column(col, "agents")
-        self.Database.commit()
 
     def remove_environmentcolumn(self,
                                  colname: str) -> None:
         """ removes specified column from environment table and commits change """
         self.remove_column(colname, "environment")
-        self.Database.commit()
 
     def remove_environmentcolumns(self, 
                                   colnames: list) -> None:
         """ removes specified columns from environment table and commits changes """
         for col in colnames:
             self.remove_column(col, "environment")
-        self.Database.commit()
 
     def reset_table(self,
                     table: str) -> None:
         """ deletes any columns that might have been added in excess of the default columns """
         self.query(f"SELECT name FROM PRAGMA_TABLE_INFO('{table}');")
-        df = self.read(-1)
-        #TODO iterate over column headers, and drop the columns 
+        colnames = [i[0] for i in self.Database.read(-1)]
+        for colname in colnames:
+            if table == "agents":
+                if colname in ["simtime"]:
+                    # dont drop because default column
+                    pass
+                else:
+                    # drop column because not a default column
+                    self.remove_column(colname, "agents")
+            elif table == "environment":
+                if colname in ["simtime","row","col","agents"]:
+                    # dont drop because default column
+                    pass
+                else:
+                    # drop because it is not a default column
+                    self.remove_column(colname, "environment")
+            else:
+                warning("unknown table forwarded to reset_table; nothing was reset for this Manager reset_table() method call")
     
     def reset_tables(self) -> None:
-        """ deleltes any columns that might have been added in excess of default, in agents and environment tables """
-        # TODO
-        pass
+        """ deletes any columns that might have been added in excess of default, in agents and environment tables """
+        self.reset_table("agents")
+        self.reset_table("environment")
+    
+    # TODO: add option of only writing into certain column, specified by column name
+    def write_to_table(self,
+                       table: str,
+                       vals: list) -> None:
+        """ function writes vals into specified table, assuming vals string specifies values for every column in the table """
+        valuestr = self.Database.vals_to_str(vals)
+        self.Database.query(f"INSERT INTO {table} VALUES({valuestr});")
+        self.Database.commit()
 
     def write_agentvalue(self,
                          simtime: int,
                          agent: Agent) -> None:
         """ for the given agent, attribute values are written into database for the respective simulation time """
-        valuestr = str(simtime),",",self.Database(agent.Attributes.values())
+        valuestr = str(simtime),",",self.Database.vals_to_str(agent.Attributes.values())
         self.Database.query(f"INSERT INTO agents VALUES({valuestr});")
         self.Database.commit()
         
@@ -231,12 +248,20 @@ class Manager:
                           simtime: int,
                           agents: list) -> None:
         """ method writes attributes values of all agents in list into database, for specified simtime """
-        # TODO
+        for agent in agents:
+            self.write_agentvalue(simtime,agent)
 
-    def write_environmentstate() -> None:
-        """ description """
-        # TODO
-        pass
+    def write_environmentcell(self,
+                              simtime: int,
+                              row: int,
+                              col: int,
+                              env: Environment,
+                              vals: list = []) -> None:
+        """ writes specified list of values into environment table, for the specified simulation time and cell """
+        valuestr = str(simtime),",",str(row),",",str(col),",",str(len(env.Array[row-1][col-1]))
+        if len(vals)>0: valuestr = valuestr,self.Database.vals_to_str(vals)
+        self.Database.query(f"INSERT INTO environment VALUES({valuestr});")
+        self.Database.commit()
     
     def close(self) -> None:
         """ closes Database connection """
