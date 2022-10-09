@@ -20,10 +20,9 @@ __email__ = "linnartsf@gmail.com"
 
 # required modules
 import random
-from readline import append_history_file
 
-# internal method for printing warnings
 def warning(msg: str) -> None:
+    """ internal but also externally accessible function for printing warning message (used for faulty user input) """
     print(f"WARNING: {msg}")
 
 # agent class
