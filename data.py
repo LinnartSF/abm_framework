@@ -203,7 +203,8 @@ class Manager:
 
     def reset_table(self,
                     table: str) -> None:
-        """ deletes any columns that might have been added in excess of the default columns """
+        """ deletes any old data in table first, and then any columns that might have been added in excess of the default columns """
+        self.Database.truncate_table(table)
         self.query(f"SELECT name FROM PRAGMA_TABLE_INFO('{table}');")
         colnames = [i[0] for i in self.Database.read(-1)]
         for colname in colnames:
