@@ -12,7 +12,6 @@ Functionality is also provided for saving plots as pdf or png. Destination direc
 __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
-from sqlite3 import DatabaseError
 import data
 import config
 from matplotlib import pyplot as plt

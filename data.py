@@ -253,7 +253,7 @@ class Manager:
                           agents: list) -> None:
         """ method writes attributes values of all agents in list into database, for specified simtime """
         for agent in agents:
-            self.write_agentvalue(simtime,agent)
+            self.write_agentvalue(simtime, agent)
 
     def write_environmentcell(self,
                               simtime: int,
