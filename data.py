@@ -303,8 +303,6 @@ class Manager:
             warning("unknown table name as argument for get_df in data.py; returned None")
             return None
 
-
-
 # testing
 import config
 db = Database("sqlite3", config.path_databasefile)
