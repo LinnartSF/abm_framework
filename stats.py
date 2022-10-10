@@ -12,7 +12,6 @@ Functionality is also provided for saving plots as pdf or png. Destination direc
 __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
-from cProfile import label
 import data
 import config
 from matplotlib import pyplot as plt
@@ -128,7 +127,6 @@ def plot_avgattr_lines(attributes: list,
     # add legend
     plt.legend()
 
-# plot, for every time interval, the distribution of agents that have one of the values of respective attribute (stacked bar diagram)
 def plot_valistribution(attributes: list,
                             df: pandas.DataFrame,
                             mintime: int,
@@ -163,13 +161,41 @@ def plot_valistribution(attributes: list,
     plt.xlabel("simulation time")
     plt.ylabel("relative state distribution")
 
-    # add legensd
+    # add legends
     plt.legend()
 
-# plot grid cell occupation (at least one agent in cell, or none), for "all" agent types or just for one or several agent types (i.e. "populations")
-# TODO
+def plot_grid_occupation(df: pandas.DataFrame,
+                         population: list) -> None:
+    """ plot grid cell occupation (at least one agent in cell, or none), for "all" agent types or just for one or several agent types (i.e. "population") """
 
-# plot grid and intensity of agent population, for "all" agents or one or several agent types
-# TODO
+    # subset relevant data from the dataframe provided as argument
+    maxtime = df["simtime"].max()
+    df = df[df["simtime"]>= maxtime]
+    
+    # create scatter plots for the desired population scenari
+    if len(population)<1: 
+        warning("population list empty or not provided at all for plt_grid_occupation() in stats.py (abm framework)")
+    else:
+        if population[0] == "all":
+            # use "agents" column data from results database (pandas DataFrame)
+            plt.scatter(df[df["agents"]>0]["col"],
+                        df[df["agents"]>0]["row"],
+                        alpha = df[df["agents"]>0]["agents"]/df["agents"].max(),
+                        label = "all")
+        else:
+            # add the scatters for each population one by one to the scatter plot, assuming that these populations are also present in the database (pandas DataFrame)
+            for pop in population:
+                plt.scatter(df[df[pop]>0]["col"],
+                            df[df[pop]>0]["row"],
+                            alpha = df[df[pop]>0][pop]/df[pop].max(), 
+                            label = pop)
+
+        # add titles
+        plt.title(f"grid occupancy for populations: {str(population)}")
+        plt.xlabel("columns")
+        plt.ylabel("rows")
+
+        # add legend
+        plt.legend()
 
 # TODO implement additional plot types and plotting options
