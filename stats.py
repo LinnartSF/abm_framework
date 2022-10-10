@@ -100,8 +100,11 @@ def plot_agentattr_lines(attr: str,
     # add legend
     plt.legend()
 
-# plot avg value trajectory for all agents throughout time, for arbitrary amount of attributes
-# TODO
+def plot_avgattr_lines(attributes: list) -> None:
+    """ plot avg value trajectory for all agents throughout time, for arbitrary amount of attributes """
+    # TODO
+    pass
+
 
 # plot, for every time interval, the distribution of agents that have one of the values of respective attribute (stacked bar diagram)
 # TODO
