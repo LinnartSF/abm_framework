@@ -20,12 +20,15 @@ __email__ = "linnartsf@gmail.com"
 
 # required modules
 import random
-from re import S
 
 def warning(msg: str) -> None:
     """ internal but also externally accessible function for printing warning message (used for faulty user input) """
     print(f"WARNING: {msg}")
 
+# TODO: environment that agent is added to should be a attribute of the agent, but not in the attribute dictionary; set by environment when adding agent
+# TODO: environment should be able to add agent, but agent should also be able to add itself to anvironment
+# TODO: environment should be optional argument when creating agent instance (constructor call)
+# TODO: agent class too should support obtaining the neighbourhood, by calling the environments' relevant methods
 # agent class
 class Agent:
     """ Agents have attributes that can be relevant to a simulation """
@@ -43,10 +46,14 @@ class Agent:
         elif len(attributes) > len(initialvals) or len(attributes) < len(initialvals):
             warning("Agent attributes not created since initialvals length differs from attribute list lengths")
         else:
-            self.Attributes = zip(attributes, initialvals)
+            self.Attributes = dict(zip(attributes, initialvals))
             self.Row = 0 # represents unassigned
             self.Col = 0 # represents unassigned
 
+# TODO: implement additional methods that return selections of agents based on rules, strategies, etc.
+# TODO: Environment should not should support Array with agents, but should also provide access to a list of agents in the environment that can easily be iterated over; 
+#       could also be a method that returns this list based on Array content
+# TODO: Environment should also offer a method that allows an "update" of the database for a specified (input argument) simulation time (= iteration), so that this does not have to be implemented by the modeller
 # environment class
 class Environment:
     """ Environment can contain agents in cells """

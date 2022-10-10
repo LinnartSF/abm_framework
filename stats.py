@@ -198,4 +198,6 @@ def plot_grid_occupation(df: pandas.DataFrame,
         # add legend
         plt.legend()
 
+# TODO implement plotting functions that plot agents' attribute value distribution across the grid
+
 # TODO implement additional plot types and plotting options
