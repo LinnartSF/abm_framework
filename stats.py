@@ -12,6 +12,7 @@ Functionality is also provided for saving plots as pdf or png. Destination direc
 __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
+from sqlite3 import DatabaseError
 import data
 import config
 from matplotlib import pyplot as plt
@@ -100,11 +101,32 @@ def plot_agentattr_lines(attr: str,
     # add legend
     plt.legend()
 
-def plot_avgattr_lines(attributes: list) -> None:
+def plot_avgattr_lines(attributes: list,
+                       df: pandas.DataFrame,
+                       mintime: int,
+                       maxtime: int) -> None:
     """ plot avg value trajectory for all agents throughout time, for arbitrary amount of attributes """
-    # TODO
-    pass
+    
+    # calculate data to plot
+    results = df.groupby("simtime").mean()
 
+    # for each attribute create a plot
+    for attr in attributes:
+        plt.plot(results["simtime"], 
+                 results[attr],
+                 label = attr)
+    
+    # cut axis if relevant
+    if maxtime > 0:
+        plt.xlim(mintime, maxtime)
+    
+    # add titles
+    plt.title("avg agent attribute value developments")
+    plt.xlabel("simulation time")
+    plt.ylabel("attribute values")
+
+    # add legend
+    plt.legend()
 
 # plot, for every time interval, the distribution of agents that have one of the values of respective attribute (stacked bar diagram)
 # TODO
