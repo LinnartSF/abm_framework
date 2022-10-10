@@ -37,6 +37,7 @@ __email__ = "linnartsf@gmail.com"
 import pyodbc
 import sqlite3
 from framework import *
+import pandas
 
 def warning(msg: str) -> None: 
     print("WARNING: "+msg)
@@ -269,10 +270,43 @@ class Manager:
     def close(self) -> None:
         """ closes Database connection """
         self.Database.close()
+    
+    def get_agentsdf(self, 
+                     condition: str = "none") -> pandas.DataFrame:
+        """ returns agent table as pandas dataframe; optional filtering condition """
+        if condition == "none":
+            # return entire table
+            return pandas.read_sql_query("SELECT * FROM agents", self.Database.Connection)
+        else:
+            # return only those rows that satisfy the condition
+            return pandas.read_sql_query(f"SELECT * FROM agents WHERE {condition}", self.Database.Connection)
+
+    def get_environmentdf(self, 
+                          condition: str = "none") -> pandas.DataFrame:
+        """ returns environment table as pandas dataframe; optional filtering condition """
+        if condition == "none":
+            # return entire table
+            return pandas.read_sql_query("SELECT * FROM environment", self.Database.Connection)
+        else:
+            # return only those rows that satisfy the condition
+            return pandas.read_sql_query(f"SELECT * FROM environment WHERE {condition}", self.Database.Connection)
+    
+    def get_df(self,
+               table: str,
+               condition: str = "none") -> pandas.DataFrame:
+        """ returns either agent or environment table as pandas dataframe, optional filtering """
+        if table == "agents":
+            return self.get_agentsdf(condition)
+        elif table == "environment":
+            return self.get_environmentdf(condition)
+        else:
+            warning("unknown table name as argument for get_df in data.py; returned None")
+            return None
+
+
 
 # testing
 import config
 db = Database("sqlite3", config.path_databasefile)
 db.query("SELECT name FROM PRAGMA_TABLE_INFO('environment');")
-result = [i[0] for i in db.read(-1)]
-print(str(result[0]))
+df = db.read(-1)
