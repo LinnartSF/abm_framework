@@ -12,6 +12,7 @@ Functionality is also provided for saving plots as pdf or png. Destination direc
 __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
+from cProfile import label
 import data
 import config
 from matplotlib import pyplot as plt
@@ -128,9 +129,44 @@ def plot_avgattr_lines(attributes: list,
     plt.legend()
 
 # plot, for every time interval, the distribution of agents that have one of the values of respective attribute (stacked bar diagram)
-# TODO
+def plot_valistribution(attributes: list,
+                            df: pandas.DataFrame,
+                            mintime: int,
+                            maxtime: int) -> None:
+    """ function for plotting dynamic relative state distribution among the state listed in attributes argument """
 
-# plot grid cell occulation (at least one agent in cell, or none), for "all" agent types or just for one or several agent types (i.e. "populations")
+    # calculate plotting data
+    results = df.groupby("simtime").sum()[attributes]
+    results["total"] = results.sum(axis = 1)
+
+    # for each time index, create a stacked barplot
+    y_old = None
+    for attr in attributes:
+        if y_old == None:
+            plt.bar(results["simtime"], 
+                     results[attr]/results["total"], 
+                     label = attr)
+            y_old = results[attr]/results["total"]
+        else:
+            plt.bar(results["simtime"], 
+                     results[attr], 
+                     bottom = y_old,
+                     label = attr)
+            y_old = y_old + results[attr]/results["total"]
+
+    # cut axis if relevant
+    if maxtime > 0:
+        plt.xlim(mintime, maxtime)
+    
+    # add titles
+    plt.title("dynamic relative state distribution of agents")
+    plt.xlabel("simulation time")
+    plt.ylabel("relative state distribution")
+
+    # add legensd
+    plt.legend()
+
+# plot grid cell occupation (at least one agent in cell, or none), for "all" agent types or just for one or several agent types (i.e. "populations")
 # TODO
 
 # plot grid and intensity of agent population, for "all" agents or one or several agent types
