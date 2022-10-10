@@ -2,7 +2,7 @@
 __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
-if __name__ == "main":
+if __name__ == "__main__":
 
     import data
     import stats
@@ -54,3 +54,5 @@ if __name__ == "main":
 
     # before exiting script, close the database
     db.close()
+
+    print("program ends")
