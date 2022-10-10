@@ -23,7 +23,7 @@ This module provides a Database class to connect to the database and to perform 
 
 This module provides a Manager class that standardizes e.g. column addition to table, state registration in agent table, etc.
 
-Developers can add onto the Manager class or use the Database class to directly facilitate custom queries.
+Developers can add onto the Manager class or use the Database class to directly facilitate custom queries. 
 
 """
 
