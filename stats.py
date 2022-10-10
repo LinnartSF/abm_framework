@@ -44,10 +44,62 @@ def save_plot(filename: str, filepath: str = "") -> None:
 
 def plot_agentattr_line(agent_id: int, 
                         attr: str,
-                        df: pandas.DataFrame) -> None:
-    """ creates a line plot for individual agent attribute value, throughout time (for one attribute) """
-    pass
- 
+                        df: pandas.DataFrame,
+                        mintime: int = 0,
+                        maxtime: int = 0) -> None:
+    """ creates a line plot for for individual agent attribute value, for a single agent, throughout time (for one attribute) """
+    
+    # derive relevant plotting data
+    df = df[df["id"] == agent_id]
+    x = df["simtime"]
+    y = df[attr]
+
+    # create plot 
+    plt.plot(x, 
+             y,
+             label = attr)
+    
+    # set axis limits, if relevant
+    if maxtime > 0:
+        plt.xlim(mintime, maxtime)
+
+    # set titles
+    plt.title(f"{attr} for agent {str(agent_id)} over time")
+    plt.xlabel("simulation time")
+    plt.ylabel(attr)
+
+    # add legend
+    plt.legend()
+
+# TODO further specify this function to allow to sample a subset of agents randomly
+def plot_agentattr_lines(attr: str,
+                         df: pandas.DataFrame,
+                         mintime: int = 0,
+                         maxtime: int = 0) -> None:
+    """ plots trajectories for all agents in dataset, but only for the specified attribute """
+    
+    # unique list of agents; for each agent one line will be added to the plot
+    ids = df["id"].unique()
+
+    # create a line plot for each agent
+    for id in ids:
+        subset = df[df["id"] == id]
+        plt.plot(df["simtime"], 
+                 df[attr],
+                 label = str(id))
+    
+    # set axis limits, if relevant
+    if maxtime > 0:
+        plt.xlim(mintime, maxtime)
+    
+    # set titles
+    plt.title(f"{attr} for agents throughput simulation time")
+    plt.xlabel("simulation time")
+    plt.ylabel(attr) 
+
+    # add legend
+    plt.legend()
+
 # plot avg value trajectory for all agents throughout time, for arbitrary amount of attributes
 # TODO
 
