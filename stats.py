@@ -42,12 +42,10 @@ def save_plot(filename: str, filepath: str = "") -> None:
     plt.savefig(filepath+"\\"+filename+".png")
     plt.savefig(filepath+"\\"+filename+".pdf")
 
-# plot individual agent attribute value trajectory throughout time, for one attribute
-def plot_agentattr_line(agent_id: Any, 
+def plot_agentattr_line(agent_id: int, 
                         attr: str,
                         df: pandas.DataFrame) -> None:
-    """ this """
-    # TODO
+    """ creates a line plot for individual agent attribute value, throughout time (for one attribute) """
     pass
  
 # plot avg value trajectory for all agents throughout time, for arbitrary amount of attributes

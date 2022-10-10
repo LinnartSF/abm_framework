@@ -20,6 +20,7 @@ __email__ = "linnartsf@gmail.com"
 
 # required modules
 import random
+from re import S
 
 def warning(msg: str) -> None:
     """ internal but also externally accessible function for printing warning message (used for faulty user input) """
@@ -29,9 +30,11 @@ def warning(msg: str) -> None:
 class Agent:
     """ Agents have attributes that can be relevant to a simulation """
     def __init__(self,
+                 id: int,
                  attributes: list,  # list of strings (attribute names)
                  initialvals: list, # list of initial attribute values
                  ):
+        self.ID = id
         # create a dictionary from the attributes and interavls, unless there are errors
         self.Attributes = None
         

@@ -206,7 +206,7 @@ class Manager:
         colnames = [i[0] for i in self.Database.read(-1)]
         for colname in colnames:
             if table == "agents":
-                if colname in ["simtime"]:
+                if colname in ["simtime","id"]:
                     # dont drop because default column
                     pass
                 else:
@@ -243,11 +243,11 @@ class Manager:
                          simtime: int,
                          agent: Agent) -> None:
         """ for the given agent, attribute values are written into database for the respective simulation time """
-        valuestr = str(simtime),",",self.Database.vals_to_str(agent.Attributes.values())
+        valuestr = str(simtime),",",str(agent.ID),",",self.Database.vals_to_str(agent.Attributes.values())
         self.Database.query(f"INSERT INTO agents VALUES({valuestr});")
         self.Database.commit()
         
-    def write_agentstates(self,
+    def write_agentvalues(self,
                           simtime: int,
                           agents: list) -> None:
         """ method writes attributes values of all agents in list into database, for specified simtime """
