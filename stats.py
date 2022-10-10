@@ -12,7 +12,6 @@ Functionality is also provided for saving plots as pdf or png. Destination direc
 __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
-
 import data
 import config
 from matplotlib import pyplot as plt
@@ -44,8 +43,13 @@ def save_plot(filename: str, filepath: str = "") -> None:
     plt.savefig(filepath+"\\"+filename+".pdf")
 
 # plot individual agent attribute value trajectory throughout time, for one attribute
-# TODO
-
+def plot_agentattr_line(agent_id: Any, 
+                        attr: str,
+                        df: pandas.DataFrame) -> None:
+    """ this """
+    # TODO
+    pass
+ 
 # plot avg value trajectory for all agents throughout time, for arbitrary amount of attributes
 # TODO
 
