@@ -115,7 +115,6 @@ class Database:
     @staticmethod
     def vals_to_str(vals: list) -> str:
         """ method for converting a list of values into a SQLite friendly query strings """
-        print("inside vals_to_str: "+str(vals))
         returnstr = ""
         for i in vals:
             if type(i) == str: 
@@ -249,25 +248,7 @@ class Manager:
                          simtime: int,
                          agent: Agent) -> None:
         """ for the given agent, attribute values are written into database for the respective simulation time """
-        ATT = agent.Attributes
-        print("ATT:")
-        print(ATT)
-        lsAttr = list(ATT.values())
-        print("lsAttr:")
-        print(str(lsAttr))
-        db = self.Database
-        strAttr = db.vals_to_str(lsAttr)
-        print("strAttr:")
-        print(strAttr)
-        
-        # old logic
-        # valuestr = str(simtime),",",str(agent.ID),",",self.Database.vals_to_str(list(agent.Attributes.values()))
-
-        # new logic
-        valuestr = str(simtime),",",str(agent.ID),",",strAttr
-        print("valuestr:")
-        print(valuestr)
-
+        valuestr = f"{str(simtime)},{str(agent.ID)},{self.Database.vals_to_str(list(agent.Attributes.values()))}"
         self.Database.query(f"INSERT INTO agents VALUES({valuestr});")
         self.Database.commit()
         
