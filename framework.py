@@ -49,6 +49,17 @@ class Agent:
             self.Attributes = dict(zip(attributes, initialvals))
             self.Row = 0 # represents unassigned
             self.Col = 0 # represents unassigned
+    
+    def set_attr_value(self,
+                       attr: str,
+                       val: Any) -> None:
+        """ method for setting new attribute value for agent """
+        self.Attributes[attr] = val
+    
+    def get_attr_value(self,
+                       attr: str) -> Any:
+        """ method for getting attribute value """
+        return self.Attributes[attr]
 
 # TODO: implement additional methods that return selections of agents based on rules, strategies, etc.
 # TODO: Environment should not should support Array with agents, but should also provide access to a list of agents in the environment that can easily be iterated over; 

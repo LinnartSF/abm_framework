@@ -4,6 +4,8 @@ __email__ = "linnartsf@gmail.com"
 
 if __name__ == "__main__":
 
+    print("test starts")
+
     import data
     import stats
     import config
@@ -30,12 +32,6 @@ if __name__ == "__main__":
     # upate database columns in accordance with framework components used
     db_manager.add_agentcolumn("life","REAL")
 
-    # test prints
-    print(str(env))
-    print(str(env.Array))
-    print(agent.Attributes.keys())
-    print(agent.Attributes.values())
-
     # setup simulation run
     iteration = 0
     for agent in agents:
@@ -47,12 +43,19 @@ if __name__ == "__main__":
     while running:
         iteration += 1
         for agent in agents:
+            agent.set_attr_value("life", agent.get_attr_value("life")*random.random(0, 1))
             db_manager.write_agentvalue(iteration, agent)
         if iteration >= maxiteration:
             running = False
             break
+    
+    # get agent data
+    agentdf = db_manager.get_agentsdf()
+
+    # create life score trajectory line plot for all agents in dataframe
+    stats.plot_agentattr_lines("life", agent.get_attr_value("life")*random.random(0, 1))
 
     # before exiting script, close the database
     db.close()
 
-    print("program ends")
+    print("test ends")
