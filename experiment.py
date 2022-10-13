@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     # place and create 10 agents of the same type onto the environment
     agents = []
-    for i in range(0, 10):
+    for i in range(0, 3):
         agent = framework.Agent(i, ["life"], [random.uniform(0,1)])
         env.add_agent(agent)
         agents.append(agent)
@@ -61,7 +61,7 @@ if __name__ == "__main__":
                                agentdf)
     stats.save_plot("lifeplot")
 
-    # before exiting script, close the database
+    # before exiting script, close database
     db.close()
 
     print("test ends")

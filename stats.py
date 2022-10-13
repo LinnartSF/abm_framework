@@ -85,8 +85,8 @@ def plot_agentattr_lines(attr: str,
     # create a line plot for each agent
     for id in ids:
         subset = df[df["id"] == id]
-        plt.plot(df["simtime"], 
-                 df[attr],
+        plt.plot(subset["simtime"], 
+                 subset[attr],
                  label = str(id),
                  linewidth=1.0)
     
