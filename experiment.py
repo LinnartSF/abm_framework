@@ -2,9 +2,6 @@
 __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
-from os import stat
-
-
 if __name__ == "__main__":
 
     print("test starts")
