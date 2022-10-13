@@ -52,12 +52,12 @@ class Agent:
     
     def set_attr_value(self,
                        attr: str,
-                       val: Any) -> None:
+                       val: any) -> None:
         """ method for setting new attribute value for agent """
         self.Attributes[attr] = val
     
     def get_attr_value(self,
-                       attr: str) -> Any:
+                       attr: str) -> any:
         """ method for getting attribute value """
         return self.Attributes[attr]
 

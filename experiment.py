@@ -43,7 +43,7 @@ if __name__ == "__main__":
     while running:
         iteration += 1
         for agent in agents:
-            agent.set_attr_value("life", agent.get_attr_value("life")*random.random(0, 1))
+            agent.set_attr_value("life", agent.get_attr_value("life")*random.uniform(0,1))
             db_manager.write_agentvalue(iteration, agent)
         if iteration >= maxiteration:
             running = False
@@ -52,8 +52,13 @@ if __name__ == "__main__":
     # get agent data
     agentdf = db_manager.get_agentsdf()
 
+    # configure plotting formats
+    stats.set_fontsizes(8,10,12)
+
     # create life score trajectory line plot for all agents in dataframe
-    stats.plot_agentattr_lines("life", agent.get_attr_value("life")*random.random(0, 1))
+    stats.plot_agentattr_lines("life", 
+                               agentdf)
+    stats.save_plot("lifeplot")
 
     # before exiting script, close the database
     db.close()
