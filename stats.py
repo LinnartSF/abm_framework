@@ -82,6 +82,9 @@ def plot_agentattr_lines(attr: str,
     # unique list of agents; for each agent one line will be added to the plot
     ids = df["id"].unique()
 
+    # create new figure
+    plt.figure()
+
     # create a line plot for each agent
     for id in ids:
         subset = df[df["id"] == id]
@@ -111,9 +114,12 @@ def plot_avgattr_lines(attributes: list,
     # calculate data to plot
     results = df.groupby("simtime").mean()
 
+    # create new figure
+    plt.figure()
+
     # for each attribute create a plot
     for attr in attributes:
-        plt.plot(results["simtime"], 
+        plt.plot(results.index, 
                  results[attr],
                  label = attr)
     

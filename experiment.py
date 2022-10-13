@@ -61,6 +61,10 @@ if __name__ == "__main__":
                                agentdf)
     stats.save_plot("avglifeplot")
 
+    stats.plot_agentattr_lines("life", 
+                               agentdf)
+    stats.save_plot("lifeplot")
+
     # before exiting script, close database
     db.close()
 
