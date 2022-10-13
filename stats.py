@@ -138,7 +138,7 @@ def plot_avgattr_lines(attributes: list,
     # add legend
     plt.legend()
 
-def plot_valistribution(attributes: list,
+def plt_valdistribution(attributes: list,
                             df: pandas.DataFrame,
                             mintime: int,
                             maxtime: int) -> None:
@@ -179,7 +179,7 @@ def plot_valistribution(attributes: list,
     plt.legend()
 
 def plot_grid_occupation(df: pandas.DataFrame,
-                         population: list) -> None:
+                         population: list = ["all"]) -> None:
     """ plot grid cell occupation (at least one agent in cell, or none), for "all" agent types or just for one or several agent types (i.e. "population") """
 
     # subset relevant data from the dataframe provided as argument
@@ -188,7 +188,7 @@ def plot_grid_occupation(df: pandas.DataFrame,
 
     # create new figure 
     plt.figure()
-    
+
     # create scatter plots for the desired population scenari
     if len(population)<1: 
         warning("population list empty or not provided at all for plt_grid_occupation() in stats.py (abm framework)")

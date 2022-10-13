@@ -266,8 +266,8 @@ class Manager:
                               env: Environment,
                               vals: list = []) -> None:
         """ writes specified list of values into environment table, for the specified simulation time and cell """
-        valuestr = str(simtime),",",str(row),",",str(col),",",str(len(env.Array[row-1][col-1]))
-        if len(vals)>0: valuestr = valuestr,self.Database.vals_to_str(vals)
+        valuestr = f"{str(simtime)},{str(row)},{str(col)},{str(len(env.Array[row-1][col-1]))}"
+        if len(vals)>0: valuestr = f"{valuestr},{self.Database.vals_to_str(vals)}"
         self.Database.query(f"INSERT INTO environment VALUES({valuestr});")
         self.Database.commit()
     
