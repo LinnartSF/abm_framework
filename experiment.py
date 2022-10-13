@@ -43,7 +43,7 @@ if __name__ == "__main__":
     while running:
         iteration += 1
         for agent in agents:
-            agent.set_attr_value("life", agent.get_attr_value("life")*random.uniform(0,1))
+            agent.set_attr_value("life", agent.get_attr_value("life")*random.uniform(0,2))
             db_manager.write_agentvalue(iteration, agent)
         if iteration >= maxiteration:
             running = False
