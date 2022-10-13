@@ -54,6 +54,9 @@ def plot_agentattr_line(agent_id: int,
     x = df["simtime"]
     y = df[attr]
 
+    # create new figure
+    plt.figure()
+
     # create plot 
     plt.plot(x, 
              y,
@@ -145,6 +148,9 @@ def plot_valistribution(attributes: list,
     results = df.groupby("simtime").sum()[attributes]
     results["total"] = results.sum(axis = 1)
 
+    # create new figure
+    plt.figure()
+
     # for each time index, create a stacked barplot
     y_old = None
     for attr in attributes:
@@ -179,6 +185,9 @@ def plot_grid_occupation(df: pandas.DataFrame,
     # subset relevant data from the dataframe provided as argument
     maxtime = df["simtime"].max()
     df = df[df["simtime"]>= maxtime]
+
+    # create new figure 
+    plt.figure()
     
     # create scatter plots for the desired population scenari
     if len(population)<1: 
