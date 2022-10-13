@@ -56,9 +56,10 @@ if __name__ == "__main__":
     stats.set_fontsizes(8,10,12)
 
     # create life score trajectory line plot for all agents in dataframe
-    stats.plot_agentattr_lines("life", 
+    stats.plot_agentattr_line(1, 
+                              "life", 
                                agentdf)
-    stats.save_plot("lifeplot")
+    stats.save_plot("lifeplotaa")
 
     # before exiting script, close the database
     db.close()

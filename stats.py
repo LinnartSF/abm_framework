@@ -57,7 +57,8 @@ def plot_agentattr_line(agent_id: int,
     # create plot 
     plt.plot(x, 
              y,
-             label = attr)
+             label = attr,
+             linewidth = 1.0)
     
     # set axis limits, if relevant
     if maxtime > 0:
@@ -86,7 +87,8 @@ def plot_agentattr_lines(attr: str,
         subset = df[df["id"] == id]
         plt.plot(df["simtime"], 
                  df[attr],
-                 label = str(id))
+                 label = str(id),
+                 linewidth=1.0)
     
     # set axis limits, if relevant
     if maxtime > 0:
