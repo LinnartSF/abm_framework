@@ -16,6 +16,7 @@ import data
 import config
 from matplotlib import pyplot as plt
 import pandas
+from matplotlib.ticker import MaxNLocator
 
 plt.style.use("fivethirtyeight")
 
@@ -28,6 +29,7 @@ def set_plotstyle(style: str) -> None:
     plt.style.use(style)
 
 def set_fontsizes(smallsize: float, mediumsize: float, largesize: float):
+    """ function for setting font size standard for all plotting functions in module """
     plt.rc('font', size = smallsize)          # controls default text sizes
     plt.rc('axes', titlesize = smallsize)     # fontsize of the axes title
     plt.rc('axes', labelsize = mediumsize)    # fontsize of the x and y labels
@@ -35,6 +37,23 @@ def set_fontsizes(smallsize: float, mediumsize: float, largesize: float):
     plt.rc('ytick', labelsize = smallsize)    # fontsize of the tick labels
     plt.rc('legend', fontsize = smallsize)    # legend fontsize
     plt.rc('figure', titlesize = largesize)   # fontsize of the figure title
+
+def set_edgecolor(color: str) -> None:
+    """ sets edge color of all plots in this module """
+    plt.rcParams["axes.edgecolor"] = color
+
+def set_autolayout(autolayout: bool) -> None:
+    """ sets autolayout True or False for all plotting functions in this module """
+    plt.rcParams["figure.autolayout"] = autolayout
+
+def set_linewidth(linewidth: float) -> None:
+    """ sets axes linewidth for all plotting functions in this module """
+    plt.rcParams["axes.linewidth"] = linewidth
+
+def set_figsize(w: float, 
+                h: float) -> None:
+    """ sets fig size for entire plotting module """
+    plt.rcParams["figure.figsize"] = [w, h]
 
 def save_plot(filename: str, filepath: str = "") -> None:
     """ stores plot as png and pdf, for specified equipment name """
@@ -187,7 +206,9 @@ def plot_grid_occupation(df: pandas.DataFrame,
     df = df[df["simtime"]>= maxtime]
 
     # create new figure 
-    plt.figure()
+    fig = plt.figure()
+    fig.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+    fig.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
 
     # create scatter plots for the desired population scenari
     if len(population)<1: 

@@ -70,6 +70,8 @@ if __name__ == "__main__":
 
     # configure plotting function
     stats.set_fontsizes(8, 10, 12)
+    stats.set_edgecolor("black")
+    stats.set_linewidth(1.0)
 
     # create life score trajectory line plot for all agents in dataframe
     stats.plot_avgattr_lines(["life"], agentdf)
