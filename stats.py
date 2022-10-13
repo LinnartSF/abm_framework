@@ -104,8 +104,8 @@ def plot_agentattr_lines(attr: str,
 
 def plot_avgattr_lines(attributes: list,
                        df: pandas.DataFrame,
-                       mintime: int,
-                       maxtime: int) -> None:
+                       mintime: int = 0,
+                       maxtime: int = 0) -> None:
     """ plot avg value trajectory for all agents throughout time, for arbitrary amount of attributes """
     
     # calculate data to plot
