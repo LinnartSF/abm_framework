@@ -19,7 +19,10 @@ __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
 # required modules
+from distutils.log import warn
 import random
+from re import S
+import data # from package
 
 def warning(msg: str) -> None:
     """ internal but also externally accessible function for printing warning message (used for faulty user input) """
@@ -34,21 +37,20 @@ class Agent:
     """ Agents have attributes that can be relevant to a simulation """
     def __init__(self,
                  id: int,
-                 attributes: list,  # list of strings (attribute names)
-                 initialvals: list, # list of initial attribute values
-                 ):
+                 pop: str):
         self.ID = id
-        # create a dictionary from the attributes and interavls, unless there are errors
-        self.Attributes = None
-        
-        if len(attributes) == 0: 
-            warning("Agent without attributes created")
-        elif len(attributes) > len(initialvals) or len(attributes) < len(initialvals):
-            warning("Agent attributes not created since initialvals length differs from attribute list lengths")
-        else:
-            self.Attributes = dict(zip(attributes, initialvals))
-            self.Row = 0 # represents unassigned
-            self.Col = 0 # represents unassigned
+        self.Population = pop
+        self.Row = 0 # default value, "unassigned"
+        self.Col = 0 # default value, "unassigned"
+
+        # placeholder for attribute dictionary
+        self.Attributes = {}
+    
+    def add_attribute(self,
+                      attr: str,
+                      val: any) -> None:
+        """ method adds attr to attributes dictionary, with the specified initial value """
+        self.Attributes[attr] = val
     
     def set_attr_value(self,
                        attr: str,
@@ -92,7 +94,7 @@ class Environment:
         else:
             # randomly assign a row
             while True:
-                #TODO: make this more efficient so that it consumes less computational power
+                #TODO: make this more computational efficient 
                 row = random.choice(range(1,self.Rows+1))
                 col = random.choice(range(1,self.Columns+1))
                 if len(self.get_cell(row,col))< self.Cellcapacity: break
@@ -152,4 +154,84 @@ class Environment:
             #TODO implement additional ordering options
             pass
 
-# TODO specify Population class, as an extension of the Environment class
+class Population: 
+    """ Population class used for a single population, used by Populations class when adding populations """
+    def __init__(self,
+                 name: str,
+                 amount: int,
+                 env: Environment,
+                 id_lastused: int,
+                 attributes: list = [],
+                 initialvals: list = [],
+                 randomness: list = []):
+        """ constructor for a population """
+        self.Name = name
+        self.Amount = amount
+        self.Environment = env
+        self.Agents = {}
+
+        # create agents one by one, add them to the environment, and add them to the dictionary
+        for i in range(id_lastused+1, id_lastused+amount+1):
+            agent = Agent(i, self.Name)
+            
+            if len(attributes) > len(initialvals) or len(attributes) < len(initialvals): 
+                warning("attributes list lenght does not match initialvals lengt; no attributes added in Population constructor")
+            elif len(randomness) > 0 and len(randomness) > len(initialvals):
+                warning("randomness list does not match initial value list")
+            elif len(randomness) > 0 and len(randomness) < len(initialvals):
+                warning("randomness list does not match initial value list")
+            else:
+                for j in range(0, len(attributes)):
+                    # determine initial value
+                    if len(randomness) > 0:
+                        if randomness[j][0] == "uniform":
+                            initialval = random.uniform(randomness[j][1]*initialvals[j], randomness[j][2]*initialvals[j])
+                        elif randomness[j][0] == "normal":
+                            initialval = random.gauss(randomness[j][1]*initialvals[j], randomness[j][2]*initialvals[j]) # randomness[j][1] represents scaling of mean; should normally be 1
+                        else:
+                            warning("in Population() constructor random distribution was not recognized; no randomn distribution applied")
+                            initialval = initialvals[j]
+                    else:
+                        initialval = initialvals[j]
+                    # add attribute and initial value
+                    agent.add_attribute(attributes[j], initialval)
+            
+            # add agents to Agents dictionary
+            self.Agents[agent.ID] = agent
+
+            # add agent to environment
+            self.Environment.add_agent(agent)
+
+class Populations:
+    """ Populations class for setting up and managing a population of agents """
+    def __init__(self,
+                 amount: int,
+                 env: Environment):
+        """ constructs population container, knowing the number of populations that will be added """
+        self.Amount = amount
+        self.Environment = env
+        self.ID_lastused = 0 # used for managing agent IDs in populations are added
+        self.Populations = {}
+    
+    def add_population(self,
+                       name: str,
+                       size: int,
+                       attributes: list = [],
+                       initialvals: list = [],
+                       randomness: list = []):
+        """ creates a population and adds to the populations dictionary """
+        self.Populations[name] = Population(name, size, attributes, initialvals, self.Environment, self.ID_lastused, randomness)
+        self.ID_lastused += size
+    
+    def get_population(self,
+                       name: str) -> Population:
+        """ returns the specified population object from populations dictionary """
+        return self.Populations[name]
+    
+    def reset_populations(self) -> None:
+        """ method for resetting populations dictionary, deleting all old populations and resetting ID_lastused marker """
+        if len(list(self.Populations.keys())) > 0:
+            for key in list(self.Populations.keys()):
+                del self.Populations[key]
+        self.Populations = {}
+        self.ID_lastused = 0
