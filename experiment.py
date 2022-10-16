@@ -17,36 +17,24 @@ if __name__ == "__main__":
     db_manager = data.Manager(db)
 
     # create an empty environment
-    env = framework.Environment(1, True, 20, 20)
+    env = framework.Environment(1, True, 20, 20) # Environment constructor implicitly resets environment table in database
 
-    # deleting all old records in database and reset to default format
-    db_manager.reset_table("agents")
-    db_manager.reset_table("environment")
+    # create agent populations
+    pops = framework.Populations(amount = 2, env = env, db_manager = db_manager)
+    pops.add_population(name = "a", 
+                        size = 20, 
+                        attributes = ["inventory","prodcapacity"], 
+                        datatypes = ["INTEGER","INTEGER"], 
+                        initialvals = [100, 10], 
+                        randomness = [["uniform",0.8,1.2], ["uniform",0.6,1.4]]) # TODO: replace randoness list by a custom datatype (Distribution class); add it to framework.py module
+    pops.add_population(name = "b", 
+                        size = 20, 
+                        attributes = ["demand"], 
+                        datatypes = ["INTEGER"], 
+                        initialvals=[50], 
+                        randomness=[["uniform",0.5,1.5]])
 
-    # upate database columns in accordance with framework components used
-    db_manager.add_agentcolumn("life","REAL") # TODO: transfer this into
-    db_manager.add_environmentcolumns(["pop_a","pop_b"], ["INTEGER","INTEGER"])
-
-    # place and create 10 agents of the same type onto the environment
-    agents_a = []
-    for i in range(0, 20):
-        agent = framework.Agent(i, ["life"], [random.uniform(0,1)])
-        env.add_agent(agent)
-        agents_a.append(agent)
-    agents_b = []
-    for i in range(0, 20):
-        agent = framework.Agent(i+19, ["life"], [random.uniform(0,1)])
-        env.add_agent(agent)
-        agents_b.append(agent)
-
-    # setup simulation run
-    iteration = 0
-    for agent in agents_a:
-        db_manager.write_agentvalue(iteration, agent)
-        db_manager.write_environmentcell(iteration, agent.Row, agent.Col, env, [1, 0])
-    for agent in agents_b:
-        db_manager.write_agentvalue(iteration, agent)
-        db_manager.write_environmentcell(iteration, agent.Row, agent.Col, env, [0, 1])
+    # TODO make sure that environment and agents tables in database are setup at this time
 
     # execute simulation run
     running = True
