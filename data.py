@@ -36,7 +36,6 @@ __email__ = "linnartsf@gmail.com"
 
 import pyodbc
 import sqlite3
-from framework import *
 import pandas
 
 def warning(msg: str) -> None: 
@@ -301,7 +300,8 @@ class Manager:
 
     def write_agentvalue(self,
                          simtime: int,
-                         agent: Agent) -> None:
+                         agent #: Agent
+                        ) -> None:
         """ for the given agent, attribute values are written into database for the respective simulation time """
         columnstr = self.Database.keys_to_str(list(agent.Attributes.keys()))
         valuestr = f"{str(simtime)},{str(agent.ID)},'{str(agent.Population)}',{self.Database.vals_to_str(list(agent.Attributes.values()))}"
@@ -319,7 +319,7 @@ class Manager:
                               simtime: int,
                               row: int,
                               col: int,
-                              env: Environment,
+                              env, #: Environment
                               vals: list = []) -> None:
         """ writes specified list of values into environment table, for the specified simulation time and cell """
         valuestr = f"{str(simtime)},{str(row)},{str(col)},0"
