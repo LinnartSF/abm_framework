@@ -121,6 +121,23 @@ class Database:
                 if len(returnstr)>0:
                     returnstr = returnstr+",'"+i+"'"
                 else:
+                    returnstr = "'"+i+"'"
+            else:
+                if len(returnstr)>0:
+                    returnstr = returnstr+","+str(i)
+                else:
+                    returnstr = str(i)
+        return returnstr
+    
+    @staticmethod
+    def keys_to_str(keys: list) -> str:
+        """ method for converting a list of dictionary keys into a SQLite column friendly string to be placed in queries """
+        returnstr = ""
+        for i in keys:
+            if type(i) == str:
+                if len(returnstr)>0:
+                    returnstr = returnstr+","+i
+                else:
                     returnstr = i
             else:
                 if len(returnstr)>0:
@@ -128,6 +145,7 @@ class Database:
                 else:
                     returnstr = str(i)
         return returnstr
+
     
 class Manager:
     """ this class provides an interface for standardized database operations relevant to ABM simulation conducted with this package """
@@ -285,7 +303,7 @@ class Manager:
                          simtime: int,
                          agent: Agent) -> None:
         """ for the given agent, attribute values are written into database for the respective simulation time """
-        columnstr = self.Database.vals_to_str(list(agent.Attributes.keys()))
+        columnstr = self.Database.keys_to_str(list(agent.Attributes.keys()))
         valuestr = f"{str(simtime)},{str(agent.ID)},{self.Database.vals_to_str(list(agent.Attributes.values()))}"
         self.Database.query(f"INSERT INTO agents ({columnstr}) VALUES({valuestr});")
         self.Database.commit()
