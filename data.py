@@ -284,7 +284,11 @@ class Manager:
         """ for the given agent, attribute values are written into database for the respective simulation time """
         columnstr = self.Database.vals_to_str(list(agent.Attributes.keys()))
         valuestr = f"{str(simtime)},{str(agent.ID)},{self.Database.vals_to_str(list(agent.Attributes.values()))}"
-        self.Database.query(f"INSERT INTO agents ({columnstr}) VALUES({valuestr});")
+        querystr = f"INSERT INTO agents ({columnstr}) VALUES({valuestr});"
+        print(str(list(agent.Attributes.keys())))
+        print(str(list(agent.Attributes.values())))
+        print(querystr)
+        self.Database.query(querystr)
         self.Database.commit()
         
     def write_agentvalues(self,
