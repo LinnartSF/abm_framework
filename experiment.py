@@ -17,7 +17,7 @@ if __name__ == "__main__":
     db_manager = data.Manager(db)
 
     # create an empty environment
-    env = framework.Environment(1, True, 20, 20) # Environment constructor implicitly resets environment table in database
+    env = framework.Environment(1, True, 20, 20, db_manager) # Environment constructor implicitly resets environment table in database
 
     # create agent populations
     pops = framework.Populations(amount = 2, env = env, db_manager = db_manager)
