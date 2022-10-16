@@ -34,8 +34,14 @@ if __name__ == "__main__":
                         initialvals=[50], 
                         randomness=[["uniform",0.5,1.5]])
 
-    # TODO make sure that environment and agents tables in database are setup at this time
+    # make sure that environment and agents tables in database are setup at this time
+    pops.write_env_to_db(0)
+    pops.write_agents_to_db(0)
 
+    db.close()
+    print("test complete")
+
+    """ 
     # execute simulation run
     running = True
     maxiteration = 100
@@ -79,3 +85,4 @@ if __name__ == "__main__":
     db.close()
 
     print("test ends")
+    """
