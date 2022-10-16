@@ -73,7 +73,8 @@ class Environment:
                 capa_cell: int,
                 endless: bool,
                 rows: int,
-                columns: int
+                columns: int,
+                db_manager: data.Manager
                 ):
         """ constructs Environment instance, facilitating a grid for agent interactions """
         self.Cellcapacity = capa_cell # maximum amount of agents allowed to be in a cell
@@ -81,6 +82,8 @@ class Environment:
         self.Rows = rows
         self.Columns = columns
         self.Array = [[[] for j in range(columns)] for i in range(rows)]
+        self.DBManager = db_manager
+        self.DBManager.reset_table("environment")  
     
     def add_agent(self,
                   agent: Agent,
@@ -236,8 +239,9 @@ class Populations:
         self.Amount = amount
         self.Environment = env
         self.DBManager = db_manager
-        self.ID_lastused = 0 # used for managing agent IDS in populations
+        self.ID_lastused = 0 # used for managing agent IDs in populations
         self.Populations = {}
+        self.DBManager.reset_table("agents")  
     
     def add_population(self,
                        name: str,
