@@ -21,7 +21,7 @@ __email__ = "linnartsf@gmail.com"
 
 # required modules
 import random
-import data # from package
+import data    # from package
 
 def warning(msg: str) -> None:
     """ internal but also externally accessible function for printing warning message (used for faulty user input) """
@@ -266,7 +266,7 @@ class Populations:
         self.ID_lastused = 0
     
     def write_env_to_db(self, 
-                        simtime: int = 0) -> None:
+                        simtime: int) -> None:
         """ writes to db environment table in database with agent counts for population, for all agents in total and for the relevant population """
         
         vals = [0 for i in range(0,self.Amount)]
@@ -275,7 +275,7 @@ class Populations:
             for col in range(1,self.Environment.Columns+1):
 
                 # which population does each agent belong to? increment the respective column in the database
-                self.DBManager.write_environmentcell(simtime), row, col, self.Environment, vals)
+                self.DBManager.write_environmentcell(simtime, row, col, self.Environment, vals)
                 self.DBManager.commit()
 
                 list_cell = self.Environment.get_cell(row, col)
@@ -283,10 +283,10 @@ class Populations:
                 if len(list_cell) > 0:
 
                     for agent in list_cell: 
-                        self.DBManager.increment_envpop(simtime), row, col, agent.Population)
+                        self.DBManager.increment_envpop(simtime, row, col, agent.Population)
                         
     def write_agents_to_db(self,
-                           simtime: int = 0) -> None:
+                           simtime: int) -> None:
         """ writes to db all agents and their values """
         
         if self.Amount > 0:
@@ -302,7 +302,7 @@ class Populations:
                         self.DBManager.write_agentvalue(simtime, agent)
     
     def update_db(self,
-                  simtime: int = 0) -> None:
+                  simtime: int) -> None:
         """ writes environment and all agent populations to database """
         self.write_env_to_db(simtime)
         self.write_agents_to_db(simtime)
