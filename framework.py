@@ -21,7 +21,6 @@ __email__ = "linnartsf@gmail.com"
 
 # required modules
 import random
-import data    # from package
 
 def warning(msg: str) -> None:
     """ internal but also externally accessible function for printing warning message (used for faulty user input) """
@@ -74,7 +73,7 @@ class Environment:
                 endless: bool,
                 rows: int,
                 columns: int,
-                db_manager: data.Manager
+                db_manager # data.Manager
                 ):
         """ constructs Environment instance, facilitating a grid for agent interactions """
         self.Cellcapacity = capa_cell # maximum amount of agents allowed to be in a cell
@@ -165,7 +164,7 @@ class Population:
                  size: int,
                  env: Environment,
                  id_lastused: int,
-                 db_manager: data.Database,
+                 db_manager, #data.Manager,
                  attributes: list = [],
                  datatypes: list = [], # attribute datatypes (list of strings)
                  initialvals: list = [],
@@ -234,7 +233,8 @@ class Populations:
     def __init__(self,
                  amount: int,
                  env: Environment,
-                 db_manager: data.Manager):
+                 db_manager # data.Manager
+                ):
         """ constructs population container, knowing the number of populations that will be added """
         self.Amount = amount
         self.Environment = env
