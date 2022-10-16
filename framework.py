@@ -14,14 +14,13 @@ Module requires random module
 
 # TODO catch and handle infeasible user input
 # TODO add additional typewriting to class atrributes
+# TODO support other query languages than SQLite (where differences apply)
 
 __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
 # required modules
-from distutils.log import warn
 import random
-from re import S
 import data # from package
 
 def warning(msg: str) -> None:
@@ -125,12 +124,14 @@ class Environment:
             warning("currently only random order supported by get_neighbourhood, framework.py")
         
         if type == "moore":
+            
             for row in range(agent.Row-radius,agent.Row+radius):
                 for col in range(agent.Col-radius,agent.Col+radius):
                     if row == agent.Row and col == agent.Col:
                         # if cell capacity is greater than one then that means neighbourhood also includes the cell that the respective agent is located in
                         if self.Cellcapacity > 1:
                             if len(self.Array[row-1][col-1]) > 0:
+                                
                                 for o in self.Array[row-1][col-1]:
                                     if o == agent:
                                         pass
@@ -153,25 +154,32 @@ class Environment:
         else:
             #TODO implement additional ordering options
             pass
-
+        
 class Population: 
     """ Population class used for a single population, used by Populations class when adding populations """
     def __init__(self,
                  name: str,
-                 amount: int,
+                 size: int,
                  env: Environment,
                  id_lastused: int,
+                 db_manager: data.Database,
                  attributes: list = [],
+                 datatypes: list = [], # attribute datatypes (list of strings)
                  initialvals: list = [],
                  randomness: list = []):
         """ constructor for a population """
         self.Name = name
-        self.Amount = amount
+        self.Size = size
         self.Environment = env
+        self.DBManager = db_manager
         self.Agents = {}
 
+        # add to agent table the attribute columns
+        if len(attributes) > len(datatypes) or len(attributes) < len(datatypes): warning("attributelist does not match datatypes list; when setting up Population")
+        self.DBManager.add_agentcolumns(attributes, datatypes)
+
         # create agents one by one, add them to the environment, and add them to the dictionary
-        for i in range(id_lastused+1, id_lastused+amount+1):
+        for i in range(id_lastused+1, id_lastused+size+1):
             agent = Agent(i, self.Name)
             
             if len(attributes) > len(initialvals) or len(attributes) < len(initialvals): 
@@ -181,6 +189,7 @@ class Population:
             elif len(randomness) > 0 and len(randomness) < len(initialvals):
                 warning("randomness list does not match initial value list")
             else:
+
                 for j in range(0, len(attributes)):
                     # determine initial value
                     if len(randomness) > 0:
@@ -202,27 +211,45 @@ class Population:
             # add agent to environment
             self.Environment.add_agent(agent)
 
+        # add column to environment table in database, with population as header (if not already added)
+        self.DBManager.add_environmentcolumn(self.Name, "INTEGER") # for counting amount in that cell for that agent
+    
+    def get_agents(self) -> list:
+        """ method for returning all agents of the population as a list """
+        return list(self.Agents.values())
+    
+    def write_agents_to_db(self, 
+                           simtime: int) -> None:
+        """ method for writing all agents in population into database """
+        if self.Size > 0:
+
+            for agent in list(self.Agents.values()):
+                self.DBManager.write_agentvalue(simtime, agent)
+
 class Populations:
     """ Populations class for setting up and managing a population of agents """
     def __init__(self,
                  amount: int,
-                 env: Environment):
+                 env: Environment,
+                 db_manager: data.Manager):
         """ constructs population container, knowing the number of populations that will be added """
         self.Amount = amount
         self.Environment = env
-        self.ID_lastused = 0 # used for managing agent IDs in populations are added
+        self.DBManager = db_manager
+        self.ID_lastused = 0 # used for managing agent IDS in populations
         self.Populations = {}
     
     def add_population(self,
                        name: str,
                        size: int,
                        attributes: list = [],
+                       datatypes: list = [], # list of strings, attribute datatypes
                        initialvals: list = [],
                        randomness: list = []):
-        """ creates a population and adds to the populations dictionary """
-        self.Populations[name] = Population(name, size, attributes, initialvals, self.Environment, self.ID_lastused, randomness)
+        """ creates a population and adds it to the populations dictionary """
+        self.Populations[name] = Population(name, size, self.Environment, self.ID_lastused, self.DBManager, attributes, datatypes, initialvals, randomness)
         self.ID_lastused += size
-    
+
     def get_population(self,
                        name: str) -> Population:
         """ returns the specified population object from populations dictionary """
@@ -231,7 +258,51 @@ class Populations:
     def reset_populations(self) -> None:
         """ method for resetting populations dictionary, deleting all old populations and resetting ID_lastused marker """
         if len(list(self.Populations.keys())) > 0:
+
             for key in list(self.Populations.keys()):
                 del self.Populations[key]
+        
         self.Populations = {}
         self.ID_lastused = 0
+    
+    def write_env_to_db(self, 
+                        simtime: int = 0) -> None:
+        """ writes to db environment table in database with agent counts for population, for all agents in total and for the relevant population """
+        
+        vals = [0 for i in range(0,self.Amount)]
+
+        for row in range(1,self.Environment.Rows+1):
+            for col in range(1,self.Environment.Columns+1):
+
+                # which population does each agent belong to? increment the respective column in the database
+                self.DBManager.write_environmentcell(simtime), row, col, self.Environment, vals)
+                self.DBManager.commit()
+
+                list_cell = self.Environment.get_cell(row, col)
+
+                if len(list_cell) > 0:
+
+                    for agent in list_cell: 
+                        self.DBManager.increment_envpop(simtime), row, col, agent.Population)
+                        
+    def write_agents_to_db(self,
+                           simtime: int = 0) -> None:
+        """ writes to db all agents and their values """
+        
+        if self.Amount > 0:
+
+            for key_pop in list(self.Populations.keys()):
+                pop = self.Populations[key_pop]
+
+                if pop.Size > 0:
+                    
+                    for key_agent in list(pop.Agents.keys()):
+                        agent = pop.Agents[key_agent]
+
+                        self.DBManager.write_agentvalue(simtime, agent)
+    
+    def update_db(self,
+                  simtime: int = 0) -> None:
+        """ writes environment and all agent populations to database """
+        self.write_env_to_db(simtime)
+        self.write_agents_to_db(simtime)

@@ -24,11 +24,10 @@ if __name__ == "__main__":
     db_manager.reset_table("environment")
 
     # upate database columns in accordance with framework components used
-    db_manager.add_agentcolumn("life","REAL")
+    db_manager.add_agentcolumn("life","REAL") # TODO: transfer this into
     db_manager.add_environmentcolumns(["pop_a","pop_b"], ["INTEGER","INTEGER"])
 
     # place and create 10 agents of the same type onto the environment
-    # TODO: add to module something that makes it easier to setup populations and allows to manage them
     agents_a = []
     for i in range(0, 20):
         agent = framework.Agent(i, ["life"], [random.uniform(0,1)])
@@ -44,7 +43,7 @@ if __name__ == "__main__":
     iteration = 0
     for agent in agents_a:
         db_manager.write_agentvalue(iteration, agent)
-        db_manager.write_environmentcell(iteration, agent.Row, agent.Col, env, [1, 0]) # TODO: add function to library that easily derives amount of agents in same population located in cell of the agent
+        db_manager.write_environmentcell(iteration, agent.Row, agent.Col, env, [1, 0])
     for agent in agents_b:
         db_manager.write_agentvalue(iteration, agent)
         db_manager.write_environmentcell(iteration, agent.Row, agent.Col, env, [0, 1])

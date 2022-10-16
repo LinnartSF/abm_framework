@@ -145,7 +145,14 @@ class Manager:
                         colname: str,
                         coltype: str) -> None:
         """ method for adding a column to agent table in results database """
-        self.add_column(colname, coltype, "agents")
+        
+        self.Database.query("SELECT name FROM PRAGMA_TABLE_INFO('agent');")
+        colnames_existing = [i[0] for i in self.Database.read(-1)]
+        
+        if colname in colnames_existing:
+            pass
+        else:
+            self.add_column(colname, coltype, "agents")
     
     def add_agentcolumns(self, 
                          colnames: list,
@@ -161,7 +168,14 @@ class Manager:
                               colname: str,
                               coltype: str) -> None:
         """ method for adding colum to environment table in results database """
-        self.add_column(colname, coltype, "environment")
+
+        self.Database.query("SELECT name FROM PRAGMA_TABLE_INFO('environment');")
+        colnames_existing = [i[0] for i in self.Database.read(-1)]
+        
+        if colname in colnames_existing:
+            pass
+        else:
+            self.add_column(colname, coltype, "environment")
     
     def add_environmentcolumns(self,
                                colnames: list,
@@ -172,6 +186,26 @@ class Manager:
                 self.add_column(colnames[i], coltypes[i], "environment")
         else: 
             warning("no columns added to environment table since lengths of col names and col types list dont match")
+
+    def increment_envpop(self,
+                         simtime: int,
+                         row: int,
+                         col: int,
+                         colname: str) -> None:
+        """ method used for incrementing agent population in environment database table, for population and for all agents in total """
+        self.Database.query(f"UPDATE environment SET agents = agents + 1 WHERE simtime = {str(simtime)} and row = {str(row)} AND col = {str(col)};")
+        self.Database.query(f"UPDATE environment SET {colname} =  {colname} + 1 WHERE simtime = {str(simtime)} and row = {str(row)} AND col = {str(col)};")
+        self.Database.commit()
+    
+    def reduction_envpop(self,
+                         simtime: int,
+                         row: int,
+                         col: int,
+                         colname: str) -> None:
+        """ method used for reducing agent population in environment database table, for population and for all agents in total """
+        self.Database.query(f"UPDATE environment SET agents = agents - 1 WHERE simtime = {str(simtime)} and row = {str(row)} AND col = {str(col)};")
+        self.Database.query(f"UPDATE environment SET {colname} =  {colname} - 1 WHERE simtime = {str(simtime)} and row = {str(row)} AND col = {str(col)};")
+        self.Database.commit()
 
     def remove_column(self,
                       colname: str,
@@ -248,8 +282,9 @@ class Manager:
                          simtime: int,
                          agent: Agent) -> None:
         """ for the given agent, attribute values are written into database for the respective simulation time """
+        columnstr = self.Database.vals_to_str(list(agent.Attributes.keys()))
         valuestr = f"{str(simtime)},{str(agent.ID)},{self.Database.vals_to_str(list(agent.Attributes.values()))}"
-        self.Database.query(f"INSERT INTO agents VALUES({valuestr});")
+        self.Database.query(f"INSERT INTO agents ({columnstr}) VALUES({valuestr});")
         self.Database.commit()
         
     def write_agentvalues(self,
@@ -274,6 +309,10 @@ class Manager:
     def close(self) -> None:
         """ closes Database connection """
         self.Database.close()
+    
+    def commit(self) -> None:
+        """ commits to Database connection """
+        self.Database.commit()
     
     def get_agentsdf(self, 
                      condition: str = "none") -> pandas.DataFrame:
