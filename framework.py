@@ -112,12 +112,12 @@ class Environment:
         return self.Array[(row-1)][(col-1)]
     
     def get_neighbourhood(self,
-                          agent: Agent, # agent for which neighbourhood is to be identified
-                          type: str,    
+                          agent: Agent, # calling agent for which neighbourhood is to be identified
+                          type: str = "moore",    
                           radius: int = 1,  
                           order: str = "random"
                          ) -> list:
-        """ returns specified neighbourhood; type supports "moore", order supports "random" """
+        """ returns specified neighbourhood in the form of a list of all agents in the neighbourhood, except the calling agent itself; type supports "moore", order supports "random" """
         ls_neighbourhood = []
         
         #TODO implement other neighbourhood orders, and other neighbourshood types --- 
@@ -154,8 +154,10 @@ class Environment:
         if order == "random":
             ls_neighbourhood = random.shuffle(ls_neighbourhood)
         else:
-            #TODO implement additional ordering options
+            #TODO implement additional order options
             pass
+        
+        return ls_neighbourhood
         
 class Population: 
     """ Population class used for a single population, used by Populations class when adding populations """

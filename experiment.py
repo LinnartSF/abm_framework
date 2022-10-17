@@ -2,6 +2,9 @@
 __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
+from unittest import runner
+
+
 if __name__ == "__main__":
 
     print("test starts")
@@ -21,13 +24,13 @@ if __name__ == "__main__":
 
     # create agent populations
     pops = framework.Populations(amount = 2, env = env, db_manager = db_manager)
-    pops.add_population(name = "a", 
+    pops.add_population(name = "producers", 
                         size = 20, 
                         attributes = ["inventory","prodcapacity"], 
                         datatypes = ["INTEGER","INTEGER"], 
                         initialvals = [100, 10], 
                         randomness = [["uniform",0.8,1.2], ["uniform",0.6,1.4]]) # TODO: replace randoness list by a custom datatype (Distribution class); add it to framework.py module
-    pops.add_population(name = "b", 
+    pops.add_population(name = "customers", 
                         size = 20, 
                         attributes = ["demand"], 
                         datatypes = ["INTEGER"], 
@@ -37,6 +40,31 @@ if __name__ == "__main__":
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(0)
     pops.write_agents_to_db(0)
+
+    # execute simulation
+    # TODO: define framework for setting up a simulation run (class of some kind)
+    running = True
+    iteration = 0
+    maxiteration = 100
+    while running: 
+        iteration +=1
+
+        customers = random.shuffle(pops.Populations["customers"].get_agents())
+        for customer in customers:
+            
+            for agent in env.get_neighbourhood(customer, "moore", 3):
+                if agent.Population == "producers":
+                    if agent.get_attr_value("inventory") > 0:
+                        # TODO proceed with implementing production economy example
+
+
+
+
+
+
+
+
+
 
     db.close()
     print("test complete")
