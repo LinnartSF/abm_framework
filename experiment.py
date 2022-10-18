@@ -43,14 +43,16 @@ if __name__ == "__main__":
     running = True
     iteration = 0
     maxiteration = 100
+
     while running: 
         iteration +=1
 
         # let every customer try to satisfy its demand
-        customers = random.shuffle(pops.Populations["customers"].get_agents())
+        customers = pops.Populations["customers"].get_agents()
+        random.shuffle(customers)
         for customer in customers:
             
-            for agent in env.get_neighbourhood(customer, "moore", 3):
+            for agent in env.get_neighbourhood(customer, "moore", 3, "random"):
                 if agent.Population == "producers":
                     if agent.get_attr_value("inventory") >= customer.get_attr_value("demand"):
 

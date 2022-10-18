@@ -152,7 +152,7 @@ class Environment:
             #TODO implement neumann neighbourhood
             pass
         if order == "random":
-            ls_neighbourhood = random.shuffle(ls_neighbourhood)
+            random.shuffle(ls_neighbourhood)
         else:
             #TODO implement additional order options
             pass
