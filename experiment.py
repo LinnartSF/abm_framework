@@ -96,6 +96,8 @@ if __name__ == "__main__":
     
     stats.plot_agentattr_lines("inventory", producer_df)
     stats.save_plot("inventorycurves")
+
+    # TODO: implement environment plot that plots attribute values in the form of scatter plot transparency or scatter plot size
     
     # end program
     db.close()
