@@ -69,7 +69,7 @@ if __name__ == "__main__":
                                                 customer.get_attr_value("demand") - agent.get_attr_value("inventory"))
             
             customer.set_attr_value("demand", 
-                                    customer.get_attr_value("demand") + customer.get_attr_value("hunger")))
+                                    customer.get_attr_value("demand") + customer.get_attr_value("hunger"))
             
         # update inventory values by produced amount
         for producer in pops.Populations["producers"].get_agents():
