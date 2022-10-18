@@ -338,7 +338,7 @@ class Manager:
     def get_populationdf(self,
                          pop: str) -> pandas.DataFrame:
         """ returns agent df only containing the specified population """
-        return pandas.read_sql(f"SELECT * FROM agents WHERE population = {pop}", self.Database.Connection)
+        return pandas.read_sql(f"SELECT * FROM agents WHERE population = '{pop}'", self.Database.Connection)
 
     def get_agentsdf(self, 
                      condition: str = "none") -> pandas.DataFrame:

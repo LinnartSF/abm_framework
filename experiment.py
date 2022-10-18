@@ -89,10 +89,12 @@ if __name__ == "__main__":
     env_df = db_manager.get_environmentdf()
     
     # visualize simulation data
+    stats.set_fontsizes(8,10,12)
+
     stats.plot_agentattr_lines("demand", customer_df)
     stats.save_plot("demandcurves")
     
-    stats.plot_agentattr_line("inventory", producer_df)
+    stats.plot_agentattr_lines("inventory", producer_df)
     stats.save_plot("inventorycurves")
     
     # end program
