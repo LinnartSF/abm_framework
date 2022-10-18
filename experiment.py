@@ -83,5 +83,18 @@ if __name__ == "__main__":
         if iteration >= maxiteration:
             running = False
 
+    # get dataframes with simulation results 
+    customer_df = db_manager.get_populationdf(pop = "customers")
+    producer_df = db_manager.get_populationdf(pop = "producers")
+    env_df = db_manager.get_environmentdf()
+    
+    # visualize simulation data
+    stats.plot_agentattr_lines("demand", customer_df)
+    stats.save_plot("demandcurves")
+    
+    stats.plot_agentattr_line("inventory", producer_df)
+    stats.save_plot("inventorycurves")
+    
+    # end program
     db.close()
     print("test complete")

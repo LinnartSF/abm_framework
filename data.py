@@ -335,6 +335,11 @@ class Manager:
         """ commits to Database connection """
         self.Database.commit()
     
+    def get_populationdf(self,
+                         pop: str) -> pandas.DataFrame:
+        """ returns agent df only containing the specified population """
+        return pandas.read_sql(f"SELECT * FROM agents WHERE population = {pop}", self.Database.Connection)
+
     def get_agentsdf(self, 
                      condition: str = "none") -> pandas.DataFrame:
         """ returns agent table as pandas dataframe; optional filtering condition """
