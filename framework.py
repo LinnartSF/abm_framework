@@ -20,6 +20,7 @@ __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
 # required modules
+from multiprocessing import popen_fork
 import random
 
 def warning(msg: str) -> None:
@@ -184,8 +185,6 @@ class Population:
         # add to agent table the attribute columns
         if len(attributes) > len(datatypes) or len(attributes) < len(datatypes): warning("attributelist does not match datatypes list; when setting up Population")
         self.DBManager.add_agentcolumns(attributes, datatypes)
-        for i in range(0,len(datatypes)):
-            if datatypes[i] in ["REAL","INTEGER"]: self.DBManager.add_densitycolumn(attributes[i])
 
         # create agents one by one, add them to the environment, and add them to the dictionary
         for i in range(id_lastused+1, id_lastused+size+1):
@@ -240,16 +239,24 @@ class Populations:
     def __init__(self,
                  amount: int,
                  env: Environment,
-                 db_manager # data.Manager
+                 db_manager, # data.Manager
+                 attributes: list,
+                 datatypes: list
                 ):
         """ constructs population container, knowing the number of populations that will be added """
         self.Amount = amount
         self.Environment = env
         self.DBManager = db_manager
+        self.Attributes = attributes
+        self.Datatypes = datatypes
+
         self.ID_lastused = 0 # used for managing agent IDs in populations
         self.Populations = {}
+
         self.DBManager.reset_table("agents")
         self.DBManager.reset_table("density")
+        for i in range(0,len(datatypes)):
+            if datatypes[i] in ["REAL","INTEGER"]: self.DBManager.add_densitycolumn(attributes[i])
     
     def add_population(self,
                        name: str,
@@ -298,13 +305,34 @@ class Populations:
                         self.DBManager.increment_envpop(simtime, row, col, agent.Population)
     
     def write_density_to_db(self, 
-                            simetime: int) -> None:
+                            simtime: int) -> None:
         """ writes to db density table in database with agent property accumulation where relevant """
 
-        vals = []
         if self.Amount > 0:
-            # TODO implement further
-            """ TODO replace
+            
+            vals = set()
+            for key_pop in list(self.Populations.keys()):
+                pop = self.Populations[key_pop]
+
+                for i in range(0,len(pop.Datatypes)):
+                    if pop.Datatypes[i] in ["INTEGER","REAL"]:
+                        vals.add(0.0)
+            
+            for row in range(1, self.Environment.Rows+1):
+                for col in range(1,self.Environment.Columns+1):
+
+                    self.DBManager.write_densitycell(simtime, row, col, list(vals))
+                    self.DBManager.commit()
+
+                    list_cell = self.Environment.get_cell(row, col)
+
+                    if len(list_cell) > 0:
+
+                        for agent in list_cell:
+                            # TODO
+            
+
+            """ TODO replace by above code
             for row in range(1,self.Environment.Rows+1):
                 for col in range(1,self.Environment.Columns+1):
 
