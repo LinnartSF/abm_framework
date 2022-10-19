@@ -197,6 +197,19 @@ class Manager:
         else:
             self.add_column(colname, coltype, "environment")
     
+    def add_densitycolumn(self,
+                          colname: str,
+                          coltype: str) -> None:
+        """ method for adding column to environment table in results database """
+
+        self.Database.query("SELECT name FROM PRAGMA_TABLE_INFO('density');")
+        colnames_existing = [i[0] for i in self.Database.read(-1)]
+        
+        if colname in colnames_existing:
+            pass
+        else:
+            self.add_column(colname, coltype, "density")
+
     def add_environmentcolumns(self,
                                colnames: list,
                                coltypes: list) -> None:
@@ -213,8 +226,18 @@ class Manager:
                          col: int,
                          colname: str) -> None:
         """ method used for incrementing agent population in environment database table, for population and for all agents in total """
-        self.Database.query(f"UPDATE environment SET agents = agents + 1 WHERE simtime = {str(simtime)} and row = {str(row)} AND col = {str(col)};")
-        self.Database.query(f"UPDATE environment SET {colname} =  {colname} + 1 WHERE simtime = {str(simtime)} and row = {str(row)} AND col = {str(col)};")
+        self.Database.query(f"UPDATE environment SET agents = agents + 1 WHERE simtime = {str(simtime)} AND row = {str(row)} AND col = {str(col)};")
+        self.Database.query(f"UPDATE environment SET {colname} =  {colname} + 1 WHERE simtime = {str(simtime)} AND row = {str(row)} AND col = {str(col)};")
+        self.Database.commit()
+    
+    def increase_density(self,
+                        simtime: int,
+                        row: int,
+                        col: int,
+                        colname: str, 
+                        val: float) -> None:
+        """ method used for increasing density score for specified cell, in density table """
+        self.Database.query(f"UPDATE environment SET {colname} =  {colname} + {str(val)} WHERE simtime = {str(simtime)} AND row = {str(row)} AND col = {str(col)};")
         self.Database.commit()
     
     def reduction_envpop(self,
@@ -223,8 +246,18 @@ class Manager:
                          col: int,
                          colname: str) -> None:
         """ method used for reducing agent population in environment database table, for population and for all agents in total """
-        self.Database.query(f"UPDATE environment SET agents = agents - 1 WHERE simtime = {str(simtime)} and row = {str(row)} AND col = {str(col)};")
-        self.Database.query(f"UPDATE environment SET {colname} =  {colname} - 1 WHERE simtime = {str(simtime)} and row = {str(row)} AND col = {str(col)};")
+        self.Database.query(f"UPDATE environment SET agents = agents - 1 WHERE simtime = {str(simtime)} AND row = {str(row)} AND col = {str(col)};")
+        self.Database.query(f"UPDATE environment SET {colname} =  {colname} - 1 WHERE simtime = {str(simtime)} AND row = {str(row)} AND col = {str(col)};")
+        self.Database.commit()
+    
+    def reduce_density(self,
+                       simtime: int,
+                       row: int,
+                       col: int,
+                       colname: str,
+                       val: float) -> None:
+        """ method used for increasing density score for specified cell, in density table """
+        self.Database.query(f"UPDATE density SET {colname} = {colname} - {str(val)} WHERE simtime = {str(simtime)} AND row = {str(row)} AND col = {str(col)};")
         self.Database.commit()
 
     def remove_column(self,
@@ -278,6 +311,13 @@ class Manager:
                 else:
                     # drop because it is not a default column
                     self.remove_column(colname, "environment")
+            elif table == "density":
+                if colname in ["simtime", "row", "col"]:
+                    # dont drop because default column
+                    pass
+                else:
+                    # drop because it is not a default column
+                    self.remove_column(colname, "density")
             else:
                 warning("unknown table forwarded to reset_table; nothing was reset for this Manager reset_table() method call")
     
@@ -285,6 +325,7 @@ class Manager:
         """ deletes any columns that might have been added in excess of default, in agents and environment tables """
         self.reset_table("agents")
         self.reset_table("environment")
+        self.reset_table("density")
     
     # TODO: specify setup functions here for setting up agent table with specified columns, environment table with specifed columns, and population (environment extensions); 
     #       setting up population will check whether database has already been setup for environment, and if not, will do so; otherwise will just add coluns for counting agents per population
@@ -319,12 +360,22 @@ class Manager:
                               simtime: int,
                               row: int,
                               col: int,
-                              env, #: Environment
                               vals: list = []) -> None:
         """ writes specified list of values into environment table, for the specified simulation time and cell """
         valuestr = f"{str(simtime)},{str(row)},{str(col)},0"
         if len(vals)>0: valuestr = f"{valuestr},{self.Database.vals_to_str(vals)}"
         self.Database.query(f"INSERT INTO environment VALUES({valuestr});")
+        self.Database.commit()
+    
+    def write_densitycell(self,
+                          simtime: int,
+                          row: int,
+                          col: int,
+                          vals: list = []) -> None:
+        """ writes specified list of values into density table, for the specified simulation time and cell """
+        valuestr = f"{str(simtime)},{str(row)},{str(col)},0"
+        if len(vals)>0: valuestr = f"{valuestr},{self.Database.vals_to_str(vals)}"
+        self.Database.query(f"INSERT INTO density VALUES({valuestr});")
         self.Database.commit()
     
     def close(self) -> None:
@@ -359,6 +410,16 @@ class Manager:
         else:
             # return only those rows that satisfy the condition
             return pandas.read_sql_query(f"SELECT * FROM environment WHERE {condition}", self.Database.Connection)
+    
+    def get_densitydf(self,
+                      condition: str = "none") -> pandas.DataFrame:
+        """ returns density table as pandas dataframe; optional filtering condition """
+        if condition == "none":
+            # return entire table
+            return pandas.read_sql_query("SELECT * FROM density", self.Database.Connection)
+        else: 
+            # return only those rows that satisfy the condition
+            return pandas.read_sql_query(f"SELECT * FROM density WHERE {condition}", self.Database.Connection)
     
     def get_df(self,
                table: str,
