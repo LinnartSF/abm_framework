@@ -177,10 +177,10 @@ class Manager:
     def add_agentcolumns(self, 
                          colnames: list,
                          coltypes: list) -> None:
-        """ method for adding several columns to agent tabel in results database """
+        """ method for adding several columns to agent table in results database """
         if len(colnames) == len(coltypes):
             for i in range(0,len(colnames)):
-                self.add_column(colnames[i],coltypes[i],"agents")
+                self.add_agentcolumn(colnames[i],coltypes[i])
         else:
             warning("no columns added to agent table since coltypes length doesnt matches colnames length")
     
@@ -209,6 +209,18 @@ class Manager:
             pass
         else:
             self.add_column(colname, coltype, "density")
+    
+    def add_densitycolumns(self,
+                           colnames: list,
+                           coltypes: list) -> None:
+        """ method for adding several columns to density table in results database """
+
+        if len(colnames) == len(coltypes):
+            for i in range(0,len(colnames)):
+                self.add_densitycolumn(colnames[i],coltypes[i])
+        else:
+            warning("no columns added to agent table since coltypes length doesnt matches colnames length")
+
 
     def add_environmentcolumns(self,
                                colnames: list,
