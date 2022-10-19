@@ -198,8 +198,7 @@ class Manager:
             self.add_column(colname, coltype, "environment")
     
     def add_densitycolumn(self,
-                          colname: str,
-                          coltype: str) -> None:
+                          colname: str) -> None:
         """ method for adding column to environment table in results database """
 
         self.Database.query("SELECT name FROM PRAGMA_TABLE_INFO('density');")
@@ -208,19 +207,14 @@ class Manager:
         if colname in colnames_existing:
             pass
         else:
-            self.add_column(colname, coltype, "density")
+            self.add_column(colname, "REAL", "density")
     
     def add_densitycolumns(self,
-                           colnames: list,
-                           coltypes: list) -> None:
+                           colnames: list) -> None:
         """ method for adding several columns to density table in results database """
 
-        if len(colnames) == len(coltypes):
-            for i in range(0,len(colnames)):
-                self.add_densitycolumn(colnames[i],coltypes[i])
-        else:
-            warning("no columns added to agent table since coltypes length doesnt matches colnames length")
-
+        for colname in colnames:
+            self.add_densitycolumn(colname)
 
     def add_environmentcolumns(self,
                                colnames: list,

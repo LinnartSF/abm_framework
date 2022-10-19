@@ -176,11 +176,16 @@ class Population:
         self.Size = size
         self.Environment = env
         self.DBManager = db_manager
+        self.Attributes = attributes
+        self.Datatypes = datatypes
+        self.Initialvals = initialvals
         self.Agents = {}
 
         # add to agent table the attribute columns
         if len(attributes) > len(datatypes) or len(attributes) < len(datatypes): warning("attributelist does not match datatypes list; when setting up Population")
         self.DBManager.add_agentcolumns(attributes, datatypes)
+        for i in range(0,len(datatypes)):
+            if datatypes[i] in ["REAL","INTEGER"]: self.DBManager.add_densitycolumn(attributes[i])
 
         # create agents one by one, add them to the environment, and add them to the dictionary
         for i in range(id_lastused+1, id_lastused+size+1):
@@ -243,7 +248,8 @@ class Populations:
         self.DBManager = db_manager
         self.ID_lastused = 0 # used for managing agent IDs in populations
         self.Populations = {}
-        self.DBManager.reset_table("agents")  
+        self.DBManager.reset_table("agents")
+        self.DBManager.reset_table("density")
     
     def add_population(self,
                        name: str,
@@ -290,6 +296,30 @@ class Populations:
 
                     for agent in list_cell: 
                         self.DBManager.increment_envpop(simtime, row, col, agent.Population)
+    
+    def write_density_to_db(self, 
+                            simetime: int) -> None:
+        """ writes to db density table in database with agent property accumulation where relevant """
+
+        vals = []
+        if self.Amount > 0:
+            # TODO implement further
+            """ TODO replace
+            for row in range(1,self.Environment.Rows+1):
+                for col in range(1,self.Environment.Columns+1):
+
+                    # which population does each agent belong to? increment the respective column in the database
+                    self.DBManager.write_environmentcell(simtime, row, col, self.Environment, vals)
+                    self.DBManager.commit()
+
+                    list_cell = self.Environment.get_cell(row, col)
+
+                    if len(list_cell) > 0:
+
+                        for agent in list_cell: 
+                            self.DBManager.increment_envpop(simtime, row, col, agent.Population)
+            """ 
+
                         
     def write_agents_to_db(self,
                            simtime: int) -> None:
@@ -312,3 +342,4 @@ class Populations:
         """ writes environment and all agent populations to database """
         self.write_env_to_db(simtime)
         self.write_agents_to_db(simtime)
+        self.write_density_to_db(simtime)

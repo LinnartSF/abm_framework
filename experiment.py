@@ -106,7 +106,7 @@ if __name__ == "__main__":
     stats.plot_grid_occupation(env_df, ["producers"])
     stats.save_plot("producer_locations")
 
-    stats.plot_avgattr_lines(["demand","hunger"], customer_df)
+    stats.plot_avgattr_lines(["demand", "hunger"], customer_df)
     stats.save_plot("customer_avgattrs")
 
     # TODO: implement environment plot that plots attribute values in the form of scatter plot transparency or scatter plot size
