@@ -3,7 +3,7 @@ A framework for agent-based simulation. It covers grid-based simulations.
 
 The model supports grid-based simulations and includes visualization and animation functionality. The module is continously extended to cover additional functionality. For example, I added the Moore neighbourhood as a neighbourhood option for grid-based ABM simulations. In a second step, the Neumann neighbourhood (easy addition) can be added, and then in addition other neighbourhood types as required.
 
-<h2>abm framework database directory </h2>
+<h2>abm framework module content</h2>
 
 Database directory contains sqlite3 database file that is meant for storing simulation results into database.
 
