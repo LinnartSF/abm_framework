@@ -112,7 +112,7 @@ if __name__ == "__main__":
     stats.plot_density_alpha(density_df, "inventory")
     stats.save_plot("customer_inventorydensity")
 
-    stats.plot_density_markersize(density_df, "demand", 5.0)
+    stats.plot_density_markersize(density_df, "demand", 20)
     stats.save_plot("customer_demandsize")
 
     # end program
