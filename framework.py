@@ -20,8 +20,6 @@ __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
 # required modules
-from math import fabs
-from multiprocessing import popen_fork
 import random
 
 def warning(msg: str) -> None:
