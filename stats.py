@@ -199,6 +199,7 @@ def plt_valdistribution(attributes: list,
 
 def plot_grid_occupation(df: pandas.DataFrame,
                          population: list = ["all"],
+                         color: str = "red",
                          maxtime: int = 0) -> None:
     """ plot grid cell occupation (at least one agent in cell, or none), for "all" agent types or just for one or several agent types (i.e. "population") """
 
@@ -220,13 +221,15 @@ def plot_grid_occupation(df: pandas.DataFrame,
             plt.scatter(df[df["agents"]>0]["col"],
                         df[df["agents"]>0]["row"],
                         alpha = df[df["agents"]>0]["agents"]/df["agents"].max(),
+                        c = color,
                         label = "all")
         else:
             # add the scatters for each population one by one to the scatter plot, assuming that these populations are also present in the database (pandas DataFrame)
             for pop in population:
                 plt.scatter(df[df[pop]>0]["col"],
                             df[df[pop]>0]["row"],
-                            alpha = df[df[pop]>0][pop]/df[pop].max(), 
+                            alpha = df[df[pop]>0][pop]/df[pop].max(),
+                            c = color,
                             label = pop)
 
         # add titles
@@ -239,6 +242,7 @@ def plot_grid_occupation(df: pandas.DataFrame,
 
 def plot_density_alpha(df: pandas.DataFrame,
                       attr: str,
+                      color: str = "red",
                       maxtime: int = 0) -> None:
     """ function for plotting the density of specified attribute on a grid plot """
 
@@ -255,6 +259,7 @@ def plot_density_alpha(df: pandas.DataFrame,
     plt.scatter(df[df[attr]>0]["col"],
                 df[df[attr]>0]["row"],
                 alpha = df[df[attr]>0][attr]/df[attr].max(),
+                c = color,
                 label = attr)
 
     # add attributes
@@ -268,6 +273,7 @@ def plot_density_alpha(df: pandas.DataFrame,
 def plot_density_markersize(df: pandas.DataFrame,
                       attr: str,
                       defaultsize: float,
+                      color: str = "red",
                       maxtime: int = 0) -> None:
     """ function for plotting the density of specified attribute on a grid plot """
 
@@ -284,6 +290,7 @@ def plot_density_markersize(df: pandas.DataFrame,
     plt.scatter(df[df[attr]>0]["col"],
                 df[df[attr]>0]["row"],
                 s = defaultsize*(df[df[attr]>0][attr]/df[attr].max()),
+                c = color,
                 label = attr)
 
     # add attributes
