@@ -115,6 +115,9 @@ if __name__ == "__main__":
     stats.plot_density_markersize(density_df, "demand", 20)
     stats.save_plot("customer_demandsize")
 
+    stats.plot_density_markersize(density_df, "inventory", 20)
+    stats.save_plot("producer_inventorysize")
+
     # end program
     db.close()
     print("test complete")
