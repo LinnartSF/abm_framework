@@ -198,14 +198,15 @@ def plt_valdistribution(attributes: list,
     plt.legend()
 
 def plot_grid_occupation(df: pandas.DataFrame,
-                         population: list = ["all"]) -> None:
+                         population: list = ["all"],
+                         maxtime: int = 0) -> None:
     """ plot grid cell occupation (at least one agent in cell, or none), for "all" agent types or just for one or several agent types (i.e. "population") """
 
     # subset relevant data from the dataframe provided as argument
-    maxtime = df["simtime"].max()
-    df = df[df["simtime"]>= maxtime]
+    if maxtime == 0: maxtime = df["simtime"].max()
+    df = df[df["simtime"] == maxtime]
 
-    # create new figure 
+    # create new figure
     fig = plt.figure()
     fig.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
     fig.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
@@ -236,5 +237,30 @@ def plot_grid_occupation(df: pandas.DataFrame,
         # add legend
         plt.legend()
 
-# TODO implement plotting functions that plot agents' attribute value distribution across the grid
-# TODO implement additional plot types and plotting functions
+def plot_grid_density(df: pandas.DataFrame,
+                      attr: str,
+                      maxtime: int = 0) -> None:
+    """ function for plotting the density of specified attribute on a grid plot """
+
+    # subset relevant data from the dataframe provided as argument
+    if maxtime == 0: maxtime = df["simtime"].max()
+    df = df[df["simtime"] == maxtime]
+
+    # create new figure
+    fig = plt.figure()
+    fig.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+    fig.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
+
+    # use attr column data from results database (pandas DataFrame)
+    plt.scatter(df[df[attr]>0]["col"],
+                df[df[attr]>0]["row"],
+                alpha = df[df[attr]>0][attr]/df[attr].max(),
+                label = attr)
+
+    # add attributes
+    plt.title(f"density grid for attr: {attr}")
+    plt.xlabel("columns")
+    plt.ylabel("rows")
+
+    # add legend
+    plt.legend()
