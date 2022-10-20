@@ -106,9 +106,11 @@ if __name__ == "__main__":
     stats.plot_avgattr_lines(["demand", "hunger"], customer_df)
     stats.save_plot("customer_avgattrs")
 
-    # TODO implement density plot 
+    stats.plot_grid_density(density_df, "demand")
+    stats.save_plot("customer_demanddensity")
 
-    # TODO: implement environment plot that plots attribute values in the form of scatter plot transparency or scatter plot size
+    stats.plot_grid_density(density_df, "inventory")
+    stats.save_plot("customer_inventorydensity")
     
     # end program
     db.close()
