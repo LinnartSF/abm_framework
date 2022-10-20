@@ -32,3 +32,15 @@ I gave some basic introductions covering the differences between simulation meth
 
 
 <a href="https://www.supplychaindataanalytics.com/agent-based-modeling-in-python/">Agent-based modeling in Python</a>
+
+<h2>introduction to agent-based simulation</h2>
+
+description here
+
+<h2>other abm frameworks in python</h2>
+
+description here
+
+<h2>exemplary visualizations created with abm_framework</h2>
+
+description here
