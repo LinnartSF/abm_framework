@@ -17,7 +17,7 @@ config.py is a configuration file that e.g. allows for path adjustments or input
 
 animation.py provides animation capabilities for animating simulation results and their trajectory throughout time.
 
-<h2>references to related articles covering abm modeling/h2>
+<h2>references to related articles covering abm modeling</h2>
 
 I gave some basic introductions covering the differences between simulation methods as well as basic agent-based simulation modeling in Python -  and you can find these introductions on my blog:
 
