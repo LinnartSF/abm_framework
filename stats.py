@@ -237,7 +237,7 @@ def plot_grid_occupation(df: pandas.DataFrame,
         # add legend
         plt.legend()
 
-def plot_grid_density(df: pandas.DataFrame,
+def plot_density_alpha(df: pandas.DataFrame,
                       attr: str,
                       maxtime: int = 0) -> None:
     """ function for plotting the density of specified attribute on a grid plot """
@@ -255,6 +255,35 @@ def plot_grid_density(df: pandas.DataFrame,
     plt.scatter(df[df[attr]>0]["col"],
                 df[df[attr]>0]["row"],
                 alpha = df[df[attr]>0][attr]/df[attr].max(),
+                label = attr)
+
+    # add attributes
+    plt.title(f"density grid for attr: {attr}")
+    plt.xlabel("columns")
+    plt.ylabel("rows")
+
+    # add legend
+    plt.legend()
+
+def plot_density_markersize(df: pandas.DataFrame,
+                      attr: str,
+                      defaultsize: float,
+                      maxtime: int = 0) -> None:
+    """ function for plotting the density of specified attribute on a grid plot """
+
+    # subset relevant data from the dataframe provided as argument
+    if maxtime == 0: maxtime = df["simtime"].max()
+    df = df[df["simtime"] == maxtime]
+
+    # create new figure
+    fig = plt.figure()
+    fig.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+    fig.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
+
+    # use attr column data from results database (pandas DataFrame)
+    plt.scatter(df[df[attr]>0]["col"],
+                df[df[attr]>0]["row"],
+                s = defaultsize*(df[df[attr]>0][attr]/df[attr].max()),
                 label = attr)
 
     # add attributes

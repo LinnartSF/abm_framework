@@ -39,7 +39,7 @@ if __name__ == "__main__":
                         randomness=[["uniform",0.5,1.5], ["uniform",0.6,1.4]])
 
     # setup simulation
-    sim = framework.Simulation(100)
+    sim = framework.Simulation(20)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -106,11 +106,14 @@ if __name__ == "__main__":
     stats.plot_avgattr_lines(["demand", "hunger"], customer_df)
     stats.save_plot("customer_avgattrs")
 
-    stats.plot_grid_density(density_df, "demand")
+    stats.plot_density_alpha(density_df, "demand")
     stats.save_plot("customer_demanddensity")
 
-    stats.plot_grid_density(density_df, "inventory")
+    stats.plot_density_alpha(density_df, "inventory")
     stats.save_plot("customer_inventorydensity")
+
+    stats.plot_density_markersize(density_df, "demand", 5.0)
+    stats.save_plot("customer_demandsize")
 
     # end program
     db.close()
