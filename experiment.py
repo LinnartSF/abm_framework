@@ -24,7 +24,7 @@ if __name__ == "__main__":
     env = framework.Environment(1, True, 20, 20, db_manager) # Environment constructor implicitly resets environment table in database
 
     # create agent populations
-    pops = framework.Populations(amount = 2, env = env, db_manager = db_manager)
+    pops = framework.Populations(amount = 2, env = env, db_manager = db_manager, attributes = ["inventory","prodcapacity","demand","hunger"], datatypes = ["REAL","REAL","REAL","REAL"])
     pops.add_population(name = "producers", 
                         size = 20, 
                         attributes = ["inventory","prodcapacity"], 
@@ -32,7 +32,7 @@ if __name__ == "__main__":
                         initialvals = [50, 10], 
                         randomness = [["uniform",0.8,1.2], ["uniform",0.6,1.4]]) # TODO: replace randoness list by a custom datatype (Distribution class); add it to framework.py module
     pops.add_population(name = "customers", 
-                        size = 20, 
+                        size = 20,
                         attributes = ["demand","hunger"], 
                         datatypes = ["REAL","REAL"], 
                         initialvals=[50,10], 
@@ -111,7 +111,7 @@ if __name__ == "__main__":
 
     stats.plot_grid_density(density_df, "inventory")
     stats.save_plot("customer_inventorydensity")
-    
+
     # end program
     db.close()
     print("test complete")
