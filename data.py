@@ -243,7 +243,7 @@ class Manager:
                         colname: str, 
                         val: float) -> None:
         """ method used for increasing density score for specified cell, in density table """
-        self.Database.query(f"UPDATE environment SET {colname} =  {colname} + {str(val)} WHERE simtime = {str(simtime)} AND row = {str(row)} AND col = {str(col)};")
+        self.Database.query(f"UPDATE density SET {colname} =  {colname} + {str(val)} WHERE simtime = {str(simtime)} AND row = {str(row)} AND col = {str(col)};")
         self.Database.commit()
     
     def reduction_envpop(self,
