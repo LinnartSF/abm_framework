@@ -13,7 +13,7 @@ Module requires random module
 """
 
 # TODO catch and handle infeasible user input
-# TODO add additional typewriting to class atrributes
+# TODO add additional to class atrributes
 # TODO support other query languages than SQLite (where differences apply)
 
 __author__ = "Linnart Felkl"
@@ -316,12 +316,14 @@ class Populations:
 
                 for i in range(0,len(pop.Datatypes)):
                     if pop.Datatypes[i] in ["INTEGER","REAL"]:
-                        vals.add(0.0)
+                        vals.add(pop.Attributes[i])
+            vals = list(vals)
+            vals = [0.0 for i in vals]
             
             for row in range(1, self.Environment.Rows+1):
                 for col in range(1,self.Environment.Columns+1):
 
-                    self.DBManager.write_densitycell(simtime, row, col, list(vals))
+                    self.DBManager.write_densitycell(simtime, row, col, vals)
                     self.DBManager.commit()
 
                     list_cell = self.Environment.get_cell(row, col)
@@ -329,25 +331,12 @@ class Populations:
                     if len(list_cell) > 0:
 
                         for agent in list_cell:
-                            # TODO
-            
+                            attr_keys = list(agent.Attributes.keys())
+                            attr_vals = list(agent.Attributes.values())
+                            for i in range(0, len(attr_vals)):
 
-            """ TODO replace by above code
-            for row in range(1,self.Environment.Rows+1):
-                for col in range(1,self.Environment.Columns+1):
-
-                    # which population does each agent belong to? increment the respective column in the database
-                    self.DBManager.write_environmentcell(simtime, row, col, self.Environment, vals)
-                    self.DBManager.commit()
-
-                    list_cell = self.Environment.get_cell(row, col)
-
-                    if len(list_cell) > 0:
-
-                        for agent in list_cell: 
-                            self.DBManager.increment_envpop(simtime, row, col, agent.Population)
-            """ 
-
+                                if type(attr_vals[i]) == float or type(attr_vals[i]) == int:
+                                    self.DBManager.increase_density(simtime, row, col, attr_keys[i], attr_vals[i])
                         
     def write_agents_to_db(self,
                            simtime: int) -> None:
