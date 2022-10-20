@@ -3,6 +3,8 @@ A framework for agent-based simulation. It covers grid-based simulations.
 
 The model supports grid-based simulations and includes visualization and animation functionality. The module is continously extended to cover additional functionality. For example, I added the Moore neighbourhood as a neighbourhood option for grid-based ABM simulations. In a second step, the Neumann neighbourhood (easy addition) can be added, and then in addition other neighbourhood types as required.
 
+<h2>abm framework database directory </h2>
+
 Database directory contains sqlite3 database file that is meant for storing simulation results into database.
 
 The data.py module provides functionality for executing queries in the database. data.py comprises a Database class and a Manager class. Database class facilitates connection to sqlite3 and potentially also mssql database. Manager provides methods representing standardized queries for quickly implementing operations on the database that are of relevance to the ABM simulations supported by this package.
@@ -15,6 +17,7 @@ config.py is a configuration file that e.g. allows for path adjustments or input
 
 animation.py provides animation capabilities for animating simulation results and their trajectory throughout time.
 
+<h2>references to related articles covering abm modeling/h2>
 
 I gave some basic introductions covering the differences between simulation methods as well as basic agent-based simulation modeling in Python -  and you can find these introductions on my blog:
 
