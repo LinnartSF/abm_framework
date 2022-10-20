@@ -379,7 +379,7 @@ class Manager:
                           col: int,
                           vals: list = []) -> None:
         """ writes specified list of values into density table, for the specified simulation time and cell """
-        valuestr = f"{str(simtime)},{str(row)},{str(col)},0"
+        valuestr = f"{str(simtime)},{str(row)},{str(col)}"
         if len(vals)>0: valuestr = f"{valuestr},{self.Database.vals_to_str(vals)}"
         self.Database.query(f"INSERT INTO density VALUES({valuestr});")
         self.Database.commit()
