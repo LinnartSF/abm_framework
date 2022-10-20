@@ -242,7 +242,7 @@ def plot_grid_density(df: pandas.DataFrame,
                       maxtime: int = 0) -> None:
     """ function for plotting the density of specified attribute on a grid plot """
 
-    # subset relevant data from the dataframe provided as arguemtn
+    # subset relevant data from the dataframe provided as argument
     if maxtime == 0: maxtime = df["simtime"].max()
     df = df[df["simtime"] == maxtime]
 

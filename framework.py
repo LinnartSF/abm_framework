@@ -20,6 +20,7 @@ __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
 
 # required modules
+from math import fabs
 from multiprocessing import popen_fork
 import random
 
@@ -31,6 +32,22 @@ def warning(msg: str) -> None:
 # TODO: environment should be able to add agent, but agent should also be able to add itself to anvironment
 # TODO: environment should be optional argument when creating agent instance (constructor call)
 # TODO: agent class too should support obtaining the neighbourhood, by calling the environments' relevant methods
+
+# simulation class
+class Simulation:
+    """ Simulation is running or not, and has iteration counter and a max iteration limit """
+    def __init__(self,
+                 limit: int):
+        """ constructor for a new simulation instance """
+        self.Running = True
+        self.Iteration = 0
+        self.Limit = limit
+    
+    def increment_iteration(self):
+        """ method for incrementing simulation iteration; also sets running to False to avoid another simulation run in a endless while loop """
+        self.Iteration += 1
+        if self.Iteration >= self.Limit: self.Running = False
+
 # agent class
 class Agent:
     """ Agents have attributes that can be relevant to a simulation """

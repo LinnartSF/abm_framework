@@ -1,6 +1,6 @@
 
 __author__ = "Linnart Felkl"
-__email__ = "linnartsf@gmail.com"
+__email__ = "LinnartSF@gmail.com"
 
 from cProfile import run
 from tokenize import Funny
@@ -16,7 +16,7 @@ if __name__ == "__main__":
     import framework
     import random
 
-    # setup database connection and manager 
+    # setup database manager and connection
     db = data.Database("sqlite3", config.path_databasefile)
     db_manager = data.Manager(db)
 
@@ -38,18 +38,16 @@ if __name__ == "__main__":
                         initialvals=[50,10], 
                         randomness=[["uniform",0.5,1.5], ["uniform",0.6,1.4]])
 
+    # setup simulation
+    sim = framework.Simulation(100)
+
     # make sure that environment and agents tables in database are setup at this time
-    pops.write_env_to_db(0)
-    pops.write_agents_to_db(0)
+    pops.write_env_to_db(sim.Iteration)
+    pops.write_agents_to_db(sim.Iteration)
 
-    # execute simulation
-    # TODO: define framework for setting up a simulation run (class of some kind)
-    running = True
-    iteration = 0
-    maxiteration = 100
-
-    while running: 
-        iteration +=1
+    # execute simulation run
+    while sim.Running: 
+        sim.increment_iteration()
 
         # let every customer try to satisfy its demand
         customers = pops.Populations["customers"].get_agents()
@@ -77,16 +75,15 @@ if __name__ == "__main__":
                                     producer.get_attr_value("inventory") + producer.get_attr_value("prodcapacity"))
         
         # update results in database, for agents and for environment
-        pops.write_agents_to_db(iteration)
-        pops.write_env_to_db(iteration)
-
-        if iteration >= maxiteration:
-            running = False
+        pops.write_agents_to_db(sim.Iteration)
+        pops.write_env_to_db(sim.Iteration)
+        pops.write_density_to_db(sim.Iteration)
 
     # get dataframes with simulation results 
     customer_df = db_manager.get_populationdf(pop = "customers")
     producer_df = db_manager.get_populationdf(pop = "producers")
     env_df = db_manager.get_environmentdf()
+    density_df = db_manager.get_densitydf()
     
     # visualize simulation data
     stats.set_fontsizes(8,10,12)
@@ -108,6 +105,8 @@ if __name__ == "__main__":
 
     stats.plot_avgattr_lines(["demand", "hunger"], customer_df)
     stats.save_plot("customer_avgattrs")
+
+    # TODO implement density plot 
 
     # TODO: implement environment plot that plots attribute values in the form of scatter plot transparency or scatter plot size
     
