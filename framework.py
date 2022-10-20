@@ -309,7 +309,7 @@ class Populations:
             for col in range(1,self.Environment.Columns+1):
 
                 # which population does each agent belong to? increment the respective column in the database
-                self.DBManager.write_environmentcell(simtime, row, col, self.Environment, vals)
+                self.DBManager.write_environmentcell(simtime, row, col, vals)
                 self.DBManager.commit()
 
                 list_cell = self.Environment.get_cell(row, col)
