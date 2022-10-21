@@ -1,4 +1,4 @@
-""""
+"""
 
 This module is used to create standardized animations from the database containing ABM simulation results generated with this module.
 
@@ -11,7 +11,6 @@ Uses pandas
 __author__ = "Linnart Felkl"
 __email__ = "LinnartSF@gmail.com"
 
-
 import matplotlib.pyplot as plt
 from celluloid import Camera
 import random
@@ -21,9 +20,11 @@ def warning(msg: str) -> None:
     """ helper function for printing warning """
     print("WARNING: "+msg)
 
-def animate_grid_occupation(df: pandas.DataFrame,
+def animate_ggit rid_occupation(df: pandas.DataFrame,
+                            filename: str,
                             population: list = ["all"],
                             color: str = "red",
+                            tpf: float = 0.01, # time per frame
                             mintime: int = 0,
                             maxtime: int = 0) -> None:
     """ animates grid occulation over simulation time, for the specified population(s), or all populations """
@@ -40,105 +41,54 @@ def animate_grid_occupation(df: pandas.DataFrame,
         warning("population list empty or not provided at all for plt_grid_occupation() in stats.py (abm framework)")
 
     else:
-        # add titles
+        # add titles and labels
         plt.title(f"grid occupancy for populations: {str(population)}")
         plt.xlabel("columns")
         plt.ylabel("rows")
 
         if population[0] == "all":
             
-            for i in range(maxtime):
-
-            # use "agents" column data from results database (pandas DataFrame)
-            plt.scatter(df[df["agents"]>0]["col"],
-                        df[df["agents"]>0]["row"],
-                        alpha = df[df["agents"]>0]["agents"]/df["agents"].max(),
-                        c = color,
-                        label = "all")
-        
-        else:
-            
-            # add the scatters for each population one by one to the scatter plot, assuming that these populations are also present in the database (pandas DataFrame)
-            for pop in population:
-                plt.scatter(df[df[pop]>0]["col"],
-                            df[df[pop]>0]["row"],
-                            alpha = df[df[pop]>0][pop]/df[pop].max(),
+            df = df[df["agents"] > 0]            
+            for i in range(mintime, maxtime+1):
+                
+                # use "agents" column data from results database (pandas.DataFrame)
+                fig.clf()
+                subdf = df[df["simtime"] == i]
+                plt.scatter(x = subdf["col"],
+                            y = subdf["row"],
+                            alpha = subdf["agents"]/df["agents"].max(),
                             c = color,
-                            label = pop)
+                            label = "all")
+                
+                if i == mintime: plt.legend()
 
+                plt.pause(tpf)
+                camera.snap()
 
+        else:
 
+            df = df[df["agents"] > 0]            
+            for i in range(mintime, maxtime+1):
 
+                fig.clf()
 
+                subdf = df[df["simtime"] == i]
+                
+                for pop in population:
 
+                    popdf = subdf[subdf[pop] > 0]
 
+                    plt.scatter(x = popdf["col"],
+                                y = popdf["row"],
+                                alpha = popdf[pop] / popdf[pop].max,
+                                c = color,
+                                label = pop)
+                
+                if i == mintime: plt.legend()
 
+                plt.pause(tpf)
+                camera.snap()
 
-
-# ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-from matplotlib import pyplot as plt
-from celluloid import Camera
-import random
-import config
-
-# create figure object
-fig = plt.figure()
-
-# specify labels
-plt.xlabel("coin side")
-plt.ylabel("absolute frequency")
-plt.title("heads or tail frequency")
-
-# generate animation data
-tailheads = [0,0]
-xaxpos = [1,2]
-
-camera = Camera(fig)
-
-plt.xticks(xaxpos, labels=["tails","heads"])
-
-for i in range(100):
-    
-    if random.randint(0,1) > 0:
-        tailheads[1] = tailheads[1] + 1
-    else:
-        tailheads[0] = tailheads[0] + 1
-
-    plt.bar(xaxpos, tailheads, color = ["darkgreen","lightgreen"])
-    plt.pause(0.005)
-    
-    camera.snap()
-
-# build animation from data and save it
-animation = camera.animate()
-animation.save('animations/coinflipanimation_celluloid.gif', writer='PillowWriter', fps=10)
-
-# ------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-from matplotlib import pyplot as plt
-from celluloid import Camera
-import numpy as np
-
-# create figure object
-fig = plt.figure()
-
-# set axis limits
-plt.xlim(0,10)
-plt.ylim(0,1)
-
-# specify labels
-plt.xlabel("x axis")
-plt.ylabel("y axis")
-plt.title("scatter plot animation")
-
-# generate animation data
-camera = Camera(fig)
-for i in range(10):
-    plt.scatter(i, np.random.random())
-    plt.pause(0.1)
-    camera.snap()
-
-# build animation from data and save it
-animation = camera.animate()
-animation.save('animations/scatteranimation_celluloid.gif', writer='PillowWriter', fps=2)
+        # build animation from data and save it
+        animation = camera.animate()
+        animation.save(config.path_saveanimations+"/"+filename+".gif", writer='PillowWriter', fps=int(1/tpf))
