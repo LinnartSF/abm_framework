@@ -36,7 +36,7 @@ if __name__ == "__main__":
                         randomness=[["uniform",0.5,1.5], ["uniform",0.6,1.4]])
 
     # setup simulation
-    sim = framework.Simulation(20)
+    sim = framework.Simulation(100)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -116,14 +116,6 @@ if __name__ == "__main__":
     stats.save_plot("producer_inventorysize")
 
     # create and save animations
-    animation.animate_grid_occupation(
-        df = env_df,
-        filename = "occupationanimation",
-        population = ["all"],
-        color = "red",
-        tpf = 0.5
-        )
-    
     animation.animate_density(
         df = density_df,
         filename = "densityanimation",
