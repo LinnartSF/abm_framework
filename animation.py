@@ -16,6 +16,7 @@ from celluloid import Camera
 import random
 import pandas
 import config
+from matplotlib.ticker import MaxNLocator
 
 def warning(msg: str) -> None:
     """ helper function for printing warning """
