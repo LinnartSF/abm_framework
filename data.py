@@ -44,6 +44,13 @@ def warning(msg: str) -> None:
 # TODO - consider merging Database and Manager class, to only have Database class
 class Database: 
     """ this class can be used to establish a database connection with pyodbc or just directly with sqlite3 """
+
+    Server: str
+    Name: str
+    Type: str
+    Connection: sqlite3.Connection
+    Cursor: sqlite3.Cursor
+
     def __init__(self, type: str, db: str, server: str = "") -> None:
         """ constructor """
         self.Server = server
@@ -148,6 +155,9 @@ class Database:
     
 class Manager:
     """ this class provides an interface for standardized database operations relevant to ABM simulation conducted with this package """
+
+    Database: Database
+
     def __init__(self,
                db: Database) -> None:
         """ constructor of Manager instance """

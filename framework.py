@@ -34,6 +34,11 @@ def warning(msg: str) -> None:
 # simulation class
 class Simulation:
     """ Simulation is running or not, and has iteration counter and a max iteration limit """
+
+    Running: bool
+    Iteration: int
+    Limit: int
+
     def __init__(self,
                  limit: int):
         """ constructor for a new simulation instance """
@@ -49,6 +54,13 @@ class Simulation:
 # agent class
 class Agent:
     """ Agents have attributes that can be relevant to a simulation """
+
+    ID: int
+    Population: str
+    Row: int
+    Col: int
+    Attributes: dict
+
     def __init__(self,
                  id: int,
                  pop: str):
@@ -84,6 +96,14 @@ class Agent:
 # environment class
 class Environment:
     """ Environment can contain agents in cells """
+
+    Cellcapacity: int
+    Endless: bool
+    Rows: int
+    Columns: int
+    Array: list
+    DBManager: data.Manager
+
     def __init__(self,
                 capa_cell: int,
                 endless: bool,
@@ -177,6 +197,16 @@ class Environment:
         
 class Population: 
     """ Population class used for a single population, used by Populations class when adding populations """
+
+    Name: str
+    Size: int
+    Environment: Environment
+    DBManager: data.Manager
+    Attributes: list
+    Datatypes: list
+    Initialvals: list
+    Agents: dict
+
     def __init__(self,
                  name: str,
                  size: int,
@@ -251,6 +281,15 @@ class Population:
 
 class Populations:
     """ Populations class for setting up and managing a population of agents """
+
+    Amount: int
+    Environment: Environment
+    DBManager: data.Manager
+    Attributes: list
+    Datatypes: list
+    ID_lastused: int
+    Populations: dict
+
     def __init__(self,
                  amount: int,
                  env: Environment,
