@@ -12,8 +12,6 @@ Module requires random module
 
 """
 
-# TODO catch and handle infeasible user input
-# TODO add additional to class atrributes
 # TODO support other query languages than SQLite (where differences apply)
 
 __author__ = "Linnart Felkl"
@@ -26,11 +24,6 @@ import data
 def warning(msg: str) -> None:
     """ internal but also externally accessible function for printing warning message (used for faulty user input) """
     print(f"WARNING: {msg}")
-
-# TODO: environment that agent is added to should be a attribute of the agent, but not in the attribute dictionary; set by environment when adding agent
-# TODO: environment should be able to add agent, but agent should also be able to add itself to anvironment
-# TODO: environment should be optional argument when creating agent instance (constructor call)
-# TODO: agent class too should support obtaining the neighbourhood, by calling the environments' relevant methods
 
 # simulation class
 class Simulation:

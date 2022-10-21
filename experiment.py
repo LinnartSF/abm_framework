@@ -2,10 +2,6 @@
 __author__ = "Linnart Felkl"
 __email__ = "LinnartSF@gmail.com"
 
-from cProfile import run
-from tokenize import Funny
-
-
 if __name__ == "__main__":
 
     print("test starts")

@@ -27,10 +27,6 @@ Developers can add onto the Manager class or use the Database class to directly 
 
 """
 
-#TODO add type writing to classes
-#TODO improve type writing of method calls, specifying agent datatype for input parameter
-#TODO catch errors results from faulty user input (e.g. column datatype for new column, etc.)
-
 __author__ = "Linnart Felkl"
 __email__ = "LinnartSF@gmail.com"
 
@@ -41,7 +37,6 @@ import pandas
 def warning(msg: str) -> None: 
     print("WARNING: "+msg)
 
-# TODO - consider merging Database and Manager class, to only have Database class
 class Database: 
     """ this class can be used to establish a database connection with pyodbc or just directly with sqlite3 """
 
