@@ -118,8 +118,17 @@ if __name__ == "__main__":
     # create and save animations
     animation.animate_density(
         df = density_df,
-        filename = "densityanimation",
+        filename = "inventoryanimation",
         attr = "inventory",
+        defaultsize = 50,
+        color = "red",
+        tpf = 0.5
+    )
+
+    animation.animate_density(
+        df = density_df,
+        filename = "demandanimation",
+        attr = "demand",
         defaultsize = 50,
         color = "red",
         tpf = 0.5

@@ -119,7 +119,7 @@ def animate_density(df: pandas.DataFrame,
     df = df[df[attr] > 0]            
     for i in range(mintime, maxtime+1):
 
-        plt.clf() 
+        #plt.clf() 
         # use "agents" column data from results database (pandas.DataFrame)
         subdf = df[df["simtime"] == i]
         plt.scatter(subdf["col"],
