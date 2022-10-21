@@ -119,7 +119,7 @@ if __name__ == "__main__":
     animation.animate_grid_occupation(
         df = env_df,
         filename = "occupationanimation",
-        popilation = ["all"],
+        population = ["all"],
         color = "red",
         tpf = 0.5
         )
