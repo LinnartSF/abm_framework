@@ -2,6 +2,9 @@
 __author__ = "Linnart Felkl"
 __email__ = "LinnartSF@gmail.com"
 
+from tkinter.tix import PopupMenu
+
+
 if __name__ == "__main__":
 
     print("test starts")
@@ -123,6 +126,15 @@ if __name__ == "__main__":
         color = "red",
         tpf = 0.5
         )
+    
+    animation.animate_density(
+        df = density_df,
+        filename = "densityanimation",
+        attr = "inventory",
+        defaultsize = 50,
+        color = "red",
+        tpf = 0.5
+    )
 
     # end program
     db.close()

@@ -93,3 +93,43 @@ def animate_grid_occupation(df: pandas.DataFrame,
         # build animation from data and save it
         animation = camera.animate()
         animation.save(config.path_saveanimations+"/"+filename+".gif", writer='PillowWriter', fps=int(1/tpf))
+
+def animate_density(df: pandas.DataFrame,
+                    filename: str,
+                    attr: str,
+                    defaultsize: float = 10.0,
+                    color: str = "red",
+                    tpf: float = 0.01, # time per frame
+                    mintime: int = 0,
+                    maxtime: int = 0) -> None:
+    """ animates density of listed properties over simulation time """
+    if maxtime == 0: maxtime = df["simtime"].max()
+    if df["simtime"].min() > mintime: mintime = df["simtime"].min()
+    
+    fig = plt.figure()
+    camera = Camera(fig)
+    fig.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
+    fig.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
+
+    # add titles and labels
+    plt.title(f"density grid for attr: {attr}")
+    plt.xlabel("columns")
+    plt.ylabel("rows")
+           
+    df = df[df[attr] > 0]            
+    for i in range(mintime, maxtime+1):
+                
+        # use "agents" column data from results database (pandas.DataFrame)
+        fig.clf()
+        subdf = df[df["simtime"] == i]
+        plt.scatter(subdf["col"],
+                    subdf["row"],
+                    s = defaultsize*(subdf[attr]/subdf[attr].max()),
+                    c = color)
+    
+        plt.pause(tpf)
+        camera.snap()
+
+    # build animation from data and save it
+    animation = camera.animate()
+    animation.save(config.path_saveanimations+"/"+filename+".gif", writer='PillowWriter', fps=int(1/tpf))
