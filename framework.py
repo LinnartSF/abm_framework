@@ -21,6 +21,7 @@ __email__ = "linnartsf@gmail.com"
 
 # required modules
 import random
+import data
 
 def warning(msg: str) -> None:
     """ internal but also externally accessible function for printing warning message (used for faulty user input) """
