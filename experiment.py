@@ -2,9 +2,6 @@
 __author__ = "Linnart Felkl"
 __email__ = "LinnartSF@gmail.com"
 
-from tkinter.tix import PopupMenu
-
-
 if __name__ == "__main__":
 
     print("test starts")

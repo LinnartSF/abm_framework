@@ -229,7 +229,6 @@ def plot_grid_occupation(df: pandas.DataFrame,
                 plt.scatter(df[df[pop]>0]["col"],
                             df[df[pop]>0]["row"],
                             alpha = df[df[pop]>0][pop]/df[pop].max(),
-                            c = color,
                             label = pop)
 
         # add titles
