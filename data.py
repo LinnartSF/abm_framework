@@ -32,7 +32,7 @@ Developers can add onto the Manager class or use the Database class to directly 
 #TODO catch errors results from faulty user input (e.g. column datatype for new column, etc.)
 
 __author__ = "Linnart Felkl"
-__email__ = "linnartsf@gmail.com"
+__email__ = "LinnartSF@gmail.com"
 
 import pyodbc
 import sqlite3

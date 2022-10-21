@@ -362,7 +362,6 @@ class Populations:
     def write_density_to_db(self, 
                             simtime: int) -> None:
         """ writes to db density table in database with agent property accumulation where relevant """
-
         if self.Amount > 0:
             
             vals = set()
@@ -396,7 +395,6 @@ class Populations:
     def write_agents_to_db(self,
                            simtime: int) -> None:
         """ writes to db all agents and their values """
-        
         if self.Amount > 0:
 
             for key_pop in list(self.Populations.keys()):
