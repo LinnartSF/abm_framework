@@ -11,6 +11,7 @@ if __name__ == "__main__":
     import config
     import framework
     import random
+    import animation
 
     # setup database manager and connection
     db = data.Database("sqlite3", config.path_databasefile)
@@ -113,6 +114,9 @@ if __name__ == "__main__":
 
     stats.plot_density_markersize(density_df, "inventory", 100)
     stats.save_plot("producer_inventorysize")
+
+    # create and save animations
+    animation.animate_grid_occupation(env_df, "occupationanimation")
 
     # end program
     db.close()

@@ -78,7 +78,6 @@ def animate_grid_occupation(df: pandas.DataFrame,
                 for pop in population:
 
                     popdf = subdf[subdf[pop] > 0]
-
                     plt.scatter(x = popdf["col"],
                                 y = popdf["row"],
                                 alpha = popdf[pop] / popdf[pop].max,
