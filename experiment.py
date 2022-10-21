@@ -116,7 +116,13 @@ if __name__ == "__main__":
     stats.save_plot("producer_inventorysize")
 
     # create and save animations
-    animation.animate_grid_occupation(env_df, "occupationanimation")
+    animation.animate_grid_occupation(
+        df = env_df,
+        filename = "occupationanimation",
+        popilation = ["all"],
+        color = "red",
+        tpf = 0.5
+        )
 
     # end program
     db.close()
