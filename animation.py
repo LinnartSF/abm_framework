@@ -24,9 +24,11 @@ def warning(msg: str) -> None:
 def animate_grid_occupation(df: pandas.DataFrame,
                             population: list = ["all"],
                             color: str = "red",
+                            mintime: int = 0,
                             maxtime: int = 0) -> None:
     """ animates grid occulation over simulation time, for the specified population(s), or all populations """
     if maxtime == 0: maxtime = df["simtime"].max()
+    if df["simtime"].min() > mintime: mintime = df["simtime"].min()
     
     fig = plt.figure()
     camera = Camera(fig)
@@ -44,13 +46,18 @@ def animate_grid_occupation(df: pandas.DataFrame,
         plt.ylabel("rows")
 
         if population[0] == "all":
+            
+            for i in range(maxtime):
+
             # use "agents" column data from results database (pandas DataFrame)
             plt.scatter(df[df["agents"]>0]["col"],
                         df[df["agents"]>0]["row"],
                         alpha = df[df["agents"]>0]["agents"]/df["agents"].max(),
                         c = color,
                         label = "all")
+        
         else:
+            
             # add the scatters for each population one by one to the scatter plot, assuming that these populations are also present in the database (pandas DataFrame)
             for pop in population:
                 plt.scatter(df[df[pop]>0]["col"],
