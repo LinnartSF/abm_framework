@@ -20,7 +20,7 @@ def warning(msg: str) -> None:
     """ helper function for printing warning """
     print("WARNING: "+msg)
 
-def animate_ggit rid_occupation(df: pandas.DataFrame,
+def animate_grid_occupation(df: pandas.DataFrame,
                             filename: str,
                             population: list = ["all"],
                             color: str = "red",
