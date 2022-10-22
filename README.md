@@ -7,7 +7,7 @@ The model supports grid-based simulations and includes visualization and animati
 
 Database directory contains sqlite3 database file that is meant for storing simulation results into database.
 
-The data.py module provides functionality for executing queries in the database. data.py comprises a Database class and a Manager class. Database class facilitates connection to sqlite3 and potentially also mssql database. Manager provides methods representing standardized queries for quickly implementing operations on the database that are of relevance to the ABM simulations supported by this package.
+The <strong>data.py</strong> module provides functionality for executing queries in the database. data.py comprises a Database class and a Manager class. Database class facilitates connection to sqlite3 and potentially also mssql database. Manager provides methods representing standardized queries for quickly implementing operations on the database that are of relevance to the ABM simulations supported by this package.
 
 framework.py contains classes for modelling e.g. the simulation environment and the agents themselves.
 
