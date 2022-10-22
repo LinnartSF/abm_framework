@@ -158,9 +158,9 @@ def plot_avgattr_lines(attributes: list,
     plt.legend()
 
 def plt_valdistribution(attributes: list,
-                            df: pandas.DataFrame,
-                            mintime: int,
-                            maxtime: int) -> None:
+                        df: pandas.DataFrame,
+                        mintime: int = 0,
+                        maxtime: int = 0) -> None:
     """ function for plotting dynamic relative state distribution among the state listed in attributes argument """
 
     # calculate plotting data
