@@ -98,7 +98,6 @@ class Environment:
     Columns: int
     Array: list
     Freecells: list
-    Takencells: list
     DBManager: data.Manager
 
     def __init__(self,
@@ -115,7 +114,6 @@ class Environment:
         self.Columns = columns
         self.Array = [[[] for j in range(columns)] for i in range(rows)]
         self.Freecells = [(row,colm) for row in range(1,rows+1) for colm in range(1,columns+1)]
-        self.Takencells = []
         self.DBManager = db_manager
         self.DBManager.reset_table("environment")  
     
@@ -143,7 +141,8 @@ class Environment:
             agent.Row = row
             agent.Col = col
 
-            if len(self.Arrange[(row-1)][(col-1)]) < self.Cellcapacity: self.Arrange[(row-1)][(col-1)].append(cell)
+            if len(self.Arrange[(row-1)][(col-1)]) < self.Cellcapacity: 
+                self.Freecells.append(cell)
     
     def get_cell(self,
                  row: int,
