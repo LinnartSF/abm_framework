@@ -67,8 +67,8 @@ This framework supports standardized agent-based simulation animations and visua
 
 You can see some exmaples below:
 
-<img src="/path/to/img.jpg" alt="Agent attributes and interactions" title="">
+<img src="/path/to/img.jpg" alt="Agent attribute value trajectories" title="">
 
-<img src="/path/to/img.jpg" alt="Agent attributes and interactions" title="">
+<img src="/path/to/img.jpg" alt="Agent grid locations" title="">
 
-<img src="/path/to/img.jpg" alt="Agent attributes and interactions" title="">
+<img src="/path/to/img.jpg" alt="Attribute density animation" title="">
