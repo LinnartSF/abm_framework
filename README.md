@@ -37,15 +37,15 @@ Agents have attributes and the interactions between agents are described by logi
 
 <h2>agent-based modelling applications</h2>
 
-Agent-based simulation models are applied in many different areas. This includes the domains listed below
-1) biology
-2) epidemology
-3) business
-4) technology
-5) network technology
-6) social sciences
-7) economics
-8) autonomous driving
+Agent-based simulation models are applied in many different areas. This includes the domains listed below:
+1) Biology
+2) Epidemology
+3) Business
+4) Technology
+5) Network technology
+6) Social sciences
+7) Economics
+8) Autonomous driving
 
 This repository comprises a demos folder. In there you will find, dynamically added over time, a series of simulation examples. 
 
