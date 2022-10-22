@@ -1,5 +1,7 @@
 # abm_framework
-A framework for agent-based simulation. It covers grid-based simulations. 
+A framework for agent-based simulation. It covers grid-based simulations. This model is part of SCDA.
+
+<img src="/docufigs/scdalogo.png" alt="SCDA - Supply Chain Data Analytics" title="">
 
 The model supports grid-based simulations and includes visualization and animation functionality. The module is continously extended to cover additional functionality. For example, I added the Moore neighbourhood as a neighbourhood option for grid-based ABM simulations. In a second step, the Neumann neighbourhood (easy addition) can be added, and then in addition other neighbourhood types as required.
 
@@ -41,7 +43,7 @@ Agents have attributes and the interactions between agents are described by logi
 
 Agent-based simulation models are applied in many different areas. This includes the domains listed below:
 1) Biology
-2) Epidemology
+2) Epidemology 
 3) Business
 4) Technology
 5) Network technology
