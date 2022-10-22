@@ -104,7 +104,7 @@ if __name__ == "__main__":
     stats.plot_density_markersize(density_df, "recovered", 50)
     stats.save_plot("recovery_density")
 
-    stats.plt_valsdistribution(["infected","recovered"], humans_df)
+    stats.plt_valdistribution(["infected","recovered"], humans_df)
 
     # create and save animations
     animation.animate_density(

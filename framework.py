@@ -124,12 +124,16 @@ class Environment:
                  ) -> None:
         """ method for adding agents to a cell in the grid; either a specific cell cna be specified, or, if one of the coordinates is not specified, a random cell is found and assigned """
         if row > 0 and col > 0:
-            pass
+            idx = -1
+            for i in range(len(self.Freecells)):
+                cell = self.Freecells[i]
+                if cell[0] == row and cell[1] == col: idx = i
+            if idx > -1: cell = self.Freecells.pop(idx)
 
         else:
 
             if len(self.Freecells)>0:
-                cell = self.Freecells.pop(random.randint(0,len(self.Freecells-1)))
+                cell = self.Freecells.pop(random.randint(0,len(self.Freecells)-1))
                 row = cell[0]
                 col = cell[1]
             
@@ -141,7 +145,7 @@ class Environment:
             agent.Row = row
             agent.Col = col
 
-            if len(self.Arrange[(row-1)][(col-1)]) < self.Cellcapacity: 
+            if len(self.Array[(row-1)][(col-1)]) < self.Cellcapacity: 
                 self.Freecells.append(cell)
     
     def get_cell(self,
