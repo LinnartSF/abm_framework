@@ -121,14 +121,15 @@ def animate_density(df: pandas.DataFrame,
 
         #plt.clf() 
         # use "agents" column data from results database (pandas.DataFrame)
-        subdf = df[df["simtime"] == i]
-        plt.scatter(subdf["col"],
-                    subdf["row"],
-                    s = defaultsize*(subdf[attr]/subdf[attr].max()),
-                    c = color)
+        if len(df["simtime"]==i)>0:
+            subdf = df[df["simtime"] == i]
+            plt.scatter(subdf["col"],
+                        subdf["row"],
+                        s = defaultsize*(subdf[attr]/subdf[attr].max()),
+                      c = color)
     
-        plt.pause(tpf)
-        camera.snap()
+            plt.pause(tpf)
+            camera.snap()
 
     # build animation from data and save it
     animation = camera.animate()

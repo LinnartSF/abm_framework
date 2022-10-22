@@ -99,10 +99,10 @@ if __name__ == "__main__":
     stats.plot_grid_occupation(env_df, ["humans"])
     stats.save_plot("human_locations")
 
-    stats.plot_density_markersize(density_df, "infected")
+    stats.plot_density_markersize(density_df, "infected", 50)
     stats.save_plot("infection_density")
 
-    stats.plot_density_markersize(density_df, "recovered")
+    stats.plot_density_markersize(density_df, "recovered", 50)
     stats.save_plot("recovery_density")
 
     # create and save animations

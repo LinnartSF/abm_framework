@@ -13,6 +13,7 @@ Module requires random module
 """
 
 # TODO support other query languages than SQLite (where differences apply)
+# TODO implement Distribution class
 
 __author__ = "Linnart Felkl"
 __email__ = "linnartsf@gmail.com"
@@ -261,10 +262,28 @@ class Population:
         # add column to environment table in database, with population as header (if not already added)
         self.DBManager.add_environmentcolumn(self.Name, "INTEGER") # for counting amount in that cell for that agent
     
-    def get_agents(self) -> list:
+    def get_agents(self, 
+                   n: int = -1
+                  ) -> list:
         """ method for returning all agents of the population as a list """
-        return list(self.Agents.values())
-    
+        if n < 0:
+            
+            # return all
+            return list(self.Agents.values())
+        
+        else:
+
+            # randomly select n agents to return in a list
+            ls_all = list(self.Agents.values())
+            ls_return = []
+            if self.Size < n: n = self.Size
+            for _ in range(n):
+                idx = random.randint(0,(len(ls_all)-1))
+                ls_return.append(ls_all.pop(idx))
+            
+            # return the random sample
+            return ls_return
+
     def write_agents_to_db(self, 
                            simtime: int) -> None:
         """ method for writing all agents in population into database """
