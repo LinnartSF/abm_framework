@@ -5,7 +5,7 @@ The model supports grid-based simulations and includes visualization and animati
 
 <h2>abm framework module content</h2>
 
-Database directory contains sqlite3 database file that is meant for storing simulation results into database.
+Database directory contains <strong>sqlite3</strong> database file that is meant for storing simulation results into database.
 
 The <strong>data.py</strong> module provides functionality for executing queries in the database. <strong>data.py</strong> comprises a <strong>Database class</strong> and a <strong>Manager class</strong>. <strong>Database class</strong> facilitates connection to <strong>sqlite3</strong> and potentially also <strong>mssql database</strong>. <strong>Manager class</strong> provides methods representing standardized queries for quickly implementing operations on the database that are of relevance to the ABM simulations supported by this package.
 
@@ -13,7 +13,7 @@ The <strong>data.py</strong> module provides functionality for executing queries
 
 <strong>stats.py</strong> provides visualization capabilities for visualizing simulation results.
 
-<strong>config.py</strong> is a configuration file that e.g. allows for path adjustments or input parameter adjustments. It e.g. specifies the filepath of the sqlite3 database used to store simulation results.
+<strong>config.py</strong> is a configuration file that e.g. allows for path adjustments or input parameter adjustments. It e.g. specifies the filepath of the <strong>sqlite3</strong> database used to store simulation results.
 
 <strong>animation.py</strong> provides animation capabilities for animating simulation results and their trajectory throughout time.
 
