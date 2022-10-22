@@ -46,11 +46,11 @@ if __name__ == "__main__":
     sampleagents = pop.get_agents(int(0.05*pop.Size))
     for agent in sampleagents: agent.Attributes["infected"] = 1
 
-    _prob_infection = 0.05
+    _prob_infection = 0.10
     _prob_recovery = 0.01
     
     # setup simulation
-    sim = framework.Simulation(1000)
+    sim = framework.Simulation(50)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -69,18 +69,17 @@ if __name__ == "__main__":
                     if neighbour.get_attr_value("infected") == 0 and neighbour.get_attr_value("recovered") == 0:
                         
                         # this neighbour is not resistant and not infected; infect with specified probability
-                        if random.uniform(1,100) < _prob_infection: neighbour.set_attr_value("infected", 1)
+                        if random.uniform(0, 1) < _prob_infection: neighbour.set_attr_value("infected", 1)
             
                 # the infected agent recovers with a specified probability
-                if random.uniform(1,100) < _prob_recovery: 
+                if random.uniform(0, 1) < _prob_recovery: 
                     agent.set_attr_value("recovered", 1)
                     agent.set_attr_value("infected", 0)
                 
         # update results in database, for agents and for environment
-        if sim.Iteration % 10 == 0:
-            pops.write_agents_to_db(sim.Iteration)
-            pops.write_env_to_db(sim.Iteration)
-            pops.write_density_to_db(sim.Iteration)
+        pops.write_agents_to_db(sim.Iteration)
+        pops.write_env_to_db(sim.Iteration)
+        pops.write_density_to_db(sim.Iteration)
 
     # get dataframes with simulation results 
     humans_df = db_manager.get_populationdf(pop = "humans")
@@ -104,6 +103,8 @@ if __name__ == "__main__":
 
     stats.plot_density_markersize(density_df, "recovered", 50)
     stats.save_plot("recovery_density")
+
+    # TODO implement stats.vals_distribution
 
     # create and save animations
     animation.animate_density(

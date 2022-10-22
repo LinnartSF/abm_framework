@@ -97,6 +97,8 @@ class Environment:
     Rows: int
     Columns: int
     Array: list
+    Freecells: list
+    Takencells: list
     DBManager: data.Manager
 
     def __init__(self,
@@ -112,6 +114,8 @@ class Environment:
         self.Rows = rows
         self.Columns = columns
         self.Array = [[[] for j in range(columns)] for i in range(rows)]
+        self.Freecells = [(row,colm) for row in range(1,rows+1) for colm in range(1,columns+1)]
+        self.Takencells = []
         self.DBManager = db_manager
         self.DBManager.reset_table("environment")  
     
@@ -123,17 +127,23 @@ class Environment:
         """ method for adding agents to a cell in the grid; either a specific cell cna be specified, or, if one of the coordinates is not specified, a random cell is found and assigned """
         if row > 0 and col > 0:
             pass
+
         else:
-            # randomly assign a row
-            while True:
-                #TODO: make this more computational efficient 
-                row = random.choice(range(1,self.Rows+1))
-                col = random.choice(range(1,self.Columns+1))
-                if len(self.get_cell(row,col))< self.Cellcapacity: break
+
+            if len(self.Freecells)>0:
+                cell = self.Freecells.pop(random.randint(0,len(self.Freecells-1)))
+                row = cell[0]
+                col = cell[1]
+            
+            else:
+                warning("no free cells left, agent was not added")
         
-        self.Array[(row-1)][(col-1)].append(agent)
-        agent.Row = row
-        agent.Col = col
+        if len(self.Freecells)>0:
+            self.Array[(row-1)][(col-1)].append(agent)
+            agent.Row = row
+            agent.Col = col
+
+            if len(self.Arrange[(row-1)][(col-1)]) < self.Cellcapacity: self.Arrange[(row-1)][(col-1)].append(cell)
     
     def get_cell(self,
                  row: int,
