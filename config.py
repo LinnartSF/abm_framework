@@ -1,3 +1,3 @@
-path_databasefile = "./database/simulationresults"
-path_saveplots= "./plots"
-path_saveanimations = "./animations"
+path_databasefile = r".\\database\\testset"
+path_saveplots= r".\\plots"
+path_saveanimations = r".\\animations"
