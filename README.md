@@ -61,7 +61,7 @@ This framework supports standardized agent-based simulation animations and visua
 - grid location plots and animations for all agents or a set of agent population groups
 - attribute value density distribution across the grid, in the form of plots and animations, for specified attributes
 
-You can see some exmaples below:
+You can see some exmaples below: 
 
 <img src="/docufigs/avglifeplot.png" alt="Avg agent attribute value trajectory" title="">
 
