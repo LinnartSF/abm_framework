@@ -31,7 +31,7 @@ Agent-based simulation is a methodology that applies compulation models for simu
 
 Agent-based simulation models are simulation models that focus that describe microscopic interactions between agents. By adding, removing, and manipulating these microscopic interactions, changes to macroscopic system behaviour are analyzed. ABM is applied to understand the emergence of complex macropic phenomena.
 
-<img src="/path/to/img.jpg" alt="Agent attributes and interactions" title="">
+<img src="/docufigs/abm.png" alt="Agent attributes and interactions" title="">
 
 Agents have attributes and the interactions between agents are described by logics and strategies. This framework provides a toolkit for building agent-based models. It also provides pre-defined database structures and visualization as well as animation functionality. You can use this to implment your own agent-based simulation. Demo models are provided in the demos folder.
 
@@ -59,8 +59,10 @@ This framework supports standardized agent-based simulation animations and visua
 
 You can see some exmaples below:
 
-<img src="/path/to/img.jpg" alt="Agent attribute value trajectories" title="">
+<img src="/docufigs/avglifeplot.png" alt="Avg agent attribute value trajectory" title="">
 
-<img src="/path/to/img.jpg" alt="Agent grid locations" title="">
+<img src="/docufigs/lifeplot.png" alt="Agent attribute value trajectories" title="">
 
-<img src="/path/to/img.jpg" alt="Attribute density animation" title="">
+<img src="/docufigs/human_locations.png" alt="Agent grid locations" title="">
+
+<img src="/docufigs/infectionanimation.gif" alt="Attribute density animation" title="">
