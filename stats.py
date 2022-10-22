@@ -174,12 +174,12 @@ def plt_valdistribution(attributes: list,
     y_old = None
     for attr in attributes:
         if y_old == None:
-            plt.bar(results["simtime"], 
+            plt.bar(list(results.index.values), 
                      results[attr]/results["total"], 
                      label = attr)
             y_old = results[attr]/results["total"]
         else:
-            plt.bar(results["simtime"], 
+            plt.bar(list(results.index.values), 
                      results[attr], 
                      bottom = y_old,
                      label = attr)
