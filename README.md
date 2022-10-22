@@ -43,7 +43,7 @@ Agents have attributes and the interactions between agents are described by logi
 
 Agent-based simulation models are applied in many different areas. This includes the domains listed below:
 1) Biology
-2) Epidemology
+2) Epidemology 
 3) Business
 4) Technology
 5) Network technology
