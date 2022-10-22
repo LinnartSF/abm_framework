@@ -4,7 +4,7 @@ __email__ = "LinnartSF@gmail.com"
 
 if __name__ == "__main__":
 
-    print("test starts")
+    print("demo starts")
 
     import data
     import stats
@@ -136,4 +136,4 @@ if __name__ == "__main__":
 
     # end program
     db.close()
-    print("test complete")
+    print("demo complete")
