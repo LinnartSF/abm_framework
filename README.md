@@ -31,11 +31,11 @@ I gave some basic introductions covering the differences between simulation meth
 
 Agent-based simulation is a methodology that applies compulation models for simulating interactions between autonomous agents as well as their actions. It can be combined with other simulation methodes, e.g. with monte-carlo simulation methodology for consideration of stochasticity. But it can e.g. also be combined with discrete-event simulation methodology. For example, processes "going on" inside agents can be modelled and simulated with discrete-event simulation. Below is an overview and comparison of the main simulation methodes.
 
-<img src="/docufigs/simulationmethods.png" alt="Simulation method comparison" title="">
+<img src="/docufigs/simulationmethods.PNG" alt="Simulation method comparison" title="">
 
 Agent-based simulation models are simulation models that focus that describe microscopic interactions between agents. By adding, removing, and manipulating these microscopic interactions, changes to macroscopic system behaviour are analyzed. ABM is applied to understand the emergence of complex macropic phenomena.
 
-<img src="/docufigs/abm.png" alt="Agent attributes and interactions" title="">
+<img src="/docufigs/abm.PNG" alt="Agent attributes and interactions" title="">
 
 Agents have attributes and the interactions between agents are described by logics and strategies. This framework provides a toolkit for building agent-based models. It also provides pre-defined database structures and visualization as well as animation functionality. You can use this to implment your own agent-based simulation. Demo models are provided in the demos folder.
 
