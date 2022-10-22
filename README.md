@@ -35,12 +35,40 @@ I gave some basic introductions covering the differences between simulation meth
 
 <h2>introduction to agent-based simulation</h2>
 
-description here
+Agent-based simulation is a methodology that applies compulation models for simulating interactions between autonomous agents as well as their actions. It can be combined with other simulation methodes, e.g. with monte-carlo simulation methodology for consideration of stochasticity. But it can e.g. also be combined with discrete-event simulation methodology. For example, processes "going on" inside agents can be modelled and simulated with discrete-event simulation.
 
-<h2>other abm frameworks in python</h2>
+Agent-based simulation models are simulation models that focus that describe microscopic interactions between agents. By adding, removing, and manipulating these microscopic interactions, changes to macroscopic system behaviour are analyzed. ABM is applied to understand the emergence of complex macropic phenomena.
 
-description here
+<img src="/path/to/img.jpg" alt="Agent attributes and interactions" title="">
+
+Agents have attributes and the interactions between agents are described by logics and strategies. This framework provides a toolkit for building agent-based models. It also provides pre-defined database structures and visualization as well as animation functionality. You can use this to implment your own agent-based simulation. Demo models are provided in the demos folder.
+
+<h2>agent-based modelling applications</h2>
+
+Agent-based simulation models are applied in many different areas. This includes the domains listed below
+1) biology
+2) epidemology
+3) business
+4) technology
+5) network technology
+6) social sciences
+7) economics
+8) autonomous driving
+
+This repository comprises a demos folder. In there you will find, dynamically added over time, a series of simulation examples. 
 
 <h2>exemplary visualizations created with abm_framework</h2>
 
-description here
+This framework supports standardized agent-based simulation animations and visualizations. The scope of animation and visualization templates is dynamically expanded overtime, but initially comprises at least:
+- agent attribute value trajectories for all agents individually, a specific subset of agents, or all agents on average
+- average attribute value distribution over time, for a specific population of agents and a list of relevant agent attributes
+- grid location plots and animations for all agents or a set of agent population groups
+- attribute value density distribution across the grid, in the form of plots and animations, for specified attributes
+
+You can see some exmaples below:
+
+<img src="/path/to/img.jpg" alt="Agent attributes and interactions" title="">
+
+<img src="/path/to/img.jpg" alt="Agent attributes and interactions" title="">
+
+<img src="/path/to/img.jpg" alt="Agent attributes and interactions" title="">
