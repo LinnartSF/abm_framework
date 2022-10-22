@@ -7,15 +7,15 @@ The model supports grid-based simulations and includes visualization and animati
 
 Database directory contains sqlite3 database file that is meant for storing simulation results into database.
 
-The <strong>data.py</strong> module provides functionality for executing queries in the database. data.py comprises a Database class and a Manager class. Database class facilitates connection to sqlite3 and potentially also mssql database. Manager provides methods representing standardized queries for quickly implementing operations on the database that are of relevance to the ABM simulations supported by this package.
+The <strong>data.py</strong> module provides functionality for executing queries in the database. <strong>data.py</strong> comprises a <strong>Database class</strong> and a <strong>Manager class</strong>. <strong>Database class</strong> facilitates connection to <strong>sqlite3</strong> and potentially also <strong>mssql database</strong>. <strong>Manager class</strong> provides methods representing standardized queries for quickly implementing operations on the database that are of relevance to the ABM simulations supported by this package.
 
-framework.py contains classes for modelling e.g. the simulation environment and the agents themselves.
+<strong>framework.py</strong> contains classes for modelling e.g. the simulation environment and the agents themselves.
 
-stats.py provides visualization capabilities for visualizing simulation results.
+<strong>stats.py</strong> provides visualization capabilities for visualizing simulation results.
 
-config.py is a configuration file that e.g. allows for path adjustments or input parameter adjustments. It e.g. specifies the filepath of the sqlite3 database used to store simulation results.
+<strong>config.py</strong> is a configuration file that e.g. allows for path adjustments or input parameter adjustments. It e.g. specifies the filepath of the sqlite3 database used to store simulation results.
 
-animation.py provides animation capabilities for animating simulation results and their trajectory throughout time.
+<strong>animation.py</strong> provides animation capabilities for animating simulation results and their trajectory throughout time.
 
 <h2>references to related articles covering abm modeling</h2>
 
