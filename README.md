@@ -40,7 +40,7 @@ Agent-based simulation models are simulation models that focus that describe mic
 
 Agents have attributes and the interactions between agents are described by logics and strategies. This framework provides a toolkit for building agent-based models. It also provides pre-defined database structures and visualization as well as animation functionality. You can use this to implment your own agent-based simulation. Demo models are provided in the demos folder.
 
-<h2>agent-based modelling applications</h2>
+<h2>agent-based modeling applications</h2>
 
 Agent-based simulation models are applied in many different areas. This includes the domains listed below:
 1) Biology
