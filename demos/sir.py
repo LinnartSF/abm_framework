@@ -46,11 +46,11 @@ if __name__ == "__main__":
     sampleagents = pop.get_agents(int(0.05*pop.Size))
     for agent in sampleagents: agent.Attributes["infected"] = 1
 
-    _prob_infection = 0.10
-    _prob_recovery = 0.01
+    _prob_infection = 0.07
+    _prob_recovery = 0.03
     
     # setup simulation
-    sim = framework.Simulation(50)
+    sim = framework.Simulation(500)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -104,25 +104,23 @@ if __name__ == "__main__":
     stats.plot_density_markersize(density_df, "recovered", 50)
     stats.save_plot("recovery_density")
 
-    stats.plt_valdistribution(["infected","recovered"], humans_df)
-
     # create and save animations
     animation.animate_density(
         df = density_df,
-        filename = "infectionanimation",
+        filename = "infectionanimation2",
         attr = "infected",
         defaultsize = 50,
         color = "red",
-        tpf = 0.5
+        tpf = 0.05
     )
 
     animation.animate_density(
         df = density_df,
-        filename = "recoveryanimation",
+        filename = "recoveryanimation2",
         attr = "recovered",
         defaultsize = 50,
         color = "green",
-        tpf = 0.5
+        tpf = 0.05
     )
 
     # end program

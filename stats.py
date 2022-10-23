@@ -157,6 +157,7 @@ def plot_avgattr_lines(attributes: list,
     # add legend
     plt.legend()
 
+# TODO still needs some fixing
 def plt_valdistribution(attributes: list,
                         df: pandas.DataFrame,
                         mintime: int = 0,
@@ -164,26 +165,29 @@ def plt_valdistribution(attributes: list,
     """ function for plotting dynamic relative state distribution among the state listed in attributes argument """
 
     # calculate plotting data
-    results = df.groupby("simtime").sum()[attributes]
+    results = df.groupby("simtime").sum()
+    results = results[attributes]
     results["total"] = results.sum(axis = 1)
 
     # create new figure
     plt.figure()
 
     # for each time index, create a stacked barplot
-    y_old = None
+    y_old = []
+    counter = 0
     for attr in attributes:
-        if y_old == None:
+        if counter == 0:
             plt.bar(list(results.index.values), 
-                     results[attr]/results["total"], 
+                     results[attr], 
                      label = attr)
-            y_old = results[attr]/results["total"]
+            y_old = results[attr]
         else:
             plt.bar(list(results.index.values), 
                      results[attr], 
                      bottom = y_old,
                      label = attr)
-            y_old = y_old + results[attr]/results["total"]
+            y_old = y_old + results[attr]
+        counter +=1
 
     # cut axis if relevant
     if maxtime > 0:
