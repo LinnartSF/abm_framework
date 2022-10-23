@@ -70,6 +70,6 @@ You can see some exmaples below:
 
 <img src="/docufigs/human_locations.png" alt="Agent grid locations" title="">
 
-<img src="/docufigs/infectionanimation.gif" alt="Attribute density animation" title="">
+<img src="/docufigs/infectionanimation2.gif" alt="Attribute density animation" title="">
 
-<img src="/docufigs/recoveryanimation.gif" alt="Attribute density animation" title="">
+<img src="/docufigs/recoveryanimation2.gif" alt="Attribute density animation" title="">
