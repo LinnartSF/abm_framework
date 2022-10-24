@@ -41,10 +41,14 @@ class Simulation:
         self.Iteration = 0
         self.Limit = limit
     
-    def increment_iteration(self):
-        """ method for incrementing simulation iteration; also sets running to False to avoid another simulation run in a endless while loop """
+    def run(self) -> bool:
+        """ method for incrementing simulation iteration; also sets running to False to avoid another simulation run in a endless while loop; returns boolean for whether simulation still runs another iteration """
         self.Iteration += 1
         if self.Iteration >= self.Limit: self.Running = False
+        if self.Iteration <= self.Limit:
+            return True
+        else:
+            return False
 
 # agent class
 class Agent:

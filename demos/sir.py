@@ -50,15 +50,14 @@ if __name__ == "__main__":
     _prob_recovery = 0.03
     
     # setup simulation
-    sim = framework.Simulation(500)
+    sim = framework.Simulation(300)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
     pops.write_agents_to_db(sim.Iteration)
 
     # execute simulation run, store every 10th run into the database
-    while sim.Running: 
-        sim.increment_iteration()
+    while sim.run():
 
         # look at every agent
         for agent in pop.get_agents():
@@ -98,16 +97,19 @@ if __name__ == "__main__":
     stats.plot_grid_occupation(env_df, ["humans"])
     stats.save_plot("human_locations")
 
-    stats.plot_density_markersize(density_df, "infected", 50)
+    stats.plot_density_markersize(density_df, "infected", 50, "red")
     stats.save_plot("infection_density")
 
-    stats.plot_density_markersize(density_df, "recovered", 50)
+    stats.plot_density_markersize(density_df, "recovered", 50, "green")
     stats.save_plot("recovery_density")
+
+    stats.plot_avgattrs_lines(["infected","recovered"], humans_df)
+    stats.save_plot("avginfectedavgrecovered")
 
     # create and save animations
     animation.animate_density(
         df = density_df,
-        filename = "infectionanimation2",
+        filename = "infectionanimation",
         attr = "infected",
         defaultsize = 50,
         color = "red",
@@ -116,7 +118,7 @@ if __name__ == "__main__":
 
     animation.animate_density(
         df = density_df,
-        filename = "recoveryanimation2",
+        filename = "recoveryanimation",
         attr = "recovered",
         defaultsize = 50,
         color = "green",
