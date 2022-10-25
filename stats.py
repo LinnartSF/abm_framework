@@ -134,7 +134,7 @@ def plot_avgattr_lines(attributes: list,
     """ plot avg value trajectory for all agents throughout time, for arbitrary amount of attributes """
     
     # compute data to plot
-    results = df.groupby("simtime").mean(skipna=True)
+    results = df.groupby("simtime").mean() # TODO: add option allow skipping na-entries
 
     # create new figure
     plt.figure()
