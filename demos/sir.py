@@ -28,7 +28,7 @@ if __name__ == "__main__":
     # setup database manager and connection
     db = data.Database("sqlite3", config.path_databasefile)
     db_manager = data.Manager(db)
-    """
+    
     # create an empty environment
     env = framework.Environment(1, True, 20, 20, db_manager) # Environment constructor implicitly resets environment table in database
 
@@ -79,7 +79,7 @@ if __name__ == "__main__":
         pops.write_agents_to_db(sim.Iteration)
         pops.write_env_to_db(sim.Iteration)
         pops.write_density_to_db(sim.Iteration)
-    """
+    
     # get dataframes with simulation results 
     humans_df = db_manager.get_populationdf(pop = "humans")
     env_df = db_manager.get_environmentdf()
@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
     stats.plot_avgattr_lines(["recovered","infected"], humans_df)
     stats.save_plot("avginfectedavgrecovered")
-    """
+    
     # create and save animations
     animation.animate_density(
         df = density_df,
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         color = "green",
         tpf = 0.05
     )
-    """
+    
     # end program
     db.close()
     print("demo ends")

@@ -117,7 +117,7 @@ class Environment:
         self.Rows = rows
         self.Columns = columns
         self.Array = [[[] for j in range(columns)] for i in range(rows)]
-        self.Freecells = [(row,colm) for row in range(1,rows+1) for colm in range(1,columns+1)]
+        self.Freecells = [(row,col) for row in range(1,rows+1) for col in range(1,columns+1)]
         self.DBManager = db_manager
         self.DBManager.reset_table("environment")  
     
@@ -126,32 +126,106 @@ class Environment:
                   row: int = 0,
                   col: int = 0
                  ) -> None:
-        """ method for adding agents to a cell in the grid; either a specific cell cna be specified, or, if one of the coordinates is not specified, a random cell is found and assigned """
+        """ method for adding agents to a cell in the grid; either a specific cell that can be specified, or, if one of the coordinates is not specified, a random cell is found and assigned """
+        
+        if len(self.Freecells) <= 0:
+            
+            warning("no free cells in environment, add_agent() in framework.py did not add agent to grid")
+            return None
+
         if row > 0 and col > 0:
-            idx = -1
-            for i in range(len(self.Freecells)):
-                cell = self.Freecells[i]
-                if cell[0] == row and cell[1] == col: idx = i
-            if idx > -1: cell = self.Freecells.pop(idx)
+            
+            if (row,col) in self.Freecells:
+                self.Freecells.remove((row,col))
+            else:
+                warning("add_agent() in framework.py wants to place agent in cell that is not free; did not add agent")
+                return None
 
         else:
 
-            if len(self.Freecells)>0:
-                cell = self.Freecells.pop(random.randint(0,len(self.Freecells)-1))
-                row = cell[0]
-                col = cell[1]
+            cell = self.Freecells.pop(random.randint(0,len(self.Freecells)-1))
+            row = cell[0]
+            col = cell[1]
+            
+        self.Array[(row-1)][(col-1)].append(agent)
+        agent.Row = row
+        agent.Col = col
+
+        if len(self.Array[(row-1)][(col-1)]) < self.Cellcapacity: 
+            self.Freecells.append(cell)
+    
+    def get_freecells(self) -> list:
+        """ method for returning index list for all empty cells """
+        return self.Freecells
+    
+    def get_freecell(self,
+                    row: int,
+                    col: int,
+                    targetcell: bool = False,
+                    radius: int = -1,
+                    ) -> tuple:
+        """ gets a free cell randomly, either from entire grid or as close to specified cell as possible; if radius is set, return None if no free cell found, otherwise tuple """
+        
+        if radius >= min([self.Columns,self.Rows])/2: 
+            warning("infeasible radius in get_freecell; radius reset by get_freecell in framework.py")
+            
+            if self.Columns > 2 and self.Rows > 2:
+                radius = (min([self.Columns,self.Rows])-1)/2
             
             else:
-                warning("no free cells left, agent was not added")
+                warning("grid is not big enough for even a small radius of 1; get_freecell in framework.py returns None")
+                return None
         
-        if len(self.Freecells)>0:
-            self.Array[(row-1)][(col-1)].append(agent)
-            agent.Row = row
-            agent.Col = col
+        if len(self.Freecells) == 0: return None
 
-            if len(self.Array[(row-1)][(col-1)]) < self.Cellcapacity: 
-                self.Freecells.append(cell)
-    
+        if radius == -1:
+            if len(self.Freecells)>0:
+                return random.choice(self.Freecells)
+
+        else:
+            startidx = 1
+            if targetcell == True: startidx = 0
+
+            for i in range(startidx,radius+1):
+                neighbours = []
+                    
+                x = row-1-i
+                if x < 0 and self.Endless == True: x = self.Rows-1+x
+
+                y = col-1-i
+                if y < 0 and self.Endless == True: y = self.Columns-1+y
+
+                if x >= 0 and y >= 0:
+                    if len(self.Array[x][y]) < self.Cellcapacity: neighbours.append((x,y))
+
+                x = row-1+i
+                if x > self.Rows-1 and self.Endless == True: x = x - (self.Rows-1)
+
+                y = col-1+i
+                if y > self.Columns-1 and self.Endless == True: y = y - (self.Columns-1)
+                
+                if x < self.Rows and y < self.Columns:
+                    if len(self.Array[x][y]) < self.Cellcapacity: neighbours.append((x,y))
+
+                if len(neighbours) > 0:
+                    return random.choice(neighbours)
+
+        return None
+
+    def update_freecells(self) -> None:
+        """ method for checking all free cells, and if they are occupied by now, remove cell from list of free cells  """
+        for rowidx in range(self.Rows):
+            for colidx in range(self.Columns):
+
+                if len(self.Array[rowidx][colidx]) >= self.Cellcapacity: self.Freecells.remove(rowidx+1,colidx+1)
+
+    def update_freecell(self,
+                        row: int,
+                        col: int
+                       ) -> None:
+        """ description """
+        if len(self.Array[(row-1)][(col-1)]) >= self.Cellcapacity: self.Freecells.remove((row,col))
+         
     def get_cell(self,
                  row: int,
                  col: int
