@@ -73,3 +73,5 @@ You can see some exmaples below:
 <img src="/docufigs/infectionanimation2.gif" alt="Attribute density animation" title="">
 
 <img src="/docufigs/recoveryanimation2.gif" alt="Attribute density animation" title="">
+
+<img src="/docufigs/avgstates.gif" alt="Attribute density animation" title="">
