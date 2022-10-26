@@ -69,9 +69,7 @@ if __name__ == "__main__":
         # if there are neighbours, then recalculate the utility of the agent
         for o in neighbours:
             
-
-
-
+            # TODO continue implementing
 
         # look at every agent
         for agent in pops.get_agents():
