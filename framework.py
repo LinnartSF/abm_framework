@@ -68,6 +68,7 @@ class Agent:
     def __init__(self,
                  id: int,
                  pop: str):
+        
         self.ID = id
         self.Population = pop
         self.Row = 0 # default value, "unassigned"
@@ -80,17 +81,20 @@ class Agent:
                       attr: str,
                       val: any) -> None:
         """ method adds attr to attributes dictionary, with the specified initial value """
+        
         self.Attributes[attr] = val
     
     def set_attr_value(self,
                        attr: str,
                        val: any) -> None:
         """ method for setting new attribute value for agent """
+        
         self.Attributes[attr] = val
     
     def get_attr_value(self,
                        attr: str) -> any:
         """ method for getting attribute value """
+        
         return self.Attributes[attr]
 
 class Environment:
