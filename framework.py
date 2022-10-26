@@ -88,11 +88,6 @@ class Agent:
         """ method for getting attribute value """
         return self.Attributes[attr]
 
-# TODO: implement additional methods that return selections of agents based on rules, strategies, etc.
-# TODO: Environment should not should support Array with agents, but should also provide access to a list of agents in the environment that can easily be iterated over; 
-#       could also be a method that returns this list based on Array content
-# TODO: Environment should also offer a method that allows an "update" of the database for a specified (input argument) simulation time (= iteration), so that this does not have to be implemented by the modeller
-# environment class
 class Environment:
     """ Environment can contain agents in cells """
 
@@ -101,7 +96,8 @@ class Environment:
     Rows: int
     Columns: int
     Array: list
-    Freecells: list
+    Freecells: list          # list of tuples
+    Cells: list              # list of tuples
     DBManager: data.Manager
 
     def __init__(self,
@@ -118,6 +114,7 @@ class Environment:
         self.Columns = columns
         self.Array = [[[] for j in range(columns)] for i in range(rows)]
         self.Freecells = [(row,col) for row in range(1,rows+1) for col in range(1,columns+1)]
+        self.Cells = [(row,col) for row in range(1,rows+1) for col in range(1,columns+1)]
         self.DBManager = db_manager
         self.DBManager.reset_table("environment")  
     
@@ -223,7 +220,7 @@ class Environment:
                         row: int,
                         col: int
                        ) -> None:
-        """ description """
+        """ checks if given free cell is still free, and if not removes it from the list of free cells """
         if len(self.Array[(row-1)][(col-1)]) >= self.Cellcapacity: self.Freecells.remove((row,col))
          
     def get_cell(self,
@@ -240,42 +237,123 @@ class Environment:
                           order: str = "random"
                          ) -> list:
         """ returns specified neighbourhood in the form of a list of all agents in the neighbourhood, except the calling agent itself; type supports "moore", order supports "random" """
+        
         ls_neighbourhood = []
         
-        #TODO implement other neighbourhood orders, and other neighbourshood types --- 
+        if radius >= min([self.Columns,self.Rows])/2: 
+            
+            warning("infeasible radius in get_neighbourhood; radius reset by get_neighbourhood in framework.py")
+            
+            if self.Columns > 2 and self.Rows > 2:
+                
+                radius = (min([self.Columns,self.Rows])-1)/2
+            
+            else:
+                
+                warning("tried to define a neighbourhood in get_neighbourhood (framework.py), but the grid is to small; method returns empty list")
+                return ls_neighbourhood # empty list
+
         if "random" not in order: 
+            
             order = "random"
             warning("currently only random order supported by get_neighbourhood, framework.py")
         
         if type == "moore":
             
             for row in range(agent.Row-radius,agent.Row+radius):
+
                 for col in range(agent.Col-radius,agent.Col+radius):
+
                     if row == agent.Row and col == agent.Col:
+                        
                         # if cell capacity is greater than one then that means neighbourhood also includes the cell that the respective agent is located in
                         if self.Cellcapacity > 1:
+
                             if len(self.Array[row-1][col-1]) > 0:
                                 
                                 for o in self.Array[row-1][col-1]:
+
                                     if o == agent:
                                         pass
                                     else: 
                                         ls_neighbourhood.append(o) 
+
                     else:
+
                         if self.Endless == True:
+
                             if row < 1: row = self.Rows+row
                             if col < 1: col = self.Columns+col
                             if row > self.Rows: row = row - self.Rows
                             if col > self.Columns: col = col - self.Columns
+
                         if row >= 1 and row <= self.Rows and col >= 1 and col <= self.Columns:
+                            
                             for o in self.Array[row-1][col-1]:
+                                
                                 ls_neighbourhood.append(o) 
+        
         elif type == "neumann":
-            #TODO implement neumann neighbourhood
-            pass
+
+            if self.Endless == False:
+                
+                # first, go through rows within radius
+                for row in range(max(1,agent.Row - radius), min(self.Rows,agent.Row + radius)):
+
+                    if len(self.Array[row-1][agent.Col-1]) > 0:
+
+                        for o in self.Array[row-1][agent.Col-1]:
+                                
+                            if o != agent: ls_neighbourhood.append(o)
+                
+                # next, go through cols within radius
+                for col in range(max(1,agent.Col-radius), min(self.Columns, agent.Col + radius)):
+
+                    if len(self.Array[agent.Row-1][col-1]) > 0:
+
+                        for o in self.Array[agent.Row-1][col-1]:
+
+                            if 0 != agent: ls_neighbourhood.append(o)
+
+            else: # endless grid
+
+                for row in range(agent.Row-radius, agent.Row+radius):
+
+                    if row < 1: row = self.Rows + radius
+                    if row > self.Rows: row = row - self.Rows
+
+                    if len(self.Array[row-1][agent.Col-1]) > 0:
+                        
+                        for o in self.Array[row-1][agent.Col-1]:
+
+                            if o != agent: ls_neighbourhood.append(o)
+                
+                for col in range(agent.Col-radius, agent.Row + radius):
+
+                    if col < 1: col = self.Columns + radius
+                    if col > self.Columns: col = col - self.Columns
+
+                    if len(self.Array[agent.Row-1][col-1]) > 0:
+
+                        for o in self.Array[agent.Row-1][col-1]:
+
+                            if o != agent: ls_neighbourhood.append(o)
+
+        else: # random sample of size radius*radius
+            
+            cells = random.sample(self.Cells, radius*radius)
+            for cell in cells:
+
+                if len(self.Array[cell[0]-1][cell[1]-1])>0:
+                    for o in self.Array[cell[0]-1][cell[1]-1]:
+                        if o != agent: ls_neighbourhood.append(o)
+
         if order == "random":
+            
             random.shuffle(ls_neighbourhood)
+
         else:
+            
             #TODO implement additional order options
             pass
         
