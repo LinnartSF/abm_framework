@@ -108,6 +108,7 @@ class Environment:
                 db_manager # data.Manager
                 ):
         """ constructs Environment instance, facilitating a grid for agent interactions """
+        
         self.Cellcapacity = capa_cell # maximum amount of agents allowed to be in a cell
         self.Endless = endless        # whether grid is endless or has hard 2D borders
         self.Rows = rows
@@ -133,8 +134,11 @@ class Environment:
         if row > 0 and col > 0:
             
             if (row,col) in self.Freecells:
+                
                 self.Freecells.remove((row,col))
+            
             else:
+                
                 warning("add_agent() in framework.py wants to place agent in cell that is not free; did not add agent")
                 return None
 
@@ -149,10 +153,12 @@ class Environment:
         agent.Col = col
 
         if len(self.Array[(row-1)][(col-1)]) < self.Cellcapacity: 
+            
             self.Freecells.append(cell)
     
     def get_freecells(self) -> list:
         """ method for returning index list for all empty cells """
+        
         return self.Freecells
     
     def get_freecell(self,
@@ -211,7 +217,9 @@ class Environment:
 
     def update_freecells(self) -> None:
         """ method for checking all free cells, and if they are occupied by now, remove cell from list of free cells  """
+        
         for rowidx in range(self.Rows):
+            
             for colidx in range(self.Columns):
 
                 if len(self.Array[rowidx][colidx]) >= self.Cellcapacity: self.Freecells.remove(rowidx+1,colidx+1)
@@ -221,6 +229,7 @@ class Environment:
                         col: int
                        ) -> None:
         """ checks if given free cell is still free, and if not removes it from the list of free cells """
+        
         if len(self.Array[(row-1)][(col-1)]) >= self.Cellcapacity: self.Freecells.remove((row,col))
          
     def get_cell(self,
@@ -228,6 +237,7 @@ class Environment:
                  col: int
                 ) -> list:
         """ method for obtaining the agent list contained by the specified grid cell """
+        
         return self.Array[(row-1)][(col-1)]
     
     def get_neighbourhood(self,
@@ -345,7 +355,9 @@ class Environment:
             for cell in cells:
 
                 if len(self.Array[cell[0]-1][cell[1]-1])>0:
+                    
                     for o in self.Array[cell[0]-1][cell[1]-1]:
+                        
                         if o != agent: ls_neighbourhood.append(o)
 
         if order == "random":
@@ -382,6 +394,7 @@ class Population:
                  initialvals: list = [],
                  randomness: list = []):
         """ constructor for a population """
+        
         self.Name = name
         self.Size = size
         self.Environment = env
@@ -393,10 +406,12 @@ class Population:
 
         # add to agent table the attribute columns
         if len(attributes) > len(datatypes) or len(attributes) < len(datatypes): warning("attributelist does not match datatypes list; when setting up Population")
+        
         self.DBManager.add_agentcolumns(attributes, datatypes)
 
         # create agents one by one, add them to the environment, and add them to the dictionary
         for i in range(id_lastused+1, id_lastused+size+1):
+            
             agent = Agent(i, self.Name)
             
             if len(attributes) > len(initialvals) or len(attributes) < len(initialvals): 
@@ -408,8 +423,10 @@ class Population:
             else:
 
                 for j in range(0, len(attributes)):
+                    
                     # determine initial value
                     if len(randomness) > 0:
+                        
                         if randomness[j][0] == "uniform":
                             initialval = random.uniform(randomness[j][1]*initialvals[j], randomness[j][2]*initialvals[j])
                         elif randomness[j][0] == "normal":
@@ -417,8 +434,11 @@ class Population:
                         else:
                             warning("in Population() constructor random distribution was not recognized; no randomn distribution applied")
                             initialval = initialvals[j]
+                    
                     else:
+                        
                         initialval = initialvals[j]
+                    
                     # add attribute and initial value
                     agent.add_attribute(attributes[j], initialval)
             
@@ -445,8 +465,11 @@ class Population:
             # randomly select n agents to return in a list
             ls_all = list(self.Agents.values())
             ls_return = []
+            
             if self.Size < n: n = self.Size
+            
             for _ in range(n):
+                
                 idx = random.randint(0,(len(ls_all)-1))
                 ls_return.append(ls_all.pop(idx))
             
@@ -456,9 +479,11 @@ class Population:
     def write_agents_to_db(self, 
                            simtime: int) -> None:
         """ method for writing all agents in population into database """
+        
         if self.Size > 0:
 
             for agent in list(self.Agents.values()):
+                
                 self.DBManager.write_agentvalue(simtime, agent)
 
 class Populations:
@@ -480,6 +505,7 @@ class Populations:
                  datatypes: list
                 ):
         """ constructs population container, knowing the number of populations that will be added """
+        
         self.Amount = amount
         self.Environment = env
         self.DBManager = db_manager
@@ -491,7 +517,9 @@ class Populations:
 
         self.DBManager.reset_table("agents")
         self.DBManager.reset_table("density")
+        
         for i in range(0,len(datatypes)):
+            
             if datatypes[i] in ["REAL","INTEGER"]: self.DBManager.add_densitycolumn(attributes[i])
     
     def add_population(self,
@@ -502,19 +530,23 @@ class Populations:
                        initialvals: list = [],
                        randomness: list = []):
         """ creates a population and adds it to the populations dictionary """
+        
         self.Populations[name] = Population(name, size, self.Environment, self.ID_lastused, self.DBManager, attributes, datatypes, initialvals, randomness)
         self.ID_lastused += size
 
     def get_population(self,
                        name: str) -> Population:
         """ returns the specified population object from populations dictionary """
+        
         return self.Populations[name]
     
     def reset_populations(self) -> None:
         """ method for resetting populations dictionary, deleting all old populations and resetting ID_lastused marker """
+        
         if len(list(self.Populations.keys())) > 0:
 
             for key in list(self.Populations.keys()):
+                
                 del self.Populations[key]
         
         self.Populations = {}
@@ -538,6 +570,7 @@ class Populations:
                 if len(list_cell) > 0:
 
                     for agent in list_cell: 
+                        
                         self.DBManager.increment_envpop(simtime, row, col, agent.Population)
     
     def write_density_to_db(self, 
@@ -547,11 +580,14 @@ class Populations:
             
             vals = set()
             for key_pop in list(self.Populations.keys()):
+                
                 pop = self.Populations[key_pop]
-
                 for i in range(0,len(pop.Datatypes)):
+                    
                     if pop.Datatypes[i] in ["INTEGER","REAL"]:
+                        
                         vals.add(pop.Attributes[i])
+            
             vals = list(vals)
             vals = [0.0 for i in vals]
             
@@ -566,11 +602,14 @@ class Populations:
                     if len(list_cell) > 0:
 
                         for agent in list_cell:
+                            
                             attr_keys = list(agent.Attributes.keys())
                             attr_vals = list(agent.Attributes.values())
+                            
                             for i in range(0, len(attr_vals)):
 
                                 if type(attr_vals[i]) == float or type(attr_vals[i]) == int:
+                                    
                                     self.DBManager.increase_density(simtime, row, col, attr_keys[i], attr_vals[i])
                         
     def write_agents_to_db(self,
@@ -579,11 +618,12 @@ class Populations:
         if self.Amount > 0:
 
             for key_pop in list(self.Populations.keys()):
+                
                 pop = self.Populations[key_pop]
-
                 if pop.Size > 0:
                     
                     for key_agent in list(pop.Agents.keys()):
+                        
                         agent = pop.Agents[key_agent]
 
                         self.DBManager.write_agentvalue(simtime, agent)
@@ -591,6 +631,7 @@ class Populations:
     def update_db(self,
                   simtime: int) -> None:
         """ writes environment and all agent populations to database """
+        
         self.write_env_to_db(simtime)
         self.write_agents_to_db(simtime)
         self.write_density_to_db(simtime)
