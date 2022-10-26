@@ -96,6 +96,22 @@ class Agent:
         """ method for getting attribute value """
         
         return self.Attributes[attr]
+
+    def increase_attr_value(self, 
+                            attr: str,
+                            val: any
+                           ) -> None:
+        """ increases specified attribute by the value handed over as argument """
+
+        self.Attributes[attr] = self.Attributes[attr] + val
+    
+    def decrease_attr_value(self,
+                            attr: str,
+                            val: any
+                           ) -> None:
+        """ decreases specified attribute by the value handed over as argument """
+
+        self.Attributes[attr] = self.Attributes[attr] - val
     
     def step(self) -> None:
         """ implements one iteration of the simulation run """
@@ -173,10 +189,16 @@ class Environment:
             
             self.Freecells.append(cell)
     
-    def get_freecells(self) -> list: # -> list of tuples:
-        """ method for returning index list for all empty cells """
+    def get_freecells(self,
+                      n: int = -1
+                     ) -> list: # -> list of tuples:
+        """ method for returning index list for all empty cells; if n specified only return up to n randomly sampled cells """
         
-        return self.Freecells
+        if len(self.Freecells) < n: n = len(self.Freecells)
+
+        if n == -1: return self.Freecells
+
+        return random.sample(self.Freecells, n)
     
     def get_freecell(self,
                     row: int,
@@ -462,10 +484,10 @@ class Environment:
         
         return ls_neighbourhood
     
-    def transfer_to_cell(self,
-                         agent: Agent,
-                         targetcell: tuple
-                        ) -> None:
+    def relocate(self,
+                 agent: Agent,
+                 targetcell: tuple
+                ) -> None:
         """ method for transfering agent from its current cell to target cell specified as argument; agent Row and Col attributes are updated """
 
         self.Array[agent.Row-1][agent.Col-1].remove(agent)

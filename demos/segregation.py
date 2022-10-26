@@ -57,6 +57,9 @@ if __name__ == "__main__":
     
     agents = pops.get_agents()
 
+    # other model specific global settings
+    _max_search = 5
+
     # execute simulation run
     while sim.run():
         
@@ -65,28 +68,44 @@ if __name__ == "__main__":
 
         # get that agents neighbourhood
         neighbours = env.get_neighbourhood(agent, type = "moore", radius = 5)
+
+        util_is = 0.0
         
         # if there are neighbours, then recalculate the utility of the agent
         for o in neighbours:
             
-            # TODO continue implementing
+            if o.get_attr_value("type") == agent.get_attr_value("type"):
 
-        # look at every agent
-        for agent in pops.get_agents():
-
-            if agent.get_attr_value("infected") == 1:
-                
-                neighbours = env.get_neighbourhood(agent)
-                for neighbour in neighbours:
-                    if neighbour.get_attr_value("infected") == 0 and neighbour.get_attr_value("recovered") == 0:
-                        
-                        # this neighbour is not resistant and not infected; infect with specified probability
-                        if random.uniform(0, 1) < _prob_infection: neighbour.set_attr_value("infected", 1)
+                util_is += 10
             
-                # the infected agent recovers with a specified probability
-                if random.uniform(0, 1) < _prob_recovery: 
-                    agent.set_attr_value("recovered", 1)
-                    agent.set_attr_value("infected", 0)
+            else:
+
+                util_is += -10
+        
+        # update agent utility 
+        agent.increase_attr_value("utility",util_is)
+        
+        # for search up to maximum limit of random free cells to see if utility is better there
+        cells = env.get_freecells()
+
+        for o in cells:
+            
+            util_new = 0.0
+
+            if o.get_attr_value("type") == agent.get_attr_value("type"):
+            
+                util_new += 10
+
+            else:
+
+                util_new += -10
+            
+            if util_new > util_new:
+
+                # relocate agent, then break loop
+                env.relocate(agent, o)
+                agent.increase_attr_value("utility",util_new)
+                break
                 
         # update results in database, for agents and for environment
         pops.write_agents_to_db(sim.Iteration)
@@ -94,49 +113,21 @@ if __name__ == "__main__":
         pops.write_density_to_db(sim.Iteration)
     
     # get dataframes with simulation results 
-    humans_df = db_manager.get_populationdf(pop = "humans")
+    agents_df = db_manager.get_agentsdf()
     env_df = db_manager.get_environmentdf()
     density_df = db_manager.get_densitydf()
     
     # visualize simulation data
     stats.set_fontsizes(8,10,12)
 
-    stats.plot_agentattr_lines("infected", humans_df)
-    stats.save_plot("infection_curves")
-    
-    stats.plot_agentattr_lines("recovered", humans_df)
-    stats.save_plot("recovery_curves")
+    stats.plot_grid_occupation(agents_df, ["natives","immigrants"], maxtime=2)
+    stats.save_plot("segregatonplot_early")
 
-    stats.plot_grid_occupation(env_df, ["humans"])
-    stats.save_plot("human_locations")
+    stats.plot_grid_occupation(agents_df, ["natives","immigrants"], maxtime=2)
+    stats.save_plot("segregatonplot_intermediate")
 
-    stats.plot_density_markersize(density_df, "infected", 50, "red")
-    stats.save_plot("infection_density")
-
-    stats.plot_density_markersize(density_df, "recovered", 50, "green")
-    stats.save_plot("recovery_density")
-
-    stats.plot_avgattr_lines(["recovered","infected"], humans_df)
-    stats.save_plot("avginfectedavgrecovered")
-    
-    # create and save animations
-    animation.animate_density(
-        df = density_df,
-        filename = "infectionanimation",
-        attr = "infected",
-        defaultsize = 50,
-        color = "red",
-        tpf = 0.05
-    )
-
-    animation.animate_density(
-        df = density_df,
-        filename = "recoveryanimation",
-        attr = "recovered",
-        defaultsize = 50,
-        color = "green",
-        tpf = 0.05
-    )
+    stats.plot_grid_occupation(agents_df, ["natives","immigrants"], maxtime=2)
+    stats.save_plot("segregatonplot_late")
     
     # end program
     db.close()

@@ -201,10 +201,12 @@ def plt_valdistribution(attributes: list,
     # add legends
     plt.legend()
 
+# TODO: allow user to set colors for populations
 def plot_grid_occupation(df: pandas.DataFrame,
                          population: list = ["all"],
-                         color: str = "red",
-                         maxtime: int = 0) -> None:
+                         maxtime: int = 0,
+                         color: str = "red"
+                         ) -> None:
     """ plot grid cell occupation (at least one agent in cell, or none), for "all" agent types or just for one or several agent types (i.e. "population") """
 
     # subset relevant data from the dataframe provided as argument
