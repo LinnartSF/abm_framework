@@ -24,6 +24,7 @@ import data
 
 def warning(msg: str) -> None:
     """ internal but also externally accessible function for printing warning message (used for faulty user input) """
+    
     print(f"WARNING: {msg}")
 
 # simulation class
@@ -37,14 +38,18 @@ class Simulation:
     def __init__(self,
                  limit: int):
         """ constructor for a new simulation instance """
+        
         self.Running = True
         self.Iteration = 0
         self.Limit = limit
     
     def run(self) -> bool:
         """ method for incrementing simulation iteration; also sets running to False to avoid another simulation run in a endless while loop; returns boolean for whether simulation still runs another iteration """
+        
         self.Iteration += 1
+        
         if self.Iteration >= self.Limit: self.Running = False
+        
         if self.Iteration <= self.Limit:
             return True
         else:
