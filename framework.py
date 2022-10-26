@@ -292,14 +292,12 @@ class Environment:
                             # if cell capacity is greater than one then that means neighbourhood also includes the cell that the respective agent is located in
                             if self.Cellcapacity > 1:
 
-                                if len(self.Array[row-1][col-1]) > 0:
-                                
-                                    for o in self.Array[row-1][col-1]:
+                                for o in self.Array[row-1][col-1]:
 
-                                        if o == ref:
-                                            pass
-                                        else: 
-                                            ls_neighbourhood.append(o) 
+                                    if o == ref:
+                                        pass
+                                    else: 
+                                        ls_neighbourhood.append(o) 
 
                         else:
 
@@ -323,20 +321,16 @@ class Environment:
                     # first, go through rows within radius
                     for row in range(max(1,ref.Row - radius), min(self.Rows,ref.Row + radius)):
 
-                        if len(self.Array[row-1][ref.Col-1]) > 0:
-
-                            for o in self.Array[row-1][ref.Col-1]:
+                        for o in self.Array[row-1][ref.Col-1]:
                                 
-                                if o != ref: ls_neighbourhood.append(o)
+                            if o != ref: ls_neighbourhood.append(o)
                 
                     # next, go through cols within radius
                     for col in range(max(1,ref.Col-radius), min(self.Columns, ref.Col + radius)):
 
-                        if len(self.Array[ref.Row-1][col-1]) > 0:
+                        for o in self.Array[ref.Row-1][col-1]:
 
-                            for o in self.Array[ref.Row-1][col-1]:
-
-                                if 0 != ref: ls_neighbourhood.append(o)
+                            if 0 != ref: ls_neighbourhood.append(o)
 
                 else: # endless grid
 
@@ -345,33 +339,27 @@ class Environment:
                         if row < 1: row = self.Rows + radius
                         if row > self.Rows: row = row - self.Rows
 
-                        if len(self.Array[row-1][ref.Col-1]) > 0:
-                        
-                            for o in self.Array[row-1][ref.Col-1]:
+                        for o in self.Array[row-1][ref.Col-1]:
 
-                                if o != ref: ls_neighbourhood.append(o)
+                            if o != ref: ls_neighbourhood.append(o)
                 
                     for col in range(ref.Col-radius, ref.Row + radius):
 
                         if col < 1: col = self.Columns + radius
                         if col > self.Columns: col = col - self.Columns
 
-                        if len(self.Array[ref.Row-1][col-1]) > 0:
+                        for o in self.Array[ref.Row-1][col-1]:
 
-                            for o in self.Array[ref.Row-1][col-1]:
-
-                                if o != ref: ls_neighbourhood.append(o)
+                            if o != ref: ls_neighbourhood.append(o)
 
             else: # random sample of size radius*radius
             
                 cells = random.sample(self.Cells, radius*radius)
                 for cell in cells:
 
-                    if len(self.Array[cell[0]-1][cell[1]-1])>0:
-                    
-                        for o in self.Array[cell[0]-1][cell[1]-1]:
+                    for o in self.Array[cell[0]-1][cell[1]-1]:
                         
-                            if o != ref: ls_neighbourhood.append(o)
+                        if o != ref: ls_neighbourhood.append(o)
 
             if order == "random":
             
@@ -395,9 +383,7 @@ class Environment:
                             # if cell capacity is greater than one then that means neighbourhood also includes the cell that the respective agent is located in
                             if self.Cellcapacity > 1:
 
-                                if len(self.Array[row-1][col-1]) > 0:
-                                
-                                    for o in self.Array[row-1][col-1]:
+                                for o in self.Array[row-1][col-1]:
 
                                         ls_neighbourhood.append(o) 
 
@@ -421,20 +407,16 @@ class Environment:
                     # first, go through rows within radius
                     for row in range(max(1,ref[0] - radius), min(self.Rows,ref[0]+ radius)):
 
-                        if len(self.Array[row-1][ref[1]-1]) > 0:
-
-                            for o in self.Array[row-1][ref[1]-1]:
+                        for o in self.Array[row-1][ref[1]-1]:
                                 
                                 ls_neighbourhood.append(o)
                 
                     # next, go through cols within radius
                     for col in range(max(1,ref[1]-radius), min(self.Columns, ref[1] + radius)):
 
-                        if len(self.Array[ref[0]-1][col-1]) > 0:
+                        for o in self.Array[ref[0]-1][col-1]:
 
-                            for o in self.Array[ref[0]-1][col-1]:
-
-                                ls_neighbourhood.append(o)
+                            ls_neighbourhood.append(o)
 
                 else: # endless grid
 
@@ -443,20 +425,16 @@ class Environment:
                         if row < 1: row = self.Rows + radius
                         if row > self.Rows: row = row - self.Rows
 
-                        if len(self.Array[row-1][ref[1]-1]) > 0:
-                        
-                            for o in self.Array[row-1][ref[1]-1]:
+                        for o in self.Array[row-1][ref[1]-1]:
 
-                                ls_neighbourhood.append(o)
+                            ls_neighbourhood.append(o)
                 
                     for col in range(ref[1]-radius, ref[2] + radius):
 
                         if col < 1: col = self.Columns + radius
                         if col > self.Columns: col = col - self.Columns
 
-                        if len(self.Array[ref[0]-1][col-1]) > 0:
-
-                            for o in self.Array[ref[0]-1][col-1]:
+                        for o in self.Array[ref[0]-1][col-1]:
 
                                 ls_neighbourhood.append(o)
 
@@ -465,9 +443,7 @@ class Environment:
                 cells = random.sample(self.Cells, radius*radius)
                 for cell in cells:
 
-                    if len(self.Array[cell[0]-1][cell[1]-1])>0:
-                    
-                        for o in self.Array[cell[0]-1][cell[1]-1]:
+                    for o in self.Array[cell[0]-1][cell[1]-1]:
                         
                             ls_neighbourhood.append(o)
 
@@ -687,11 +663,9 @@ class Populations:
     def reset_populations(self) -> None:
         """ method for resetting populations dictionary, deleting all old populations and resetting ID_lastused marker """
         
-        if len(list(self.Populations.keys())) > 0:
-
-            for key in list(self.Populations.keys()):
+        for key in list(self.Populations.keys()):
                 
-                del self.Populations[key]
+            del self.Populations[key]
         
         self.Populations = {}
         self.ID_lastused = 0
@@ -712,11 +686,9 @@ class Populations:
 
                 list_cell = self.Environment.get_cell(row, col)
 
-                if len(list_cell) > 0:
-
-                    for agent in list_cell: 
+                for agent in list_cell: 
                         
-                        self.DBManager.increment_envpop(simtime, row, col, agent.Population)
+                    self.DBManager.increment_envpop(simtime, row, col, agent.Population)
     
     def write_density_to_db(self, 
                             simtime: int) -> None:
@@ -745,18 +717,16 @@ class Populations:
 
                     list_cell = self.Environment.get_cell(row, col)
 
-                    if len(list_cell) > 0:
-
-                        for agent in list_cell:
+                    for agent in list_cell:
                             
-                            attr_keys = list(agent.Attributes.keys())
-                            attr_vals = list(agent.Attributes.values())
+                        attr_keys = list(agent.Attributes.keys())
+                        attr_vals = list(agent.Attributes.values())
                             
-                            for i in range(0, len(attr_vals)):
+                        for i in range(0, len(attr_vals)):
 
-                                if type(attr_vals[i]) == float or type(attr_vals[i]) == int:
+                            if type(attr_vals[i]) == float or type(attr_vals[i]) == int:
                                     
-                                    self.DBManager.increase_density(simtime, row, col, attr_keys[i], attr_vals[i])
+                                self.DBManager.increase_density(simtime, row, col, attr_keys[i], attr_vals[i])
                         
     def write_agents_to_db(self,
                            simtime: int) -> None:
