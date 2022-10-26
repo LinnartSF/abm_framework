@@ -165,7 +165,7 @@ class Environment:
             
             self.Freecells.append(cell)
     
-    def get_freecells(self) -> list:
+    def get_freecells(self) -> list: # -> list of tuples:
         """ method for returning index list for all empty cells """
         
         return self.Freecells
@@ -241,7 +241,7 @@ class Environment:
         
         if len(self.Array[(row-1)][(col-1)]) >= self.Cellcapacity: self.Freecells.remove((row,col))
          
-    def get_cell(self,
+    def get_cell_content(self,
                  row: int,
                  col: int
                 ) -> list:
@@ -379,6 +379,19 @@ class Environment:
             pass
         
         return ls_neighbourhood
+    
+    def transfer_to_cell(self,
+                         agent: Agent,
+                         targetcell: tuple
+                        ) -> None:
+        """ method for transfering agent from its current cell to target cell specified as argument; agent Row and Col attributes are updated """
+
+        self.Array[agent.Row-1][agent.Col-1].remove(agent)
+
+        self.Array[targetcell[0]-1][targetcell[1]-1].append(agent)
+
+        agent.Row = targetcell[0]
+        agent.Col = targetcell[1]
         
 class Population: 
     """ Population class used for a single population, used by Populations class when adding populations """
@@ -642,7 +655,7 @@ class Populations:
     
     def update_db(self,
                   simtime: int) -> None:
-        """ writes environment and all agent populations to database """
+        """ writes environment and all agent populations to database populations """
         
         self.write_env_to_db(simtime)
         self.write_agents_to_db(simtime)
