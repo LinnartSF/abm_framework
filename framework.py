@@ -559,6 +559,7 @@ class Populations:
         vals = [0 for i in range(0,self.Amount)]
 
         for row in range(1,self.Environment.Rows+1):
+            
             for col in range(1,self.Environment.Columns+1):
 
                 # which population does each agent belong to? increment the respective column in the database
@@ -592,6 +593,7 @@ class Populations:
             vals = [0.0 for i in vals]
             
             for row in range(1, self.Environment.Rows+1):
+                
                 for col in range(1,self.Environment.Columns+1):
 
                     self.DBManager.write_densitycell(simtime, row, col, vals)
@@ -615,6 +617,7 @@ class Populations:
     def write_agents_to_db(self,
                            simtime: int) -> None:
         """ writes to db all agents and their values """
+        
         if self.Amount > 0:
 
             for key_pop in list(self.Populations.keys()):
