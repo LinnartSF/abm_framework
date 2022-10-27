@@ -32,7 +32,7 @@ animation.animate_grid_occupation(
                             color = "red",
                             tpf = 0.01, # time per frame
                             mintime = 0,
-                            maxtime = 500, 
+                            maxtime = 20, 
                             markersize = 150.0
                         )
 """
