@@ -67,7 +67,7 @@ if __name__ == "__main__":
         agent = random.choice(agents)
 
         # get that agents neighbourhood
-        neighbours = env.get_neighbourhood(agent, type = "moore", radius = 5)
+        neighbours = env.get_neighbourhood(agent, mode = "moore", radius = 5)
 
         util_is = 0.0
         
@@ -88,17 +88,21 @@ if __name__ == "__main__":
         # for search up to maximum limit of random free cells to see if utility is better there
         cells = env.get_freecells()
 
-        for o in cells:
+        for c in cells:
             
             util_new = 0.0
 
-            if o.get_attr_value("type") == agent.get_attr_value("type"):
+            neighbours = env.get_neighbourhood(c, "moore", radius = 5)
+
+            for o in neighbours:
+
+                if o.get_attr_value("type") == agent.get_attr_value("type"):
             
-                util_new += 10
+                    util_new += 10
 
-            else:
+                else:
 
-                util_new += -10
+                    util_new += -10
             
             if util_new > util_new:
 

@@ -281,7 +281,7 @@ class Environment:
     
     def get_neighbourhood(self,
                           ref: any, # calling agent for which neighbourhood is to be identified
-                          type: str = "moore",    
+                          mode: str = "moore",    
                           radius: int = 1,  
                           order: str = "random"
                          ) -> list:
@@ -303,7 +303,7 @@ class Environment:
                 return ls_neighbourhood # empty list
         
         if type(ref) == Agent:
-            if type == "moore":
+            if mode == "moore":
             
                 for row in range(ref.Row-radius,ref.Row+radius):
 
@@ -336,7 +336,7 @@ class Environment:
                                 
                                     ls_neighbourhood.append(o) 
         
-            elif type == "neumann":
+            elif mode == "neumann":
 
                 if self.Endless == False:
                 
@@ -394,7 +394,7 @@ class Environment:
         
         elif type(ref) == tuple:
 
-            if type == "moore":
+            if mode == "moore":
             
                 for row in range(ref[0]-radius,ref[1]+radius):
 
@@ -422,7 +422,7 @@ class Environment:
                             
                                 ls_neighbourhood.append(o) 
         
-            elif type == "neumann":
+            elif mode == "neumann":
 
                 if self.Endless == False:
                 
@@ -673,7 +673,7 @@ class Populations:
         
         ls_return = []
 
-        for pop in list(self.Populations.values):
+        for pop in list(self.Populations.values()):
 
             for agent in pop.get_agents():
 
@@ -706,7 +706,7 @@ class Populations:
                 self.DBManager.write_environmentcell(simtime, row, col, vals)
                 self.DBManager.commit()
 
-                list_cell = self.Environment.get_cell(row, col)
+                list_cell = self.Environment.get_cell_content(row, col)
 
                 for agent in list_cell: 
                         
@@ -737,7 +737,7 @@ class Populations:
                     self.DBManager.write_densitycell(simtime, row, col, vals)
                     self.DBManager.commit()
 
-                    list_cell = self.Environment.get_cell(row, col)
+                    list_cell = self.Environment.get_cell_content(row, col)
 
                     for agent in list_cell:
                             
