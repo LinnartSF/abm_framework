@@ -27,7 +27,7 @@ stats.save_plot("avgagentutility")
 
 animation.animate_grid_occupation(
                             df = env_df,
-                            filename = "segregationvideo3",
+                            filename = "segregationvideo",
                             population = ["natives","immigrants"],
                             color = "red",
                             tpf = 0.01, # time per frame
