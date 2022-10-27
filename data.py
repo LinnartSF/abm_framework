@@ -71,6 +71,7 @@ class Database:
     
     def query(self, query: str)-> None:
         """ executes specified query on database """
+        
         self.Cursor.execute(query)
     
     def read(self,x: int) -> list:
@@ -171,7 +172,7 @@ class Manager:
                         coltype: str) -> None:
         """ method for adding a column to agent table in results database """
         
-        self.Database.query("SELECT name FROM PRAGMA_TABLE_INFO('agent');")
+        self.Database.query("SELECT name FROM PRAGMA_TABLE_INFO('agents');")
         colnames_existing = [i[0] for i in self.Database.read(-1)]
         
         if colname in colnames_existing:
