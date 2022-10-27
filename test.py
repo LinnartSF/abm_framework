@@ -8,6 +8,7 @@ db = data.Database("sqlite3",config.path_databasefile)
 
 env_df = pandas.read_sql_query("SELECT * FROM environment", db.Connection)
 agents_df = pandas.read_sql_query("SELECT * FROM agents", db.Connection)
+density_df = pandas.read_sql_query("SELECT * FROM density", db.Connection)
 
 stats.set_fontsizes(8,10,12)
 """
@@ -24,11 +25,24 @@ stats.plot_avgattr_lines(["utility"], agents_df)
 stats.save_plot("avgagentutility")
 """
 
-animation.animate_grid_occupation(env_df, 
-                            "segregationvideo",
+animation.animate_grid_occupation(
+                            df = env_df,
+                            filename = "segregationvideo",
                             population = ["natives","immigrants"],
-                            markersize = 120,
-                            tpf = 0.10
-                            )
+                            color = "red",
+                            tpf = 0.01, # time per frame
+                            mintime = 0,
+                            maxtime = 500, 
+                            markersize = 150.0
+                        )
+
+animation.animate_density(
+        df = density_df,
+        filename = "segregationutility",
+        attr = "utility",
+        defaultsize = 100,
+        color = "red",
+        tpf = 0.01
+    )
 
 db.close()

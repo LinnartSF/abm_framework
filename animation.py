@@ -96,7 +96,7 @@ def animate_grid_occupation(df: pandas.DataFrame,
 
         # build animation from data and save it
         animation = camera.animate()
-        animation.save(config.path_saveanimations+"/"+filename+".gif", writer='PillowWriter', fps=int(1/tpf))
+        animation.save(config.path_saveanimations+"/"+filename+".gif", writer='Pillow', fps=int(1/tpf))
 
 def animate_density(df: pandas.DataFrame,
                     filename: str,
