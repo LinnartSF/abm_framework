@@ -49,6 +49,7 @@ def animate_grid_occupation(df: pandas.DataFrame,
         plt.title(f"grid occupancy for populations: {str(population)}")
         plt.xlabel("columns")
         plt.ylabel("rows")
+        print("title added")
 
         if population[0] == "all":
             
@@ -76,7 +77,7 @@ def animate_grid_occupation(df: pandas.DataFrame,
             
             for i in range(mintime, maxtime+1):
 
-                fig.clf()
+                #fig.clf()
 
                 subdf = df[df["simtime"] == i]
                 
@@ -86,14 +87,13 @@ def animate_grid_occupation(df: pandas.DataFrame,
                     plt.scatter(x = popdf["col"],
                                 y = popdf["row"],
                                 alpha = popdf[pop] / popdf[pop].max(),
-                                label = pop)
+                                label = pop, 
+                                s = markersize)
                 
                 if i == mintime: plt.legend()
-                
-                plt.pause(tpf)
+
                 camera.snap()
                 
-
         # build animation from data and save it
         animation = camera.animate()
         animation.save(config.path_saveanimations+"/"+filename+".gif", writer='Pillow', fps=int(1/tpf))
@@ -132,7 +132,6 @@ def animate_density(df: pandas.DataFrame,
                         s = defaultsize*(subdf[attr]/subdf[attr].max()),
                       c = color)
     
-            plt.pause(tpf)
             camera.snap()
 
     # build animation from data and save it

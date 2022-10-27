@@ -27,7 +27,7 @@ stats.save_plot("avgagentutility")
 
 animation.animate_grid_occupation(
                             df = env_df,
-                            filename = "segregationvideo",
+                            filename = "segregationvideo3",
                             population = ["natives","immigrants"],
                             color = "red",
                             tpf = 0.01, # time per frame
@@ -35,14 +35,14 @@ animation.animate_grid_occupation(
                             maxtime = 500, 
                             markersize = 150.0
                         )
-
+"""
 animation.animate_density(
         df = density_df,
-        filename = "segregationutility",
+        filename = "segregationutility2",
         attr = "utility",
-        defaultsize = 100,
+        defaultsize = 150,
         color = "red",
         tpf = 0.01
     )
-
+"""
 db.close()
