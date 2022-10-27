@@ -403,11 +403,9 @@ class Environment:
                         if row == ref[0] and col == ref[1]:
                         
                             # if cell capacity is greater than one then that means neighbourhood also includes the cell that the respective agent is located in
-                            if self.Cellcapacity > 1:
+                            for o in self.Array[row-1][col-1]:
 
-                                for o in self.Array[row-1][col-1]:
-
-                                        ls_neighbourhood.append(o) 
+                                ls_neighbourhood.append(o) 
 
                         else:
 
@@ -420,7 +418,9 @@ class Environment:
 
                             if row >= 1 and row <= self.Rows and col >= 1 and col <= self.Columns:
                             
-                                ls_neighbourhood.append(o) 
+                                for o in self.Array[row-1][col-1]:
+                                
+                                    ls_neighbourhood.append(o) 
         
             elif mode == "neumann":
 
@@ -431,7 +431,7 @@ class Environment:
 
                         for o in self.Array[row-1][ref[1]-1]:
                                 
-                                ls_neighbourhood.append(o)
+                            ls_neighbourhood.append(o)
                 
                     # next, go through cols within radius
                     for col in range(max(1,ref[1]-radius), min(self.Columns, ref[1] + radius)):
@@ -458,7 +458,7 @@ class Environment:
 
                         for o in self.Array[ref[0]-1][col-1]:
 
-                                ls_neighbourhood.append(o)
+                            ls_neighbourhood.append(o)
 
             else: # random sample of size radius*radius
             
@@ -467,7 +467,7 @@ class Environment:
 
                     for o in self.Array[cell[0]-1][cell[1]-1]:
                         
-                            ls_neighbourhood.append(o)
+                        ls_neighbourhood.append(o)
 
             if order == "random":
             
