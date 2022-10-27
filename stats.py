@@ -124,7 +124,7 @@ def plot_agentattr_lines(attr: str,
     plt.xlabel("simulation time")
     plt.ylabel(attr) 
 
-    # add legend
+    # aad
     plt.legend()
 
 def plot_avgattr_lines(attributes: list,
@@ -205,6 +205,7 @@ def plt_valdistribution(attributes: list,
 def plot_grid_occupation(df: pandas.DataFrame,
                          population: list = ["all"],
                          maxtime: int = 0,
+                         markersize: float = 50.0,
                          color: str = "red"
                          ) -> None:
     """ plot grid cell occupation (at least one agent in cell, or none), for "all" agent types or just for one or several agent types (i.e. "population") """
@@ -228,14 +229,16 @@ def plot_grid_occupation(df: pandas.DataFrame,
                         df[df["agents"]>0]["row"],
                         alpha = df[df["agents"]>0]["agents"]/df["agents"].max(),
                         c = color,
-                        label = "all")
+                        label = "all",
+                        s = markersize)
         else:
             # add the scatters for each population one by one to the scatter plot, assuming that these populations are also present in the database (pandas DataFrame)
             for pop in population:
                 plt.scatter(df[df[pop]>0]["col"],
                             df[df[pop]>0]["row"],
                             alpha = df[df[pop]>0][pop]/df[pop].max(),
-                            label = pop)
+                            label = pop,
+                            s = markersize)
 
         # add titles
         plt.title(f"grid occupancy for populations: {str(population)}")

@@ -491,8 +491,11 @@ class Environment:
         """ method for transfering agent from its current cell to target cell specified as argument; agent Row and Col attributes are updated """
 
         self.Array[agent.Row-1][agent.Col-1].remove(agent)
-
+        
         self.Array[targetcell[0]-1][targetcell[1]-1].append(agent)
+
+        if len(self.Array[targetcell[0]-1][targetcell[1]-1]) >= self.Cellcapacity:
+            self.Freecells.remove(targetcell)
 
         agent.Row = targetcell[0]
         agent.Col = targetcell[1]

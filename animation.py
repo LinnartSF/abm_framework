@@ -22,13 +22,15 @@ def warning(msg: str) -> None:
     """ helper function for printing warning """
     print("WARNING: "+msg)
 
+# TODO allow user to specify colors per population, insteaed of one default color
 def animate_grid_occupation(df: pandas.DataFrame,
                             filename: str,
                             population: list = ["all"],
                             color: str = "red",
                             tpf: float = 0.01, # time per frame
                             mintime: int = 0,
-                            maxtime: int = 0) -> None:
+                            maxtime: int = 0, 
+                            markersize: float = 150.0) -> None:
     """ animates grid occulation over simulation time, for the specified population(s), or all populations """
     if maxtime == 0: maxtime = df["simtime"].max()
     if df["simtime"].min() > mintime: mintime = df["simtime"].min()
@@ -60,7 +62,8 @@ def animate_grid_occupation(df: pandas.DataFrame,
                             y = subdf["row"],
                             alpha = subdf["agents"]/df["agents"].max(),
                             c = color,
-                            label = "all")
+                            label = "all",
+                            s = markersize)
                 
                 if i == mintime: plt.legend()
 
@@ -69,7 +72,8 @@ def animate_grid_occupation(df: pandas.DataFrame,
 
         else:
 
-            df = df[df["agents"] > 0]            
+            df = df[df["agents"] > 0]
+            
             for i in range(mintime, maxtime+1):
 
                 fig.clf()
@@ -81,14 +85,14 @@ def animate_grid_occupation(df: pandas.DataFrame,
                     popdf = subdf[subdf[pop] > 0]
                     plt.scatter(x = popdf["col"],
                                 y = popdf["row"],
-                                alpha = popdf[pop] / popdf[pop].max,
-                                c = color,
+                                alpha = popdf[pop] / popdf[pop].max(),
                                 label = pop)
                 
                 if i == mintime: plt.legend()
-
+                
                 plt.pause(tpf)
                 camera.snap()
+                
 
         # build animation from data and save it
         animation = camera.animate()

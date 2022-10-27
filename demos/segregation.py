@@ -49,7 +49,7 @@ if __name__ == "__main__":
                         )
     
     # setup simulation
-    sim = framework.Simulation(100)
+    sim = framework.Simulation(500)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -86,13 +86,13 @@ if __name__ == "__main__":
         agent.increase_attr_value("utility",util_is)
         
         # for search up to maximum limit of random free cells to see if utility is better there
-        cells = env.get_freecells()
+        cells = env.get_freecells(n = 5)
 
         for c in cells:
             
             util_new = 0.0
 
-            neighbours = env.get_neighbourhood(c, "moore", radius = 5)
+            neighbours = env.get_neighbourhood(c, "moore", radius = _max_search)
 
             for o in neighbours:
 
@@ -104,10 +104,10 @@ if __name__ == "__main__":
 
                     util_new += -10
             
-            if util_new > util_new:
+            if util_new > util_is:
 
                 # relocate agent, then break loop
-                env.relocate(agent, o)
+                env.relocate(agent, c)
                 agent.increase_attr_value("utility",util_new)
                 break
                 
@@ -124,14 +124,14 @@ if __name__ == "__main__":
     # visualize simulation data
     stats.set_fontsizes(8,10,12)
 
-    stats.plot_grid_occupation(agents_df, ["natives","immigrants"], maxtime=2)
-    stats.save_plot("segregatonplot_early")
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], maxtime=2, markersize = 100.0)
+    stats.save_plot("segregationplot_early")
 
-    stats.plot_grid_occupation(agents_df, ["natives","immigrants"], maxtime=2)
-    stats.save_plot("segregatonplot_intermediate")
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], maxtime=250, markersize = 100.0)
+    stats.save_plot("segregationplot_intermediate")
 
-    stats.plot_grid_occupation(agents_df, ["natives","immigrants"], maxtime=2)
-    stats.save_plot("segregatonplot_late")
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], maxtime=500, markersize = 100.0)
+    stats.save_plot("segregationplot_late")
     
     # end program
     db.close()
