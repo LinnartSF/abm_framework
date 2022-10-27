@@ -92,6 +92,7 @@ def animate_grid_occupation(df: pandas.DataFrame,
                 if i == mintime: plt.legend()
 
                 camera.snap()
+                print(i)
                 
         # build animation from data and save it
         animation = camera.animate()
