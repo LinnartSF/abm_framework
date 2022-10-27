@@ -56,7 +56,7 @@ def animate_grid_occupation(df: pandas.DataFrame,
             for i in range(mintime, maxtime+1):
                 
                 # use "agents" column data from results database (pandas.DataFrame)
-                fig.clf()
+                
                 subdf = df[df["simtime"] == i]
                 plt.scatter(x = subdf["col"],
                             y = subdf["row"],
@@ -67,7 +67,7 @@ def animate_grid_occupation(df: pandas.DataFrame,
                 
                 if i == mintime: plt.legend()
 
-                plt.pause(tpf)
+             
                 camera.snap()
 
         else:
