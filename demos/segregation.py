@@ -49,7 +49,7 @@ if __name__ == "__main__":
                         )
     
     # setup simulation
-    sim = framework.Simulation(500)
+    sim = framework.Simulation(250)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -117,21 +117,45 @@ if __name__ == "__main__":
         pops.write_density_to_db(sim.Iteration)
     
     # get dataframes with simulation results 
-    agents_df = db_manager.get_agentsdf()
-    env_df = db_manager.get_environmentdf()
-    density_df = db_manager.get_densitydf()
+    agents_df = db_manager.get_agentsdf(condition = "(simtime%5) == 0")
+    env_df = db_manager.get_environmentdf(condition = "(simtime%5) == 0")
+    density_df = db_manager.get_densitydf(condition = "(simtime%5) == 0")
     
     # visualize simulation data
     stats.set_fontsizes(8,10,12)
 
-    stats.plot_grid_occupation(env_df, ["natives","immigrants"], maxtime=2, markersize = 100.0)
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=2, markersize = 100.0)
     stats.save_plot("segregationplot_early")
 
-    stats.plot_grid_occupation(env_df, ["natives","immigrants"], maxtime=250, markersize = 100.0)
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=125, markersize = 100.0)
     stats.save_plot("segregationplot_intermediate")
 
-    stats.plot_grid_occupation(env_df, ["natives","immigrants"], maxtime=500, markersize = 100.0)
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=250, markersize = 100.0)
     stats.save_plot("segregationplot_late")
+
+    stats.plot_avgattr_lines(["utility"], agents_df)
+    stats.save_plot("avgagentutility")
+
+    animation.animate_grid_occupation(
+                            df = env_df,
+                            filename = "segregationvideo",
+                            population = ["natives","immigrants"],
+                            colors = ["#F52D2D","#4A87F1"],
+                            tpf = 0.10, # time per frame
+                            mintime = 0,
+                            maxtime = 250, 
+                            markersize = 150.0
+                        )
+
+    animation.animate_density(
+                            df = density_df,
+                            filename = "segregationutility",
+                            attr = "utility",
+                            defaultsize = 150,
+                            color = "#F52D2D",
+                            tpf = 0.10,
+                            maxtime = 250
+    )
     
     # end program
     db.close()

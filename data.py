@@ -12,7 +12,7 @@ Data.py furthermore assumes, that the database has the following tables
    additional columns must be added for each new simulation application; 
    table contains data on agents states throughout simulation times, i.e. relevant properties of the agent
 - environment: 
-   predefined fixed column names (columns)
+   predefined fixed column names (column)
    column simtime - simulation time
    column row - row index
    column col - column index
@@ -23,7 +23,7 @@ This module provides a Database class to connect to the database and to perform 
 
 This module provides a Manager class that standardizes e.g. column addition to table, state registration in agent table, etc.
 
-Developers can add onto the Manager class or use the Database class to directly facilitate custom queries. 
+Developers can add onto the Manager class or use the Database class to directly facilitate custom queries.
 
 """
 

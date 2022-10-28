@@ -201,17 +201,16 @@ def plt_valdistribution(attributes: list,
     # add legends
     plt.legend()
 
-# TODO: allow user to set colors for populations
+# TODO rename maxtime
 def plot_grid_occupation(df: pandas.DataFrame,
                          population: list = ["all"],
                          maxtime: int = 0,
                          markersize: float = 50.0,
-                         color: str = "red"
+                         colors: list = ["red"]
                          ) -> None:
     """ plot grid cell occupation (at least one agent in cell, or none), for "all" agent types or just for one or several agent types (i.e. "population") """
 
     # subset relevant data from the dataframe provided as argument
-    if maxtime == 0: maxtime = df["simtime"].max()
     df = df[df["simtime"] == maxtime]
 
     # create new figure
@@ -221,23 +220,32 @@ def plot_grid_occupation(df: pandas.DataFrame,
 
     # create scatter plots for the desired population scenari
     if len(population)<1: 
+        
         warning("population list empty or not provided at all for plt_grid_occupation() in stats.py (abm framework)")
+    
     else:
+        
         if population[0] == "all":
+            
             # use "agents" column data from results database (pandas DataFrame)
             plt.scatter(df[df["agents"]>0]["col"],
                         df[df["agents"]>0]["row"],
                         alpha = df[df["agents"]>0]["agents"]/df["agents"].max(),
-                        c = color,
+                        c = colors[0],
                         label = "all",
                         s = markersize)
+        
         else:
+            
             # add the scatters for each population one by one to the scatter plot, assuming that these populations are also present in the database (pandas DataFrame)
-            for pop in population:
+            for i in range(len(population)):
+                
+                pop = population[i]
                 plt.scatter(df[df[pop]>0]["col"],
                             df[df[pop]>0]["row"],
                             alpha = df[df[pop]>0][pop]/df[pop].max(),
                             label = pop,
+                            c = colors[i],
                             s = markersize)
 
         # add titles

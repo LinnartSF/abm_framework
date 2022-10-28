@@ -78,20 +78,22 @@ def animate_grid_occupation(df: pandas.DataFrame,
                 #fig.clf()
 
                 subdf = df[df["simtime"] == i]
-                
-                for j in range(len(population)):
-                    pop = population[j]
-                    popdf = subdf[subdf[pop] > 0]
-                    plt.scatter(x = popdf["col"],
-                                y = popdf["row"],
-                                alpha = popdf[pop] / popdf[pop].max(),
-                                label = pop, 
-                                s = markersize,
-                                c = colors[j])
-                
-                if i == mintime: plt.legend()
 
-                camera.snap()
+                if not subdf.empty:
+                
+                    for j in range(len(population)):
+                        pop = population[j]
+                        popdf = subdf[subdf[pop] > 0]
+                        plt.scatter(x = popdf["col"],
+                                    y = popdf["row"],
+                                 alpha = popdf[pop] / popdf[pop].max(),
+                                 label = pop, 
+                                 s = markersize,
+                                 c = colors[j])
+                
+                    if i == mintime: plt.legend()
+
+                    camera.snap()
                 
         # build animation from data and save it
         animation = camera.animate()
@@ -122,10 +124,10 @@ def animate_density(df: pandas.DataFrame,
     df = df[df[attr] > 0]            
     for i in range(mintime, maxtime+1):
 
-        #plt.clf() 
+        subdf = df[df["simtime"] == i]
+
         # use "agents" column data from results database (pandas.DataFrame)
-        if len(df["simtime"]==i)>0:
-            subdf = df[df["simtime"] == i]
+        if not subdf.empty:
             plt.scatter(subdf["col"],
                         subdf["row"],
                         s = defaultsize*(subdf[attr]/subdf[attr].max()),
