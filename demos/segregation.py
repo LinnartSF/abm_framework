@@ -36,20 +36,20 @@ if __name__ == "__main__":
     datatypes = ["REAL","TEXT"]
     pops = framework.Populations(amount = 2, env = env, db_manager = db_manager, attributes = attrs, datatypes = datatypes)
     pops.add_population(name = "natives", 
-                        size = 150, 
+                        size = 50, 
                         attributes = attrs, 
                         datatypes = datatypes, 
                         initialvals = [100, "native"]
                         )
     pops.add_population(name = "immigrants",
-                        size = 150,
+                        size = 50,
                         attributes = attrs,
                         datatypes = datatypes,
                         initialvals = [100, "immigrant"]
                         )
     
     # setup simulation
-    sim = framework.Simulation(250)
+    sim = framework.Simulation(1000)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -59,6 +59,7 @@ if __name__ == "__main__":
 
     # other model specific global settings
     _max_search = 10
+    _impactarea = 1
 
     # execute simulation run
     while sim.run():
@@ -67,7 +68,7 @@ if __name__ == "__main__":
         agent = random.choice(agents)
 
         # get that agents neighbourhood
-        neighbours = env.get_neighbourhood(agent, mode = "moore", radius = 5)
+        neighbours = env.get_neighbourhood(agent, mode = "moore", radius = _impactarea)
 
         util_is = 0.0
         
@@ -92,7 +93,7 @@ if __name__ == "__main__":
             
             util_new = 0.0
 
-            neighbours = env.get_neighbourhood(c, "moore", radius = 9)
+            neighbours = env.get_neighbourhood(c, "moore", radius = _impactarea)
 
             for o in neighbours:
 
@@ -112,7 +113,7 @@ if __name__ == "__main__":
                 break
                 
         # update results in database, for agents and for environment
-        if (sim.Iteration % 5) == 0:
+        if (sim.Iteration % 10) == 0:
             pops.write_agents_to_db(sim.Iteration)
             pops.write_env_to_db(sim.Iteration)
             pops.write_density_to_db(sim.Iteration)
@@ -126,36 +127,36 @@ if __name__ == "__main__":
     stats.set_fontsizes(8,10,12)
 
     stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=0, markersize = 150.0)
-    stats.save_plot("segregationplot_early2")
+    stats.save_plot("segplt_early_ia1_50agents_1000it")
 
-    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=125, markersize = 150.0)
-    stats.save_plot("segregationplot_intermediate2")
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=500, markersize = 150.0)
+    stats.save_plot("segplt_intermediate_ia1_50agents_1000it")
 
-    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=250, markersize = 150.0)
-    stats.save_plot("segregationplot_late2")
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=1000, markersize = 150.0)
+    stats.save_plot("segplt_late_ia1_50agents_1000it")
 
     stats.plot_avgattr_lines(["utility"], agents_df)
-    stats.save_plot("avgagentutility2")
+    stats.save_plot("avgutil_ia1_50agents_1000it")
 
     animation.animate_grid_occupation(
                             df = env_df,
-                            filename = "segregationvideo2",
+                            filename = "segvid_ia1_50agents_1000it",
                             population = ["natives","immigrants"],
                             colors = ["#F52D2D","#4A87F1"],
-                            tpf = 0.10, # time per frame
+                            tpf = 0.20, # time per frame
                             mintime = 0,
-                            maxtime = 250, 
+                            maxtime = 1000, 
                             markersize = 150.0
                         )
 
     animation.animate_density(
                             df = density_df,
-                            filename = "segregationutility2",
+                            filename = "segdens_ia1_50agents_1000it",
                             attr = "utility",
                             defaultsize = 150,
                             color = "#F52D2D",
-                            tpf = 0.10,
-                            maxtime = 250
+                            tpf = 0.20,
+                            maxtime = 1000
     )
     
     # end program
