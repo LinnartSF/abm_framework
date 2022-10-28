@@ -58,7 +58,7 @@ if __name__ == "__main__":
     agents = pops.get_agents()
 
     # other model specific global settings
-    _max_search = 5
+    _max_search = int(10)
 
     # execute simulation run
     while sim.run():
@@ -112,33 +112,34 @@ if __name__ == "__main__":
                 break
                 
         # update results in database, for agents and for environment
-        pops.write_agents_to_db(sim.Iteration)
-        pops.write_env_to_db(sim.Iteration)
-        pops.write_density_to_db(sim.Iteration)
+        if (sim.Iteration % 5) == 0:
+            pops.write_agents_to_db(sim.Iteration)
+            pops.write_env_to_db(sim.Iteration)
+            pops.write_density_to_db(sim.Iteration)
     
     # get dataframes with simulation results 
-    agents_df = db_manager.get_agentsdf(condition = "(simtime%5) == 0")
-    env_df = db_manager.get_environmentdf(condition = "(simtime%5) == 0")
-    density_df = db_manager.get_densitydf(condition = "(simtime%5) == 0")
+    agents_df = db_manager.get_agentsdf()
+    env_df = db_manager.get_environmentdf()
+    density_df = db_manager.get_densitydf()
     
     # visualize simulation data
     stats.set_fontsizes(8,10,12)
 
     stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=0, markersize = 150.0)
-    stats.save_plot("segregationplot_early")
+    stats.save_plot("segregationplot_early2")
 
     stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=125, markersize = 150.0)
-    stats.save_plot("segregationplot_intermediate")
+    stats.save_plot("segregationplot_intermediate2")
 
     stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=250, markersize = 150.0)
-    stats.save_plot("segregationplot_late")
+    stats.save_plot("segregationplot_late2")
 
     stats.plot_avgattr_lines(["utility"], agents_df)
-    stats.save_plot("avgagentutility")
+    stats.save_plot("avgagentutility2")
 
     animation.animate_grid_occupation(
                             df = env_df,
-                            filename = "segregationvideo",
+                            filename = "segregationvideo2",
                             population = ["natives","immigrants"],
                             colors = ["#F52D2D","#4A87F1"],
                             tpf = 0.10, # time per frame
@@ -149,7 +150,7 @@ if __name__ == "__main__":
 
     animation.animate_density(
                             df = density_df,
-                            filename = "segregationutility",
+                            filename = "segregationutility2",
                             attr = "utility",
                             defaultsize = 150,
                             color = "#F52D2D",

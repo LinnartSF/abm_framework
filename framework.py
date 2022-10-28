@@ -209,6 +209,7 @@ class Environment:
         """ gets a free cell randomly, either from entire grid or as close to specified cell as possible; if radius is set, return None if no free cell found, otherwise tuple """
         
         if radius >= min([self.Columns,self.Rows])/2: 
+            print(str(radius))
             warning("infeasible radius in get_freecell; radius reset by get_freecell in framework.py")
             
             if self.Columns > 2 and self.Rows > 2:
@@ -396,9 +397,9 @@ class Environment:
 
             if mode == "moore":
             
-                for row in range(ref[0]-radius,ref[1]+radius):
+                for row in range(int(ref[0])-int(radius),int(ref[1])+int(radius)):
 
-                    for col in range(ref[1]-radius,ref[1]+radius):
+                    for col in range(int(ref[1])-int(radius),int(ref[1])+int(radius)):
 
                         if row == ref[0] and col == ref[1]:
                         
