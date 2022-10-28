@@ -209,7 +209,6 @@ class Environment:
         """ gets a free cell randomly, either from entire grid or as close to specified cell as possible; if radius is set, return None if no free cell found, otherwise tuple """
         
         if radius >= min([self.Columns,self.Rows])/2: 
-            print(str(radius))
             warning("infeasible radius in get_freecell; radius reset by get_freecell in framework.py")
             
             if self.Columns > 2 and self.Rows > 2:
@@ -289,9 +288,9 @@ class Environment:
         """ returns specified neighbourhood in the form of a list of all agents in the neighbourhood, except the calling agent itself; type supports "moore", order supports "random"; first argument can be an agent or a cell """
         
         ls_neighbourhood = []
-        
+        print("get_neighbourhood radisu"+str(radius))
         if radius >= min([self.Columns,self.Rows])/2: 
-            
+            print(str(radius))
             warning("infeasible radius in get_neighbourhood; radius reset by get_neighbourhood in framework.py")
             
             if self.Columns > 2 and self.Rows > 2:
