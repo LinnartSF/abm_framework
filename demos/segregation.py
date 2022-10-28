@@ -124,13 +124,13 @@ if __name__ == "__main__":
     # visualize simulation data
     stats.set_fontsizes(8,10,12)
 
-    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=2, markersize = 100.0)
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=0, markersize = 150.0)
     stats.save_plot("segregationplot_early")
 
-    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=125, markersize = 100.0)
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=125, markersize = 150.0)
     stats.save_plot("segregationplot_intermediate")
 
-    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=250, markersize = 100.0)
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=250, markersize = 150.0)
     stats.save_plot("segregationplot_late")
 
     stats.plot_avgattr_lines(["utility"], agents_df)
