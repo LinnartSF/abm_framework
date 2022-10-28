@@ -288,9 +288,9 @@ class Environment:
         """ returns specified neighbourhood in the form of a list of all agents in the neighbourhood, except the calling agent itself; type supports "moore", order supports "random"; first argument can be an agent or a cell """
         
         ls_neighbourhood = []
-        print("get_neighbourhood radisu"+str(radius))
+
         if radius >= min([self.Columns,self.Rows])/2: 
-            print(str(radius))
+            
             warning("infeasible radius in get_neighbourhood; radius reset by get_neighbourhood in framework.py")
             
             if self.Columns > 2 and self.Rows > 2:

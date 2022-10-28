@@ -58,7 +58,7 @@ if __name__ == "__main__":
     agents = pops.get_agents()
 
     # other model specific global settings
-    _max_search = int(10)
+    _max_search = 10
 
     # execute simulation run
     while sim.run():
@@ -86,13 +86,13 @@ if __name__ == "__main__":
         agent.increase_attr_value("utility",util_is)
         
         # for search up to maximum limit of random free cells to see if utility is better there
-        cells = env.get_freecells(n = 5)
+        cells = env.get_freecells(n = _max_search)
 
         for c in cells:
             
             util_new = 0.0
 
-            neighbours = env.get_neighbourhood(c, "moore", radius = _max_search)
+            neighbours = env.get_neighbourhood(c, "moore", radius = 9)
 
             for o in neighbours:
 
