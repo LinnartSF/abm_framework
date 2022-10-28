@@ -64,6 +64,10 @@ This framework supports standardized agent-based simulation animations and visua
 
 You can see some exmaples below: 
 
+<img src="/docufigs/segregationprocess.gif" alt="Segregation process animation" title="">
+
+<img src="/docufigs/segregationutility.gif" alt="Segregation process and utility concentration" title="">
+
 <img src="/docufigs/avglifeplot.png" alt="Avg agent attribute value trajectory" title="">
 
 <img src="/docufigs/lifeplot.png" alt="Agent attribute value trajectories" title="">
