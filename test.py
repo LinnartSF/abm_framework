@@ -7,7 +7,7 @@ import animation
 db = data.Database("sqlite3",config.path_databasefile)
 
 env_df = pandas.read_sql_query("SELECT * FROM environment", db.Connection)
-agents_df = pandas.read_sql_query("SELECT * FROM agents", db.Connection)
+#agents_df = pandas.read_sql_query("SELECT * FROM agents", db.Connection)
 density_df = pandas.read_sql_query("SELECT * FROM density", db.Connection)
 
 stats.set_fontsizes(8,10,12)
@@ -32,10 +32,10 @@ animation.animate_grid_occupation(
                             colors = ["#F52D2D","#4A87F1"],
                             tpf = 0.05, # time per frame
                             mintime = 0,
-                            maxtime = 500, 
+                            maxtime = 50, 
                             markersize = 150.0
                         )
-
+"""
 animation.animate_density(
         df = density_df,
         filename = "segregationutility2",
@@ -44,5 +44,5 @@ animation.animate_density(
         color = "#F52D2D",
         tpf = 0.01
     )
-
+"""
 db.close()
