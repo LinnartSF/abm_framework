@@ -78,4 +78,4 @@ You can see some exmaples below:
 
 <img src="/docufigs/recoveryanimation2.gif" alt="Attribute density animation" title="">
 
-<img src="/docufigs/avgstates.png" alt="Attribute density animation" title="">
+<img src="/docufigs/avgstates.png" alt="Attribute density animation" title=""> 
