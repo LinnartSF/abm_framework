@@ -26,7 +26,7 @@ def warning(msg: str) -> None:
 def animate_grid_occupation(df: pandas.DataFrame,
                             filename: str,
                             population: list = ["all"],
-                            color: str = "red",
+                            colors: list = ["red"],
                             tpf: float = 0.01, # time per frame
                             mintime: int = 0,
                             maxtime: int = 0, 
@@ -61,7 +61,7 @@ def animate_grid_occupation(df: pandas.DataFrame,
                 plt.scatter(x = subdf["col"],
                             y = subdf["row"],
                             alpha = subdf["agents"]/df["agents"].max(),
-                            c = color,
+                            c = colors[0],
                             label = "all",
                             s = markersize)
                 
@@ -80,14 +80,15 @@ def animate_grid_occupation(df: pandas.DataFrame,
 
                 subdf = df[df["simtime"] == i]
                 
-                for pop in population:
-
+                for j in range(len(population)):
+                    pop = population[j]
                     popdf = subdf[subdf[pop] > 0]
                     plt.scatter(x = popdf["col"],
                                 y = popdf["row"],
                                 alpha = popdf[pop] / popdf[pop].max(),
                                 label = pop, 
-                                s = markersize)
+                                s = markersize,
+                                c = colors[j])
                 
                 if i == mintime: plt.legend()
 

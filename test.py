@@ -29,20 +29,20 @@ animation.animate_grid_occupation(
                             df = env_df,
                             filename = "segregationvideo",
                             population = ["natives","immigrants"],
-                            color = "red",
-                            tpf = 0.01, # time per frame
+                            colors = ["#F52D2D","#4A87F1"],
+                            tpf = 0.05, # time per frame
                             mintime = 0,
-                            maxtime = 20, 
+                            maxtime = 500, 
                             markersize = 150.0
                         )
-"""
+
 animation.animate_density(
         df = density_df,
         filename = "segregationutility2",
         attr = "utility",
         defaultsize = 150,
-        color = "red",
+        color = "#F52D2D",
         tpf = 0.01
     )
-"""
+
 db.close()
