@@ -115,7 +115,7 @@ if __name__ == "__main__":
         color = "red",
         tpf = 0.05
     )
-
+ 
     animation.animate_density(
         df = density_df,
         filename = "recoveryanimation",
