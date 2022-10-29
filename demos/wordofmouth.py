@@ -43,12 +43,12 @@ if __name__ == "__main__":
                         )
     
     # model specific global settings (parameter values)
-    _prob_recommend = 0.01
-    _impactarea = 3
-    _initialclients = 5
+    _prob_recommend = 0.03
+    _impactarea = 2
+    _initialclients = 1
 
     # setup simulation
-    sim = framework.Simulation(50)
+    sim = framework.Simulation(200)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     
     agents = pops.get_agents()
 
-    # set 5 initial purchases 
+    # set initial purchases 
     for _ in range(_initialclients):
         agent = random.choice(agents)
         agent.set_attr_value("purchased", 1)
@@ -82,15 +82,26 @@ if __name__ == "__main__":
                 
         # update results in database, for agents and for environment
         pops.write_agents_to_db(sim.Iteration)
+        pops.write_density_to_db(sim.Iteration)
     
-    # get dataframes with simulation results 
+    # get dataframes with simulation results
     agents_df = db_manager.get_agentsdf()
-    
+    density_df = db_manager.get_densitydf()
+
     # visualize simulation data
     stats.set_fontsizes(8,10,12)
 
     stats.plot_avgattr_lines(["purchased"], agents_df)
     stats.save_plot("avgpurchasingshare")
+
+    animation.animate_density(
+        df = density_df,
+        filename = "purchasinganimation",
+        attr = "purchased",
+        defaultsize = 50,
+        color = "blue",
+        tpf = 0.05
+    )
 
     # end program
     db.close()
