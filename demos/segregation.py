@@ -29,27 +29,27 @@ if __name__ == "__main__":
     db_manager = data.Manager(db)
     
     # create an empty environment
-    env = framework.Environment(1, True, 20, 20, db_manager) # Environment constructor implicitly resets environment table in database
+    env = framework.Environment(1, True, 50, 50, db_manager) # Environment constructor implicitly resets environment table in database
 
     # create initial population of healthy humans
     attrs = ["utility","type"]
     datatypes = ["REAL","TEXT"]
     pops = framework.Populations(amount = 2, env = env, db_manager = db_manager, attributes = attrs, datatypes = datatypes)
     pops.add_population(name = "natives", 
-                        size = 50, 
+                        size = 500, 
                         attributes = attrs, 
                         datatypes = datatypes, 
                         initialvals = [100, "native"]
                         )
     pops.add_population(name = "immigrants",
-                        size = 50,
+                        size = 500,
                         attributes = attrs,
                         datatypes = datatypes,
                         initialvals = [100, "immigrant"]
                         )
     
     # setup simulation
-    sim = framework.Simulation(1000)
+    sim = framework.Simulation(2500)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -113,7 +113,7 @@ if __name__ == "__main__":
                 break
                 
         # update results in database, for agents and for environment
-        if (sim.Iteration % 10) == 0:
+        if (sim.Iteration % 25) == 0:
             pops.write_agents_to_db(sim.Iteration)
             pops.write_env_to_db(sim.Iteration)
             pops.write_density_to_db(sim.Iteration)
@@ -126,17 +126,17 @@ if __name__ == "__main__":
     # visualize simulation data
     stats.set_fontsizes(8,10,12)
 
-    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=0, markersize = 150.0)
-    stats.save_plot("segplt_early_ia1_50agents_1000it")
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=0, markersize = 50.0)
+    stats.save_plot("segplt_early_ia1_2000agents_10000it")
 
-    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=500, markersize = 150.0)
-    stats.save_plot("segplt_intermediate_ia1_50agents_1000it")
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=500, markersize = 50.0)
+    stats.save_plot("segplt_intermediate_ia1_2000agents_10000it")
 
-    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=1000, markersize = 150.0)
-    stats.save_plot("segplt_late_ia1_50agents_1000it")
+    stats.plot_grid_occupation(env_df, ["natives","immigrants"], colors = ["#F52D2D","#4A87F1"], maxtime=1000, markersize = 50.0)
+    stats.save_plot("segplt_late_ia1_2000agents_10000it")
 
     stats.plot_avgattr_lines(["utility"], agents_df)
-    stats.save_plot("avgutil_ia1_50agents_1000it")
+    stats.save_plot("avgutil_ia1_2000agents_10000it")
 
     animation.animate_grid_occupation(
                             df = env_df,

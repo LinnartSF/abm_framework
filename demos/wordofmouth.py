@@ -43,7 +43,7 @@ if __name__ == "__main__":
                         )
     
     # model specific global settings (parameter values)
-    _prob_recommend = 0.1
+    _prob_recommend = 0.01
     _impactarea = 3
     _initialclients = 5
 
@@ -77,7 +77,7 @@ if __name__ == "__main__":
 
                 if agent.get_attr_value("purchased") == 0 and neighbour.get_attr_value("purchased") == 1 and random.uniform(0,1) < _prob_recommend: 
                     
-                    agent.set_attr_value("purchasd", 1)
+                    agent.set_attr_value("purchased", 1)
                     break               
                 
         # update results in database, for agents and for environment
