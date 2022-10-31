@@ -29,7 +29,7 @@ if __name__ == "__main__":
     db_manager = data.Manager(db)
     
     # create an empty environment
-    env = framework.Environment(1, True, 20, 20, db_manager) # Environment constructor implicitly resets environment table in database
+    env = framework.Environment(1, True, 10, 10, db_manager) # Environment constructor implicitly resets environment table in database
 
     # create initial population of healthy humans
     attrs = ["life_t0","life_t1"]
@@ -49,14 +49,14 @@ if __name__ == "__main__":
     for i in range(200):
         agents[i].set_attr_value("life_t0",1)
     """
-    (env.Array[8][8])[0].set_attr_value("life_t0",1)
-    (env.Array[8][9])[0].set_attr_value("life_t0",1)
-    (env.Array[8][10])[0].set_attr_value("life_t0",1)
-    (env.Array[9][10])[0].set_attr_value("life_t0",1)
-    (env.Array[10][9])[0].set_attr_value("life_t0",1)
+    (env.Array[4][4])[0].set_attr_value("life_t0",1)
+    (env.Array[4][5])[0].set_attr_value("life_t0",1)
+    (env.Array[4][6])[0].set_attr_value("life_t0",1)
+    (env.Array[5][6])[0].set_attr_value("life_t0",1)
+    (env.Array[6][5])[0].set_attr_value("life_t0",1)
 
     # setup simulation
-    sim = framework.Simulation(20)
+    sim = framework.Simulation(5)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     while sim.run():
         
         for agent in agents:
-
+            print("iteration "+str(sim.Iteration)+" row "+str(agent.Row)+" col "+str(agent.Col)+" life_t0: "+str(agent.get_attr_value("life_t0")))
             # get that agents neighbourhood
             neighbours = env.get_neighbourhood(agent, mode = "moore", radius = 1)
 
