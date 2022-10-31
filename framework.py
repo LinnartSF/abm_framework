@@ -305,9 +305,9 @@ class Environment:
         if type(ref) == Agent:
             if mode == "moore":
             
-                for row in range(ref.Row-radius,ref.Row+radius):
+                for row in range(ref.Row-radius,ref.Row+radius+1):
 
-                    for col in range(ref.Col-radius,ref.Col+radius):
+                    for col in range(ref.Col-radius,ref.Col+radius+1):
 
                         if row == ref.Row and col == ref.Col:
                         
@@ -341,14 +341,14 @@ class Environment:
                 if self.Endless == False:
                 
                     # first, go through rows within radius
-                    for row in range(max(1,ref.Row - radius), min(self.Rows,ref.Row + radius)):
+                    for row in range(max(1,ref.Row - radius), min(self.Rows+1,ref.Row + radius+1)):
 
                         for o in self.Array[row-1][ref.Col-1]:
                                 
                             if o != ref: ls_neighbourhood.append(o)
                 
                     # next, go through cols within radius
-                    for col in range(max(1,ref.Col-radius), min(self.Columns, ref.Col + radius)):
+                    for col in range(max(1,ref.Col-radius), min(self.Columns+1, ref.Col + radius+1)):
 
                         for o in self.Array[ref.Row-1][col-1]:
 
@@ -356,7 +356,7 @@ class Environment:
 
                 else: # endless grid
 
-                    for row in range(ref.Row-radius, ref.Row+radius):
+                    for row in range(ref.Row-radius, ref.Row+radius+1):
 
                         if row < 1: row = self.Rows + radius
                         if row > self.Rows: row = row - self.Rows
@@ -365,7 +365,7 @@ class Environment:
 
                             if o != ref: ls_neighbourhood.append(o)
                 
-                    for col in range(ref.Col-radius, ref.Row + radius):
+                    for col in range(ref.Col-radius, ref.Row + radius +1):
 
                         if col < 1: col = self.Columns + radius
                         if col > self.Columns: col = col - self.Columns
@@ -396,9 +396,9 @@ class Environment:
 
             if mode == "moore":
             
-                for row in range(int(ref[0])-int(radius),int(ref[1])+int(radius)):
+                for row in range(ref[0]-radius,ref[1]+radius+1):
 
-                    for col in range(int(ref[1])-int(radius),int(ref[1])+int(radius)):
+                    for col in range(ref[1]-radius,ref[1]+radius+1):
 
                         if row == ref[0] and col == ref[1]:
                         
@@ -427,14 +427,14 @@ class Environment:
                 if self.Endless == False:
                 
                     # first, go through rows within radius
-                    for row in range(max(1,ref[0] - radius), min(self.Rows,ref[0]+ radius)):
+                    for row in range(max(1,ref[0] - radius), min(self.Rows+1,ref[0]+ radius+1)):
 
                         for o in self.Array[row-1][ref[1]-1]:
                                 
                             ls_neighbourhood.append(o)
                 
                     # next, go through cols within radius
-                    for col in range(max(1,ref[1]-radius), min(self.Columns, ref[1] + radius)):
+                    for col in range(max(1,ref[1]-radius), min(self.Columns+1, ref[1] + radius+1)):
 
                         for o in self.Array[ref[0]-1][col-1]:
 
@@ -442,7 +442,7 @@ class Environment:
 
                 else: # endless grid
 
-                    for row in range(ref[0]-radius, ref[0]+radius):
+                    for row in range(ref[0]-radius, ref[0]+radius+1):
 
                         if row < 1: row = self.Rows + radius
                         if row > self.Rows: row = row - self.Rows
@@ -451,7 +451,7 @@ class Environment:
 
                             ls_neighbourhood.append(o)
                 
-                    for col in range(ref[1]-radius, ref[2] + radius):
+                    for col in range(ref[1]-radius, ref[2] + radius+1):
 
                         if col < 1: col = self.Columns + radius
                         if col > self.Columns: col = col - self.Columns

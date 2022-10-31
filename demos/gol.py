@@ -36,7 +36,7 @@ if __name__ == "__main__":
     datatypes = ["INTEGER","INTEGER"]
     pops = framework.Populations(amount = 1, env = env, db_manager = db_manager, attributes = attrs, datatypes = datatypes)
     pops.add_population(name = "units", 
-                        size = 200, 
+                        size = 400, 
                         attributes = attrs, 
                         datatypes = datatypes, 
                         initialvals = [0, 0]
@@ -44,12 +44,19 @@ if __name__ == "__main__":
    
     # set seed of simulation (number of agents alive and their pattern)
     agents = pops.get_agents()
+    """
     random.shuffle(agents)
-    for i in range(10):
+    for i in range(200):
         agents[i].set_attr_value("life_t0",1)
+    """
+    (env.Array[8][8])[0].set_attr_value("life_t0",1)
+    (env.Array[8][9])[0].set_attr_value("life_t0",1)
+    (env.Array[8][10])[0].set_attr_value("life_t0",1)
+    (env.Array[9][10])[0].set_attr_value("life_t0",1)
+    (env.Array[10][9])[0].set_attr_value("life_t0",1)
 
     # setup simulation
-    sim = framework.Simulation(200)
+    sim = framework.Simulation(20)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -66,7 +73,8 @@ if __name__ == "__main__":
             _neighbours_alive = 0
             for neighbour in neighbours:
                 
-                if neighbour.get_attr_value("life_t0") == 1: _neighbours_alive += 1
+                if neighbour.get_attr_value("life_t0") == 1: 
+                    if sim.Iteration == 1: _neighbours_alive  += 1
 
             if agent.get_attr_value("life_t0") == 1: 
 
@@ -89,6 +97,11 @@ if __name__ == "__main__":
         # update results in database, for agents and for environment
         pops.write_agents_to_db(sim.Iteration)
         pops.write_density_to_db(sim.Iteration)
+
+        # update attributes for next round
+        for agent in agents:
+
+            agent.set_attr_value("life_t0", agent.get_attr_value("life_t1"))
     
     # get dataframes with simulation results
     density_df = db_manager.get_densitydf()
@@ -98,11 +111,11 @@ if __name__ == "__main__":
 
     animation.animate_density(
         df = density_df,
-        filename = "gameoflife",
+        filename = "gol_initialcluster",
         attr = "life_t1",
         defaultsize = 50,
         color = "black",
-        tpf = 0.05
+        tpf = 0.30
     )
 
     # end program

@@ -265,18 +265,26 @@ def plot_density_alpha(df: pandas.DataFrame,
     # subset relevant data from the dataframe provided as argument
     if maxtime == 0: maxtime = df["simtime"].max()
     df = df[df["simtime"] == maxtime]
-
+    
     # create new figure
     fig = plt.figure()
     fig.gca().xaxis.set_major_locator(MaxNLocator(integer=True))
     fig.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
 
-    # use attr column data from results database (pandas DataFrame)
-    plt.scatter(df[df[attr]>0]["col"],
-                df[df[attr]>0]["row"],
-                alpha = df[df[attr]>0][attr]/df[attr].max(),
-                c = color,
-                label = attr)
+    # use attr column data from results database (pandas DataFrame); only plot if there are actual datapoints
+    df = df[df[attr]>0]
+    if not df.empty:
+
+        plt.scatter(df["col"],
+                    df["row"],
+                    alpha = df[attr]/df[attr].max(),
+                    c = color,
+                    label = attr)
+    
+    else:
+
+        warning("there is no data to plot in density plot")
+
 
     # add attributes
     plt.title(f"density grid for attr: {attr}")
