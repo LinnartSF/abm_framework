@@ -74,7 +74,7 @@ if __name__ == "__main__":
             for neighbour in neighbours:
                 
                 if neighbour.get_attr_value("life_t0") == 1: 
-                    if sim.Iteration == 1: _neighbours_alive  += 1
+                    _neighbours_alive  += 1
 
             if agent.get_attr_value("life_t0") == 1: 
 
