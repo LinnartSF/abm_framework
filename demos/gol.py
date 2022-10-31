@@ -44,16 +44,9 @@ if __name__ == "__main__":
    
     # set seed of simulation (number of agents alive and their pattern)
     agents = pops.get_agents()
-    """
     random.shuffle(agents)
-    for i in range(200):
+    for i in range(50):
         agents[i].set_attr_value("life_t0",1)
-    """
-    (env.Array[4][4])[0].set_attr_value("life_t0",1)
-    (env.Array[4][5])[0].set_attr_value("life_t0",1)
-    (env.Array[4][6])[0].set_attr_value("life_t0",1)
-    (env.Array[5][6])[0].set_attr_value("life_t0",1)
-    (env.Array[6][5])[0].set_attr_value("life_t0",1)
 
     # setup simulation
     sim = framework.Simulation(50)
@@ -111,7 +104,7 @@ if __name__ == "__main__":
 
     animation.animate_density(
         df = density_df,
-        filename = "gol_initialcluster",
+        filename = "gol_randomendless",
         attr = "life_t1",
         defaultsize = 50,
         color = "black",
