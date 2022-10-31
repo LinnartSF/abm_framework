@@ -36,7 +36,7 @@ if __name__ == "__main__":
     datatypes = ["INTEGER","INTEGER"]
     pops = framework.Populations(amount = 1, env = env, db_manager = db_manager, attributes = attrs, datatypes = datatypes)
     pops.add_population(name = "units", 
-                        size = 400, 
+                        size = 100, 
                         attributes = attrs, 
                         datatypes = datatypes, 
                         initialvals = [0, 0]
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     (env.Array[6][5])[0].set_attr_value("life_t0",1)
 
     # setup simulation
-    sim = framework.Simulation(5)
+    sim = framework.Simulation(3)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
