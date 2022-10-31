@@ -35,7 +35,7 @@ if __name__ == "__main__":
     attrs = ["life_t0","life_t1"]
     datatypes = ["INTEGER","INTEGER"]
     pops = framework.Populations(amount = 1, env = env, db_manager = db_manager, attributes = attrs, datatypes = datatypes)
-    pops.add_population(name = "agents", 
+    pops.add_population(name = "units", 
                         size = 200, 
                         attributes = attrs, 
                         datatypes = datatypes, 
