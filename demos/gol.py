@@ -29,7 +29,7 @@ if __name__ == "__main__":
     db_manager = data.Manager(db)
     
     # create an empty environment
-    env = framework.Environment(1, True, 10, 10, db_manager) # Environment constructor implicitly resets environment table in database
+    env = framework.Environment(1, False, 10, 10, db_manager) # Environment constructor implicitly resets environment table in database
 
     # create initial population of healthy humans
     attrs = ["life_t0","life_t1"]
@@ -104,7 +104,7 @@ if __name__ == "__main__":
 
     animation.animate_density(
         df = density_df,
-        filename = "gol_randomendless",
+        filename = "gol_randombounded",
         attr = "life_t1",
         defaultsize = 50,
         color = "black",
