@@ -56,7 +56,7 @@ if __name__ == "__main__":
     (env.Array[6][5])[0].set_attr_value("life_t0",1)
 
     # setup simulation
-    sim = framework.Simulation(3)
+    sim = framework.Simulation(50)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     while sim.run():
         
         for agent in agents:
-            print("iteration "+str(sim.Iteration)+" row "+str(agent.Row)+" col "+str(agent.Col)+" life_t0: "+str(agent.get_attr_value("life_t0")))
+
             # get that agents neighbourhood
             neighbours = env.get_neighbourhood(agent, mode = "moore", radius = 1)
 
