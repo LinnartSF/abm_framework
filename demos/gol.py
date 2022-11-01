@@ -23,6 +23,9 @@ if __name__ == "__main__":
     import framework
     import random
     import animation
+    
+    import time
+    starttime = time.time()
 
     # setup database manager and connection
     db = data.Database("sqlite3", config.path_databasefile)
@@ -49,7 +52,7 @@ if __name__ == "__main__":
         agents[i].set_attr_value("life_t0",1)
 
     # setup simulation
-    sim = framework.Simulation(50)
+    sim = framework.Simulation(10)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
@@ -114,3 +117,6 @@ if __name__ == "__main__":
     # end program
     db.close()
     print("demo ends")
+
+    endtime = time.time()
+    print(str(endtime-starttime))
