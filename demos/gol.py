@@ -52,7 +52,7 @@ if __name__ == "__main__":
         agents[i].set_attr_value("life_t0",1)
 
     # setup simulation
-    sim = framework.Simulation(10)
+    sim = framework.Simulation(100)
 
     # make sure that environment and agents tables in database are setup at this time
     pops.write_env_to_db(sim.Iteration)
