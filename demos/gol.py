@@ -23,7 +23,7 @@ if __name__ == "__main__":
     import framework
     import random
     import animation
-    
+
     import time
     starttime = time.time()
 
@@ -107,7 +107,7 @@ if __name__ == "__main__":
 
     animation.animate_density(
         df = density_df,
-        filename = "gol_randombounded",
+        filename = "gol_randomboundednb",
         attr = "life_t1",
         defaultsize = 50,
         color = "black",
