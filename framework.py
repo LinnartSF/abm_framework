@@ -1,15 +1,10 @@
 """
-
 Module that provides a framework in the form of a class library that aids agent-based simulation modeling
-
 The module only covers grid-based simulations
-
 Classes comprise
 - environment
 - agent
-
 Module requires random module
-
 """
 
 # TODO support other query languages than SQLite (where differences apply)
@@ -21,16 +16,11 @@ __email__ = "linnartsf@gmail.com"
 # required modules
 import random
 import data
-from numba import njit, jit
-
-# --- FUNCTIONS ------------------------------------------------------------------------------------------------------------------
 
 def warning(msg: str) -> None:
     """ internal but also externally accessible function for printing warning message (used for faulty user input) """
     
     print(f"WARNING: {msg}")
-
-# --- CLASS / CUSTOM DATATYPES ---------------------------------------------------------------------------------------------------
 
 # simulation class
 class Simulation:
@@ -79,7 +69,7 @@ class Agent:
         self.Row = 0 # default value, "unassigned"
         self.Col = 0 # default value, "unassigned"
 
-        # placeholder for attribute dictionary 
+        # placeholder for attribute dictionary
         self.Attributes = {}
     
     def add_attribute(self,
@@ -292,7 +282,6 @@ class Environment:
                          ) -> list:
         """ returns specified neighbourhood in the form of a list of all agents in the neighbourhood, except the calling agent itself; type supports "moore", order supports "random"; first argument can be an agent or a cell """
         
-        # TODO numpy instead and create a predefined ndarray of predefined length (numba optimization)
         ls_neighbourhood = []
 
         if radius >= min([self.Columns,self.Rows])/2: 
@@ -310,22 +299,40 @@ class Environment:
         
         if type(ref) == Agent:
             if mode == "moore":
-                
-                # numba optimization
-                ls_neighbourhood = nb_append_moore(ref = ref, 
-                    refrow = ref.Row, 
-                    refcol = ref.Col, 
-                    radius = radius, 
-                    cellcap = self.Cellcapacity, 
-                    grid = self.Array, 
-                    endless = self.Endless, 
-                    gridrows = self.Rows, 
-                    gridcols = self.Columns,
-                    returnls = [ref])
+            
+                for row in range(ref.Row-radius,ref.Row+radius+1):
+
+                    for col in range(ref.Col-radius,ref.Col+radius+1):
+
+                        if row == ref.Row and col == ref.Col:
+                        
+                            # if cell capacity is greater than one then that means neighbourhood also includes the cell that the respective agent is located in
+                            if self.Cellcapacity > 1:
+
+                                for o in self.Array[row-1][col-1]:
+
+                                    if o == ref:
+                                        pass
+                                    else: 
+                                        ls_neighbourhood.append(o) 
+
+                        else:
+
+                            if self.Endless == True:
+
+                                if row < 1: row = self.Rows+row
+                                if col < 1: col = self.Columns+col
+                                if row > self.Rows: row = row - self.Rows
+                                if col > self.Columns: col = col - self.Columns
+
+                            if row >= 1 and row <= self.Rows and col >= 1 and col <= self.Columns:
+                            
+                                for o in self.Array[row-1][col-1]:
+                                
+                                    ls_neighbourhood.append(o) 
         
             elif mode == "neumann":
-                
-                # TODO numba optimization
+
                 if self.Endless == False:
                 
                     # first, go through rows within radius
@@ -363,8 +370,7 @@ class Environment:
                             if o != ref: ls_neighbourhood.append(o)
 
             else: # random sample of size radius*radius
-                
-                # TODO numba optimization
+            
                 cells = random.sample(self.Cells, radius*radius)
                 for cell in cells:
 
@@ -766,29 +772,3 @@ class Populations:
         self.write_env_to_db(simtime)
         self.write_agents_to_db(simtime)
         self.write_density_to_db(simtime)
-
-# --- NUMBA FUNCTIONS -------------------------------------------------------------------------------------------------------------
-
-@njit
-def nb_append_moore(ref: Agent, refrow: int, refcol: int, radius: int, cellcap: int, grid: list, endless: bool, gridrows: int, gridcols: int, returnls: list) -> list:
-    for row in range(refrow-radius, refrow+radius+1):
-        for col in range(refcol-radius, refcol+radius+1):
-            if row == refrow and col == refcol:
-                if cellcap > 1:
-                    for o in grid[row-1][col-1]:
-                        append_agent(ref,o,returnls)
-                        #if o != ref: returnls.append(o)
-            else:
-                if endless == True:
-                    if row < 1: row = gridrows+row
-                    if col < 1: col = gridcols+col
-                    if row > gridrows: row = row - gridrows
-                    if col > gridcols: col = col - gridcols
-                if row >= 1 and row <= gridrows and col >= 1 and col <= gridcols:
-                    for o in grid[row-1][col-1]:
-                        append_agent(ref, o, returnls)
-                    #    returnls.append(o)
-    return returnls[1:]
-
-def append_agent(ref: Agent, o: Agent, returnls: list) -> None:
-    if o != ref: returnls.append(o)
