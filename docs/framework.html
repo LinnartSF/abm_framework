@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module framework</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>framework</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cfeli03%5Cdesktop%5Clocaldir%5Cgithub%5Cabm_framework%5Cframework.py">c:\users\feli03\desktop\localdir\github\abm_framework\framework.py</a></font></td></tr></table>
+    <p><tt>Module&nbsp;that&nbsp;provides&nbsp;a&nbsp;framework&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;a&nbsp;class&nbsp;library&nbsp;that&nbsp;aids&nbsp;agent-based&nbsp;simulation&nbsp;modeling<br>
+The&nbsp;module&nbsp;only&nbsp;covers&nbsp;grid-based&nbsp;simulations<br>
+Classes&nbsp;comprise<br>
+-&nbsp;environment<br>
+-&nbsp;agent<br>
+Module&nbsp;requires&nbsp;random&nbsp;module</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="data.html">data</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="framework.html#Agent">Agent</a>
+</font></dt><dt><font face="helvetica, arial"><a href="framework.html#Environment">Environment</a>
+</font></dt><dt><font face="helvetica, arial"><a href="framework.html#Population">Population</a>
+</font></dt><dt><font face="helvetica, arial"><a href="framework.html#Populations">Populations</a>
+</font></dt><dt><font face="helvetica, arial"><a href="framework.html#Simulation">Simulation</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Agent">class <strong>Agent</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Agent">Agent</a>(id:&nbsp;int,&nbsp;pop:&nbsp;str)<br>
+&nbsp;<br>
+Agents&nbsp;have&nbsp;attributes&nbsp;that&nbsp;can&nbsp;be&nbsp;relevant&nbsp;to&nbsp;a&nbsp;simulation<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Agent-__init__"><strong>__init__</strong></a>(self, id: int, pop: str)</dt><dd><tt>Initialize&nbsp;self.&nbsp;&nbsp;See&nbsp;help(type(self))&nbsp;for&nbsp;accurate&nbsp;signature.</tt></dd></dl>
+
+<dl><dt><a name="Agent-add_attribute"><strong>add_attribute</strong></a>(self, attr: str, val: &lt;built-in function any&gt;) -&gt; None</dt><dd><tt>method&nbsp;adds&nbsp;attr&nbsp;to&nbsp;attributes&nbsp;dictionary,&nbsp;with&nbsp;the&nbsp;specified&nbsp;initial&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="Agent-decrease_attr_value"><strong>decrease_attr_value</strong></a>(self, attr: str, val: &lt;built-in function any&gt;) -&gt; None</dt><dd><tt>decreases&nbsp;specified&nbsp;attribute&nbsp;by&nbsp;the&nbsp;value&nbsp;handed&nbsp;over&nbsp;as&nbsp;argument</tt></dd></dl>
+
+<dl><dt><a name="Agent-get_attr_value"><strong>get_attr_value</strong></a>(self, attr: str) -&gt; &lt;built-in function any&gt;</dt><dd><tt>method&nbsp;for&nbsp;getting&nbsp;attribute&nbsp;value</tt></dd></dl>
+
+<dl><dt><a name="Agent-increase_attr_value"><strong>increase_attr_value</strong></a>(self, attr: str, val: &lt;built-in function any&gt;) -&gt; None</dt><dd><tt>increases&nbsp;specified&nbsp;attribute&nbsp;by&nbsp;the&nbsp;value&nbsp;handed&nbsp;over&nbsp;as&nbsp;argument</tt></dd></dl>
+
+<dl><dt><a name="Agent-set_attr_value"><strong>set_attr_value</strong></a>(self, attr: str, val: &lt;built-in function any&gt;) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;setting&nbsp;new&nbsp;attribute&nbsp;value&nbsp;for&nbsp;agent</tt></dd></dl>
+
+<dl><dt><a name="Agent-step"><strong>step</strong></a>(self) -&gt; None</dt><dd><tt>implements&nbsp;one&nbsp;iteration&nbsp;of&nbsp;the&nbsp;simulation&nbsp;run</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Attributes': &lt;class 'dict'&gt;, 'Col': &lt;class 'int'&gt;, 'ID': &lt;class 'int'&gt;, 'Population': &lt;class 'str'&gt;, 'Row': &lt;class 'int'&gt;}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Environment">class <strong>Environment</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Environment">Environment</a>(capa_cell:&nbsp;int,&nbsp;endless:&nbsp;bool,&nbsp;rows:&nbsp;int,&nbsp;columns:&nbsp;int,&nbsp;db_manager)<br>
+&nbsp;<br>
+<a href="#Environment">Environment</a>&nbsp;can&nbsp;contain&nbsp;agents&nbsp;in&nbsp;cells<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Environment-__init__"><strong>__init__</strong></a>(self, capa_cell: int, endless: bool, rows: int, columns: int, db_manager)</dt><dd><tt>constructs&nbsp;<a href="#Environment">Environment</a>&nbsp;instance,&nbsp;facilitating&nbsp;a&nbsp;grid&nbsp;for&nbsp;agent&nbsp;interactions</tt></dd></dl>
+
+<dl><dt><a name="Environment-add_agent"><strong>add_agent</strong></a>(self, agent: framework.Agent, row: int = 0, col: int = 0) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;adding&nbsp;agents&nbsp;to&nbsp;a&nbsp;cell&nbsp;in&nbsp;the&nbsp;grid;&nbsp;either&nbsp;a&nbsp;specific&nbsp;cell&nbsp;that&nbsp;can&nbsp;be&nbsp;specified,&nbsp;or,&nbsp;if&nbsp;one&nbsp;of&nbsp;the&nbsp;coordinates&nbsp;is&nbsp;not&nbsp;specified,&nbsp;a&nbsp;random&nbsp;cell&nbsp;is&nbsp;found&nbsp;and&nbsp;assigned</tt></dd></dl>
+
+<dl><dt><a name="Environment-get_cell_content"><strong>get_cell_content</strong></a>(self, row: int, col: int) -&gt; list</dt><dd><tt>method&nbsp;for&nbsp;obtaining&nbsp;the&nbsp;agent&nbsp;list&nbsp;contained&nbsp;by&nbsp;the&nbsp;specified&nbsp;grid&nbsp;cell</tt></dd></dl>
+
+<dl><dt><a name="Environment-get_freecell"><strong>get_freecell</strong></a>(self, row: int, col: int, targetcell: bool = False, radius: int = -1) -&gt; tuple</dt><dd><tt>gets&nbsp;a&nbsp;free&nbsp;cell&nbsp;randomly,&nbsp;either&nbsp;from&nbsp;entire&nbsp;grid&nbsp;or&nbsp;as&nbsp;close&nbsp;to&nbsp;specified&nbsp;cell&nbsp;as&nbsp;possible;&nbsp;if&nbsp;radius&nbsp;is&nbsp;set,&nbsp;return&nbsp;None&nbsp;if&nbsp;no&nbsp;free&nbsp;cell&nbsp;found,&nbsp;otherwise&nbsp;tuple</tt></dd></dl>
+
+<dl><dt><a name="Environment-get_freecells"><strong>get_freecells</strong></a>(self, n: int = -1) -&gt; list</dt><dd><tt>method&nbsp;for&nbsp;returning&nbsp;index&nbsp;list&nbsp;for&nbsp;all&nbsp;empty&nbsp;cells;&nbsp;if&nbsp;n&nbsp;specified&nbsp;only&nbsp;return&nbsp;up&nbsp;to&nbsp;n&nbsp;randomly&nbsp;sampled&nbsp;cells</tt></dd></dl>
+
+<dl><dt><a name="Environment-get_neighbourhood"><strong>get_neighbourhood</strong></a>(self, ref: &lt;built-in function any&gt;, mode: str = 'moore', radius: int = 1, order: str = 'random') -&gt; list</dt><dd><tt>returns&nbsp;specified&nbsp;neighbourhood&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;a&nbsp;list&nbsp;of&nbsp;all&nbsp;agents&nbsp;in&nbsp;the&nbsp;neighbourhood,&nbsp;except&nbsp;the&nbsp;calling&nbsp;agent&nbsp;itself;&nbsp;type&nbsp;supports&nbsp;"moore",&nbsp;order&nbsp;supports&nbsp;"random";&nbsp;first&nbsp;argument&nbsp;can&nbsp;be&nbsp;an&nbsp;agent&nbsp;or&nbsp;a&nbsp;cell</tt></dd></dl>
+
+<dl><dt><a name="Environment-relocate"><strong>relocate</strong></a>(self, agent: framework.Agent, targetcell: tuple) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;transfering&nbsp;agent&nbsp;from&nbsp;its&nbsp;current&nbsp;cell&nbsp;to&nbsp;target&nbsp;cell&nbsp;specified&nbsp;as&nbsp;argument;&nbsp;agent&nbsp;Row&nbsp;and&nbsp;Col&nbsp;attributes&nbsp;are&nbsp;updated</tt></dd></dl>
+
+<dl><dt><a name="Environment-update_freecell"><strong>update_freecell</strong></a>(self, row: int, col: int) -&gt; None</dt><dd><tt>checks&nbsp;if&nbsp;given&nbsp;free&nbsp;cell&nbsp;is&nbsp;still&nbsp;free,&nbsp;and&nbsp;if&nbsp;not&nbsp;removes&nbsp;it&nbsp;from&nbsp;the&nbsp;list&nbsp;of&nbsp;free&nbsp;cells</tt></dd></dl>
+
+<dl><dt><a name="Environment-update_freecells"><strong>update_freecells</strong></a>(self) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;checking&nbsp;all&nbsp;free&nbsp;cells,&nbsp;and&nbsp;if&nbsp;they&nbsp;are&nbsp;occupied&nbsp;by&nbsp;now,&nbsp;remove&nbsp;cell&nbsp;from&nbsp;list&nbsp;of&nbsp;free&nbsp;cells</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Array': &lt;class 'list'&gt;, 'Cellcapacity': &lt;class 'int'&gt;, 'Cells': &lt;class 'list'&gt;, 'Columns': &lt;class 'int'&gt;, 'DBManager': &lt;class 'data.Manager'&gt;, 'Endless': &lt;class 'bool'&gt;, 'Freecells': &lt;class 'list'&gt;, 'Rows': &lt;class 'int'&gt;}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Population">class <strong>Population</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Population">Population</a>(name:&nbsp;str,&nbsp;size:&nbsp;int,&nbsp;env:&nbsp;framework.<a href="#Environment">Environment</a>,&nbsp;id_lastused:&nbsp;int,&nbsp;db_manager,&nbsp;attributes:&nbsp;list&nbsp;=&nbsp;[],&nbsp;datatypes:&nbsp;list&nbsp;=&nbsp;[],&nbsp;initialvals:&nbsp;list&nbsp;=&nbsp;[],&nbsp;randomness:&nbsp;list&nbsp;=&nbsp;[])<br>
+&nbsp;<br>
+<a href="#Population">Population</a>&nbsp;class&nbsp;used&nbsp;for&nbsp;a&nbsp;single&nbsp;population,&nbsp;used&nbsp;by&nbsp;<a href="#Populations">Populations</a>&nbsp;class&nbsp;when&nbsp;adding&nbsp;populations<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Population-__init__"><strong>__init__</strong></a>(self, name: str, size: int, env: framework.Environment, id_lastused: int, db_manager, attributes: list = [], datatypes: list = [], initialvals: list = [], randomness: list = [])</dt><dd><tt>constructor&nbsp;for&nbsp;a&nbsp;population</tt></dd></dl>
+
+<dl><dt><a name="Population-get_agents"><strong>get_agents</strong></a>(self, n: int = -1) -&gt; list</dt><dd><tt>method&nbsp;for&nbsp;returning&nbsp;all&nbsp;agents&nbsp;of&nbsp;the&nbsp;population&nbsp;as&nbsp;a&nbsp;list</tt></dd></dl>
+
+<dl><dt><a name="Population-write_agents_to_db"><strong>write_agents_to_db</strong></a>(self, simtime: int) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;writing&nbsp;all&nbsp;agents&nbsp;in&nbsp;population&nbsp;into&nbsp;database</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Agents': &lt;class 'dict'&gt;, 'Attributes': &lt;class 'list'&gt;, 'DBManager': &lt;class 'data.Manager'&gt;, 'Datatypes': &lt;class 'list'&gt;, 'Environment': &lt;class 'framework.Environment'&gt;, 'Initialvals': &lt;class 'list'&gt;, 'Name': &lt;class 'str'&gt;, 'Size': &lt;class 'int'&gt;}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Populations">class <strong>Populations</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Populations">Populations</a>(amount:&nbsp;int,&nbsp;env:&nbsp;framework.<a href="#Environment">Environment</a>,&nbsp;db_manager,&nbsp;attributes:&nbsp;list,&nbsp;datatypes:&nbsp;list)<br>
+&nbsp;<br>
+<a href="#Populations">Populations</a>&nbsp;class&nbsp;for&nbsp;setting&nbsp;up&nbsp;and&nbsp;managing&nbsp;a&nbsp;population&nbsp;of&nbsp;agents<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Populations-__init__"><strong>__init__</strong></a>(self, amount: int, env: framework.Environment, db_manager, attributes: list, datatypes: list)</dt><dd><tt>constructs&nbsp;population&nbsp;container,&nbsp;knowing&nbsp;the&nbsp;number&nbsp;of&nbsp;populations&nbsp;that&nbsp;will&nbsp;be&nbsp;added</tt></dd></dl>
+
+<dl><dt><a name="Populations-add_population"><strong>add_population</strong></a>(self, name: str, size: int, attributes: list = [], datatypes: list = [], initialvals: list = [], randomness: list = [])</dt><dd><tt>creates&nbsp;a&nbsp;population&nbsp;and&nbsp;adds&nbsp;it&nbsp;to&nbsp;the&nbsp;populations&nbsp;dictionary</tt></dd></dl>
+
+<dl><dt><a name="Populations-get_agents"><strong>get_agents</strong></a>(self) -&gt; list</dt><dd><tt>method&nbsp;on&nbsp;<a href="#Populations">Populations</a>&nbsp;level&nbsp;instead&nbsp;of&nbsp;<a href="#Population">Population</a>&nbsp;level,&nbsp;for&nbsp;returning&nbsp;all&nbsp;agents&nbsp;in&nbsp;all&nbsp;populations&nbsp;assigned&nbsp;to&nbsp;<a href="#Populations">Populations</a>&nbsp;instance</tt></dd></dl>
+
+<dl><dt><a name="Populations-get_population"><strong>get_population</strong></a>(self, name: str) -&gt; framework.Population</dt><dd><tt>returns&nbsp;the&nbsp;specified&nbsp;population&nbsp;<a href="builtins.html#object">object</a>&nbsp;from&nbsp;populations&nbsp;dictionary</tt></dd></dl>
+
+<dl><dt><a name="Populations-reset_populations"><strong>reset_populations</strong></a>(self) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;resetting&nbsp;populations&nbsp;dictionary,&nbsp;deleting&nbsp;all&nbsp;old&nbsp;populations&nbsp;and&nbsp;resetting&nbsp;ID_lastused&nbsp;marker</tt></dd></dl>
+
+<dl><dt><a name="Populations-update_db"><strong>update_db</strong></a>(self, simtime: int) -&gt; None</dt><dd><tt>writes&nbsp;environment&nbsp;and&nbsp;all&nbsp;agent&nbsp;populations&nbsp;to&nbsp;database&nbsp;populations</tt></dd></dl>
+
+<dl><dt><a name="Populations-write_agents_to_db"><strong>write_agents_to_db</strong></a>(self, simtime: int) -&gt; None</dt><dd><tt>writes&nbsp;to&nbsp;db&nbsp;all&nbsp;agents&nbsp;and&nbsp;their&nbsp;values</tt></dd></dl>
+
+<dl><dt><a name="Populations-write_density_to_db"><strong>write_density_to_db</strong></a>(self, simtime: int) -&gt; None</dt><dd><tt>writes&nbsp;to&nbsp;db&nbsp;density&nbsp;table&nbsp;in&nbsp;database&nbsp;with&nbsp;agent&nbsp;property&nbsp;accumulation&nbsp;where&nbsp;relevant</tt></dd></dl>
+
+<dl><dt><a name="Populations-write_env_to_db"><strong>write_env_to_db</strong></a>(self, simtime: int) -&gt; None</dt><dd><tt>writes&nbsp;to&nbsp;db&nbsp;environment&nbsp;table&nbsp;in&nbsp;database&nbsp;with&nbsp;agent&nbsp;counts&nbsp;for&nbsp;population,&nbsp;for&nbsp;all&nbsp;agents&nbsp;in&nbsp;total&nbsp;and&nbsp;for&nbsp;the&nbsp;relevant&nbsp;population</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Amount': &lt;class 'int'&gt;, 'Attributes': &lt;class 'list'&gt;, 'DBManager': &lt;class 'data.Manager'&gt;, 'Datatypes': &lt;class 'list'&gt;, 'Environment': &lt;class 'framework.Environment'&gt;, 'ID_lastused': &lt;class 'int'&gt;, 'Populations': &lt;class 'dict'&gt;}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Simulation">class <strong>Simulation</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Simulation">Simulation</a>(limit:&nbsp;int)<br>
+&nbsp;<br>
+<a href="#Simulation">Simulation</a>&nbsp;is&nbsp;running&nbsp;or&nbsp;not,&nbsp;and&nbsp;has&nbsp;iteration&nbsp;counter&nbsp;and&nbsp;a&nbsp;max&nbsp;iteration&nbsp;limit<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Simulation-__init__"><strong>__init__</strong></a>(self, limit: int)</dt><dd><tt>constructor&nbsp;for&nbsp;a&nbsp;new&nbsp;simulation&nbsp;instance</tt></dd></dl>
+
+<dl><dt><a name="Simulation-run"><strong>run</strong></a>(self) -&gt; bool</dt><dd><tt>method&nbsp;for&nbsp;incrementing&nbsp;simulation&nbsp;iteration;&nbsp;also&nbsp;sets&nbsp;running&nbsp;to&nbsp;False&nbsp;to&nbsp;avoid&nbsp;another&nbsp;simulation&nbsp;run&nbsp;in&nbsp;a&nbsp;endless&nbsp;while&nbsp;loop;&nbsp;returns&nbsp;boolean&nbsp;for&nbsp;whether&nbsp;simulation&nbsp;still&nbsp;runs&nbsp;another&nbsp;iteration</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Iteration': &lt;class 'int'&gt;, 'Limit': &lt;class 'int'&gt;, 'Running': &lt;class 'bool'&gt;}</dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-warning"><strong>warning</strong></a>(msg: str) -&gt; None</dt><dd><tt>internal&nbsp;but&nbsp;also&nbsp;externally&nbsp;accessible&nbsp;function&nbsp;for&nbsp;printing&nbsp;warning&nbsp;message&nbsp;(used&nbsp;for&nbsp;faulty&nbsp;user&nbsp;input)</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__email__</strong> = 'linnartsf@gmail.com'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Linnart&nbsp;Felkl</td></tr></table>
+</body></html>

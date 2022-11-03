@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module stats</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>stats</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cfeli03%5Cdesktop%5Clocaldir%5Cgithub%5Cabm_framework%5Cstats.py">c:\users\feli03\desktop\localdir\github\abm_framework\stats.py</a></font></td></tr></table>
+    <p><tt>This&nbsp;module&nbsp;is&nbsp;used&nbsp;for&nbsp;visualizing&nbsp;results&nbsp;generated&nbsp;by&nbsp;the&nbsp;ABM&nbsp;simulation&nbsp;runs.&nbsp;<br>
+&nbsp;<br>
+The&nbsp;standardized&nbsp;results,&nbsp;stored&nbsp;in&nbsp;the&nbsp;database,&nbsp;are&nbsp;visualized&nbsp;using&nbsp;matplotlib.pyplot,&nbsp;which&nbsp;is&nbsp;wrapped&nbsp;by&nbsp;this&nbsp;module.&nbsp;The&nbsp;module&nbsp;also&nbsp;makes&nbsp;use&nbsp;of&nbsp;pandas.<br>
+&nbsp;<br>
+The&nbsp;module&nbsp;provides&nbsp;a&nbsp;set&nbsp;of&nbsp;pre-defined&nbsp;plotting&nbsp;functions.&nbsp;Data&nbsp;is&nbsp;forwarded&nbsp;to&nbsp;these&nbsp;in&nbsp;the&nbsp;form&nbsp;of&nbsp;input&nbsp;arguments.&nbsp;The&nbsp;functions&nbsp;then&nbsp;create&nbsp;the&nbsp;plots.&nbsp;<br>
+Functionality&nbsp;is&nbsp;also&nbsp;provided&nbsp;for&nbsp;saving&nbsp;plots&nbsp;as&nbsp;pdf&nbsp;or&nbsp;png.&nbsp;Destination&nbsp;directory&nbsp;must&nbsp;be&nbsp;specified&nbsp;in&nbsp;the&nbsp;config-file.&nbsp;Alternatively,&nbsp;paths&nbsp;where&nbsp;plots&nbsp;are&nbsp;saved&nbsp;can&nbsp;be&nbsp;specified&nbsp;as&nbsp;input&nbsp;arguments.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="config.html">config</a><br>
+</td><td width="25%" valign=top><a href="data.html">data</a><br>
+</td><td width="25%" valign=top><a href="pandas.html">pandas</a><br>
+</td><td width="25%" valign=top><a href="matplotlib.pyplot.html">matplotlib.pyplot</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-plot_agentattr_line"><strong>plot_agentattr_line</strong></a>(agent_id: int, attr: str, df: pandas.core.frame.DataFrame, mintime: int = 0, maxtime: int = 0) -&gt; None</dt><dd><tt>creates&nbsp;a&nbsp;line&nbsp;plot&nbsp;for&nbsp;for&nbsp;individual&nbsp;agent&nbsp;attribute&nbsp;value,&nbsp;for&nbsp;a&nbsp;single&nbsp;agent,&nbsp;throughout&nbsp;time&nbsp;(for&nbsp;one&nbsp;attribute)</tt></dd></dl>
+ <dl><dt><a name="-plot_agentattr_lines"><strong>plot_agentattr_lines</strong></a>(attr: str, df: pandas.core.frame.DataFrame, mintime: int = 0, maxtime: int = 0) -&gt; None</dt><dd><tt>plots&nbsp;trajectories&nbsp;for&nbsp;all&nbsp;agents&nbsp;in&nbsp;dataset,&nbsp;but&nbsp;only&nbsp;for&nbsp;the&nbsp;specified&nbsp;attribute</tt></dd></dl>
+ <dl><dt><a name="-plot_avgattr_lines"><strong>plot_avgattr_lines</strong></a>(attributes: list, df: pandas.core.frame.DataFrame, mintime: int = 0, maxtime: int = 0) -&gt; None</dt><dd><tt>plot&nbsp;avg&nbsp;value&nbsp;trajectory&nbsp;for&nbsp;all&nbsp;agents&nbsp;throughout&nbsp;time,&nbsp;for&nbsp;arbitrary&nbsp;amount&nbsp;of&nbsp;attributes</tt></dd></dl>
+ <dl><dt><a name="-plot_density_alpha"><strong>plot_density_alpha</strong></a>(df: pandas.core.frame.DataFrame, attr: str, color: str = 'red', maxtime: int = 0) -&gt; None</dt><dd><tt>function&nbsp;for&nbsp;plotting&nbsp;the&nbsp;density&nbsp;of&nbsp;specified&nbsp;attribute&nbsp;on&nbsp;a&nbsp;grid&nbsp;plot</tt></dd></dl>
+ <dl><dt><a name="-plot_density_markersize"><strong>plot_density_markersize</strong></a>(df: pandas.core.frame.DataFrame, attr: str, defaultsize: float, color: str = 'red', maxtime: int = 0) -&gt; None</dt><dd><tt>function&nbsp;for&nbsp;plotting&nbsp;the&nbsp;density&nbsp;of&nbsp;specified&nbsp;attribute&nbsp;on&nbsp;a&nbsp;grid&nbsp;plot</tt></dd></dl>
+ <dl><dt><a name="-plot_grid_occupation"><strong>plot_grid_occupation</strong></a>(df: pandas.core.frame.DataFrame, population: list = ['all'], maxtime: int = 0, markersize: float = 50.0, colors: list = ['red']) -&gt; None</dt><dd><tt>plot&nbsp;grid&nbsp;cell&nbsp;occupation&nbsp;(at&nbsp;least&nbsp;one&nbsp;agent&nbsp;in&nbsp;cell,&nbsp;or&nbsp;none),&nbsp;for&nbsp;"all"&nbsp;agent&nbsp;types&nbsp;or&nbsp;just&nbsp;for&nbsp;one&nbsp;or&nbsp;several&nbsp;agent&nbsp;types&nbsp;(i.e.&nbsp;"population")</tt></dd></dl>
+ <dl><dt><a name="-plt_valdistribution"><strong>plt_valdistribution</strong></a>(attributes: list, df: pandas.core.frame.DataFrame, mintime: int = 0, maxtime: int = 0) -&gt; None</dt><dd><tt>function&nbsp;for&nbsp;plotting&nbsp;dynamic&nbsp;relative&nbsp;state&nbsp;distribution&nbsp;among&nbsp;the&nbsp;state&nbsp;listed&nbsp;in&nbsp;attributes&nbsp;argument</tt></dd></dl>
+ <dl><dt><a name="-save_plot"><strong>save_plot</strong></a>(filename: str, filepath: str = '') -&gt; None</dt><dd><tt>stores&nbsp;plot&nbsp;as&nbsp;png&nbsp;and&nbsp;pdf,&nbsp;for&nbsp;specified&nbsp;equipment&nbsp;name</tt></dd></dl>
+ <dl><dt><a name="-set_autolayout"><strong>set_autolayout</strong></a>(autolayout: bool) -&gt; None</dt><dd><tt>sets&nbsp;autolayout&nbsp;True&nbsp;or&nbsp;False&nbsp;for&nbsp;all&nbsp;plotting&nbsp;functions&nbsp;in&nbsp;this&nbsp;module</tt></dd></dl>
+ <dl><dt><a name="-set_edgecolor"><strong>set_edgecolor</strong></a>(color: str) -&gt; None</dt><dd><tt>sets&nbsp;edge&nbsp;color&nbsp;of&nbsp;all&nbsp;plots&nbsp;in&nbsp;this&nbsp;module</tt></dd></dl>
+ <dl><dt><a name="-set_figsize"><strong>set_figsize</strong></a>(w: float, h: float) -&gt; None</dt><dd><tt>sets&nbsp;fig&nbsp;size&nbsp;for&nbsp;entire&nbsp;plotting&nbsp;module</tt></dd></dl>
+ <dl><dt><a name="-set_fontsizes"><strong>set_fontsizes</strong></a>(smallsize: float, mediumsize: float, largesize: float)</dt><dd><tt>function&nbsp;for&nbsp;setting&nbsp;font&nbsp;size&nbsp;standard&nbsp;for&nbsp;all&nbsp;plotting&nbsp;functions&nbsp;in&nbsp;module</tt></dd></dl>
+ <dl><dt><a name="-set_linewidth"><strong>set_linewidth</strong></a>(linewidth: float) -&gt; None</dt><dd><tt>sets&nbsp;axes&nbsp;linewidth&nbsp;for&nbsp;all&nbsp;plotting&nbsp;functions&nbsp;in&nbsp;this&nbsp;module</tt></dd></dl>
+ <dl><dt><a name="-set_plotstyle"><strong>set_plotstyle</strong></a>(style: str) -&gt; None</dt><dd><tt>sets&nbsp;matplotlib&nbsp;plotstyle</tt></dd></dl>
+ <dl><dt><a name="-warning"><strong>warning</strong></a>(msg: str) -&gt; None</dt><dd><tt>helper&nbsp;function&nbsp;that&nbsp;prints&nbsp;a&nbsp;warning&nbsp;into&nbsp;console;&nbsp;used&nbsp;when&nbsp;invalid&nbsp;input&nbsp;is&nbsp;forwarded&nbsp;to&nbsp;one&nbsp;of&nbsp;the&nbsp;functions&nbsp;in&nbsp;the&nbsp;module</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__email__</strong> = 'linnartsf@gmail.com'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Linnart&nbsp;Felkl</td></tr></table>
+</body></html>

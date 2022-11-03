@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module data</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>data</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cfeli03%5Cdesktop%5Clocaldir%5Cgithub%5Cabm_framework%5Cdata.py">c:\users\feli03\desktop\localdir\github\abm_framework\data.py</a></font></td></tr></table>
+    <p><tt>This&nbsp;script&nbsp;works&nbsp;with&nbsp;Python&nbsp;3.10&nbsp;and&nbsp;is&nbsp;meant&nbsp;to&nbsp;be&nbsp;called&nbsp;as&nbsp;an&nbsp;API&nbsp;from&nbsp;local&nbsp;Python&nbsp;installation<br>
+&nbsp;<br>
+The&nbsp;module&nbsp;wraps&nbsp;pyodbc&nbsp;and&nbsp;sqlite3<br>
+&nbsp;<br>
+This&nbsp;package&nbsp;assumes&nbsp;a&nbsp;slite&nbsp;database&nbsp;(in&nbsp;future&nbsp;mssql&nbsp;will&nbsp;be&nbsp;supported&nbsp;in&nbsp;an&nbsp;extension&nbsp;of&nbsp;this&nbsp;package)<br>
+&nbsp;<br>
+Data.py&nbsp;furthermore&nbsp;assumes,&nbsp;that&nbsp;the&nbsp;database&nbsp;has&nbsp;the&nbsp;following&nbsp;tables&nbsp;<br>
+-&nbsp;agents:&nbsp;<br>
+&nbsp;&nbsp;&nbsp;contains&nbsp;one&nbsp;fixed&nbsp;column&nbsp;"simtime",&nbsp;for&nbsp;storing&nbsp;simulation&nbsp;time<br>
+&nbsp;&nbsp;&nbsp;additional&nbsp;columns&nbsp;must&nbsp;be&nbsp;added&nbsp;for&nbsp;each&nbsp;new&nbsp;simulation&nbsp;application;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;table&nbsp;contains&nbsp;data&nbsp;on&nbsp;agents&nbsp;states&nbsp;throughout&nbsp;simulation&nbsp;times,&nbsp;i.e.&nbsp;relevant&nbsp;properties&nbsp;of&nbsp;the&nbsp;agent<br>
+-&nbsp;environment:&nbsp;<br>
+&nbsp;&nbsp;&nbsp;predefined&nbsp;fixed&nbsp;column&nbsp;names&nbsp;(column)<br>
+&nbsp;&nbsp;&nbsp;column&nbsp;simtime&nbsp;-&nbsp;simulation&nbsp;time<br>
+&nbsp;&nbsp;&nbsp;column&nbsp;row&nbsp;-&nbsp;row&nbsp;index<br>
+&nbsp;&nbsp;&nbsp;column&nbsp;col&nbsp;-&nbsp;column&nbsp;index<br>
+&nbsp;&nbsp;&nbsp;column&nbsp;agents&nbsp;-&nbsp;agent&nbsp;count&nbsp;registered&nbsp;in&nbsp;the&nbsp;cell<br>
+&nbsp;&nbsp;&nbsp;additional&nbsp;columns&nbsp;can&nbsp;be&nbsp;added<br>
+&nbsp;<br>
+This&nbsp;module&nbsp;provides&nbsp;a&nbsp;<a href="#Database">Database</a>&nbsp;class&nbsp;to&nbsp;connect&nbsp;to&nbsp;the&nbsp;database&nbsp;and&nbsp;to&nbsp;perform&nbsp;database&nbsp;operations.<br>
+&nbsp;<br>
+This&nbsp;module&nbsp;provides&nbsp;a&nbsp;<a href="#Manager">Manager</a>&nbsp;class&nbsp;that&nbsp;standardizes&nbsp;e.g.&nbsp;column&nbsp;addition&nbsp;to&nbsp;table,&nbsp;state&nbsp;registration&nbsp;in&nbsp;agent&nbsp;table,&nbsp;etc.<br>
+&nbsp;<br>
+Developers&nbsp;can&nbsp;add&nbsp;onto&nbsp;the&nbsp;<a href="#Manager">Manager</a>&nbsp;class&nbsp;or&nbsp;use&nbsp;the&nbsp;<a href="#Database">Database</a>&nbsp;class&nbsp;to&nbsp;directly&nbsp;facilitate&nbsp;custom&nbsp;queries.</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="pandas.html">pandas</a><br>
+</td><td width="25%" valign=top><a href="pyodbc.html">pyodbc</a><br>
+</td><td width="25%" valign=top><a href="sqlite3.html">sqlite3</a><br>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="data.html#Database">Database</a>
+</font></dt><dt><font face="helvetica, arial"><a href="data.html#Manager">Manager</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Database">class <strong>Database</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Database">Database</a>(type:&nbsp;str,&nbsp;db:&nbsp;str,&nbsp;server:&nbsp;str&nbsp;=&nbsp;'')&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+this&nbsp;class&nbsp;can&nbsp;be&nbsp;used&nbsp;to&nbsp;establish&nbsp;a&nbsp;database&nbsp;connection&nbsp;with&nbsp;pyodbc&nbsp;or&nbsp;just&nbsp;directly&nbsp;with&nbsp;sqlite3<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Database-__init__"><strong>__init__</strong></a>(self, type: str, db: str, server: str = '') -&gt; None</dt><dd><tt>constructor</tt></dd></dl>
+
+<dl><dt><a name="Database-close"><strong>close</strong></a>(self) -&gt; None</dt><dd><tt>closes&nbsp;connection&nbsp;to&nbsp;database&nbsp;without&nbsp;committing</tt></dd></dl>
+
+<dl><dt><a name="Database-commit"><strong>commit</strong></a>(self) -&gt; None</dt><dd><tt>commits&nbsp;changes&nbsp;without&nbsp;closing&nbsp;connection&nbsp;to&nbsp;database</tt></dd></dl>
+
+<dl><dt><a name="Database-commit_n_close"><strong>commit_n_close</strong></a>(self) -&gt; None</dt><dd><tt>perform&nbsp;commit&nbsp;and&nbsp;then&nbsp;close&nbsp;database&nbsp;connection</tt></dd></dl>
+
+<dl><dt><a name="Database-connect"><strong>connect</strong></a>(self) -&gt; None</dt><dd><tt>establishes&nbsp;connection,&nbsp;e.g.&nbsp;if&nbsp;connection&nbsp;is&nbsp;closed&nbsp;and&nbsp;then&nbsp;opened&nbsp;again</tt></dd></dl>
+
+<dl><dt><a name="Database-delete_records"><strong>delete_records</strong></a>(self, tablename: str, condition: str = 'none') -&gt; None</dt><dd><tt>deletes&nbsp;all&nbsp;those&nbsp;entries&nbsp;from&nbsp;the&nbsp;datatable&nbsp;in&nbsp;which&nbsp;the&nbsp;condition&nbsp;is&nbsp;satisfied</tt></dd></dl>
+
+<dl><dt><a name="Database-drop_table"><strong>drop_table</strong></a>(self, tablename: str) -&gt; None</dt><dd><tt>drops&nbsp;a&nbsp;table&nbsp;from&nbsp;the&nbsp;database,&nbsp;i.e.&nbsp;table&nbsp;is&nbsp;removed</tt></dd></dl>
+
+<dl><dt><a name="Database-query"><strong>query</strong></a>(self, query: str) -&gt; None</dt><dd><tt>executes&nbsp;specified&nbsp;query&nbsp;on&nbsp;database</tt></dd></dl>
+
+<dl><dt><a name="Database-read"><strong>read</strong></a>(self, x: int) -&gt; list</dt><dd><tt>returns&nbsp;specified&nbsp;amount&nbsp;of&nbsp;rows&nbsp;from&nbsp;query&nbsp;execution&nbsp;(cursor&nbsp;obj)&nbsp;<br>
+input&nbsp;paramter&nbsp;x:&nbsp;1&nbsp;==&nbsp;return&nbsp;one&nbsp;data&nbsp;row,&nbsp;x&nbsp;&gt;&nbsp;1&nbsp;return&nbsp;x&nbsp;data&nbsp;rows,&nbsp;otherwise&nbsp;return&nbsp;all&nbsp;rows</tt></dd></dl>
+
+<dl><dt><a name="Database-truncate_table"><strong>truncate_table</strong></a>(self, tablename: str) -&gt; None</dt><dd><tt>deletes&nbsp;all&nbsp;records&nbsp;and&nbsp;data&nbsp;in&nbsp;the&nbsp;table</tt></dd></dl>
+
+<hr>
+Static methods defined here:<br>
+<dl><dt><a name="Database-keys_to_str"><strong>keys_to_str</strong></a>(keys: list) -&gt; str</dt><dd><tt>method&nbsp;for&nbsp;converting&nbsp;a&nbsp;list&nbsp;of&nbsp;dictionary&nbsp;keys&nbsp;into&nbsp;a&nbsp;SQLite&nbsp;column&nbsp;friendly&nbsp;string&nbsp;to&nbsp;be&nbsp;placed&nbsp;in&nbsp;queries</tt></dd></dl>
+
+<dl><dt><a name="Database-vals_to_str"><strong>vals_to_str</strong></a>(vals: list) -&gt; str</dt><dd><tt>method&nbsp;for&nbsp;converting&nbsp;a&nbsp;list&nbsp;of&nbsp;values&nbsp;into&nbsp;a&nbsp;SQLite&nbsp;friendly&nbsp;query&nbsp;strings</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Connection': &lt;class 'sqlite3.Connection'&gt;, 'Cursor': &lt;class 'sqlite3.Cursor'&gt;, 'Name': &lt;class 'str'&gt;, 'Server': &lt;class 'str'&gt;, 'Type': &lt;class 'str'&gt;}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Manager">class <strong>Manager</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Manager">Manager</a>(db:&nbsp;data.<a href="#Database">Database</a>)&nbsp;-&amp;gt;&nbsp;None<br>
+&nbsp;<br>
+this&nbsp;class&nbsp;provides&nbsp;an&nbsp;interface&nbsp;for&nbsp;standardized&nbsp;database&nbsp;operations&nbsp;relevant&nbsp;to&nbsp;ABM&nbsp;simulation&nbsp;conducted&nbsp;with&nbsp;this&nbsp;package<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Manager-__init__"><strong>__init__</strong></a>(self, db: data.Database) -&gt; None</dt><dd><tt>constructor&nbsp;of&nbsp;<a href="#Manager">Manager</a>&nbsp;instance</tt></dd></dl>
+
+<dl><dt><a name="Manager-add_agentcolumn"><strong>add_agentcolumn</strong></a>(self, colname: str, coltype: str) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;adding&nbsp;a&nbsp;column&nbsp;to&nbsp;agent&nbsp;table&nbsp;in&nbsp;results&nbsp;database</tt></dd></dl>
+
+<dl><dt><a name="Manager-add_agentcolumns"><strong>add_agentcolumns</strong></a>(self, colnames: list, coltypes: list) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;adding&nbsp;several&nbsp;columns&nbsp;to&nbsp;agent&nbsp;table&nbsp;in&nbsp;results&nbsp;database</tt></dd></dl>
+
+<dl><dt><a name="Manager-add_column"><strong>add_column</strong></a>(self, colname: str, coltype: str, table: str) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;adding&nbsp;column&nbsp;to&nbsp;specified&nbsp;table;&nbsp;WARNING:&nbsp;does&nbsp;not&nbsp;commit&nbsp;after&nbsp;querying!</tt></dd></dl>
+
+<dl><dt><a name="Manager-add_densitycolumn"><strong>add_densitycolumn</strong></a>(self, colname: str) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;adding&nbsp;column&nbsp;to&nbsp;environment&nbsp;table&nbsp;in&nbsp;results&nbsp;database</tt></dd></dl>
+
+<dl><dt><a name="Manager-add_densitycolumns"><strong>add_densitycolumns</strong></a>(self, colnames: list) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;adding&nbsp;several&nbsp;columns&nbsp;to&nbsp;density&nbsp;table&nbsp;in&nbsp;results&nbsp;database</tt></dd></dl>
+
+<dl><dt><a name="Manager-add_environmentcolumn"><strong>add_environmentcolumn</strong></a>(self, colname: str, coltype: str) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;adding&nbsp;colum&nbsp;to&nbsp;environment&nbsp;table&nbsp;in&nbsp;results&nbsp;database</tt></dd></dl>
+
+<dl><dt><a name="Manager-add_environmentcolumns"><strong>add_environmentcolumns</strong></a>(self, colnames: list, coltypes: list) -&gt; None</dt><dd><tt>method&nbsp;for&nbsp;adding&nbsp;additional&nbsp;columns&nbsp;to&nbsp;environment&nbsp;table&nbsp;in&nbsp;results&nbsp;database,&nbsp;in&nbsp;excess&nbsp;of&nbsp;default</tt></dd></dl>
+
+<dl><dt><a name="Manager-close"><strong>close</strong></a>(self) -&gt; None</dt><dd><tt>closes&nbsp;<a href="#Database">Database</a>&nbsp;connection</tt></dd></dl>
+
+<dl><dt><a name="Manager-commit"><strong>commit</strong></a>(self) -&gt; None</dt><dd><tt>commits&nbsp;to&nbsp;<a href="#Database">Database</a>&nbsp;connection</tt></dd></dl>
+
+<dl><dt><a name="Manager-get_agentsdf"><strong>get_agentsdf</strong></a>(self, condition: str = 'none') -&gt; pandas.core.frame.DataFrame</dt><dd><tt>returns&nbsp;agent&nbsp;table&nbsp;as&nbsp;pandas&nbsp;dataframe;&nbsp;optional&nbsp;filtering&nbsp;condition</tt></dd></dl>
+
+<dl><dt><a name="Manager-get_densitydf"><strong>get_densitydf</strong></a>(self, condition: str = 'none') -&gt; pandas.core.frame.DataFrame</dt><dd><tt>returns&nbsp;density&nbsp;table&nbsp;as&nbsp;pandas&nbsp;dataframe;&nbsp;optional&nbsp;filtering&nbsp;condition</tt></dd></dl>
+
+<dl><dt><a name="Manager-get_df"><strong>get_df</strong></a>(self, table: str, condition: str = 'none') -&gt; pandas.core.frame.DataFrame</dt><dd><tt>returns&nbsp;either&nbsp;agent&nbsp;or&nbsp;environment&nbsp;table&nbsp;as&nbsp;pandas&nbsp;dataframe,&nbsp;optional&nbsp;filtering</tt></dd></dl>
+
+<dl><dt><a name="Manager-get_environmentdf"><strong>get_environmentdf</strong></a>(self, condition: str = 'none') -&gt; pandas.core.frame.DataFrame</dt><dd><tt>returns&nbsp;environment&nbsp;table&nbsp;as&nbsp;pandas&nbsp;dataframe;&nbsp;optional&nbsp;filtering&nbsp;condition</tt></dd></dl>
+
+<dl><dt><a name="Manager-get_populationdf"><strong>get_populationdf</strong></a>(self, pop: str) -&gt; pandas.core.frame.DataFrame</dt><dd><tt>returns&nbsp;agent&nbsp;df&nbsp;only&nbsp;containing&nbsp;the&nbsp;specified&nbsp;population</tt></dd></dl>
+
+<dl><dt><a name="Manager-increase_density"><strong>increase_density</strong></a>(self, simtime: int, row: int, col: int, colname: str, val: float) -&gt; None</dt><dd><tt>method&nbsp;used&nbsp;for&nbsp;increasing&nbsp;density&nbsp;score&nbsp;for&nbsp;specified&nbsp;cell,&nbsp;in&nbsp;density&nbsp;table</tt></dd></dl>
+
+<dl><dt><a name="Manager-increment_envpop"><strong>increment_envpop</strong></a>(self, simtime: int, row: int, col: int, colname: str) -&gt; None</dt><dd><tt>method&nbsp;used&nbsp;for&nbsp;incrementing&nbsp;agent&nbsp;population&nbsp;in&nbsp;environment&nbsp;database&nbsp;table,&nbsp;for&nbsp;population&nbsp;and&nbsp;for&nbsp;all&nbsp;agents&nbsp;in&nbsp;total</tt></dd></dl>
+
+<dl><dt><a name="Manager-reduce_density"><strong>reduce_density</strong></a>(self, simtime: int, row: int, col: int, colname: str, val: float) -&gt; None</dt><dd><tt>method&nbsp;used&nbsp;for&nbsp;increasing&nbsp;density&nbsp;score&nbsp;for&nbsp;specified&nbsp;cell,&nbsp;in&nbsp;density&nbsp;table</tt></dd></dl>
+
+<dl><dt><a name="Manager-reduction_envpop"><strong>reduction_envpop</strong></a>(self, simtime: int, row: int, col: int, colname: str) -&gt; None</dt><dd><tt>method&nbsp;used&nbsp;for&nbsp;reducing&nbsp;agent&nbsp;population&nbsp;in&nbsp;environment&nbsp;database&nbsp;table,&nbsp;for&nbsp;population&nbsp;and&nbsp;for&nbsp;all&nbsp;agents&nbsp;in&nbsp;total</tt></dd></dl>
+
+<dl><dt><a name="Manager-remove_agentcolumn"><strong>remove_agentcolumn</strong></a>(self, colname: str) -&gt; None</dt><dd><tt>removes&nbsp;specified&nbsp;column&nbsp;from&nbsp;agents&nbsp;table&nbsp;and&nbsp;commits&nbsp;change</tt></dd></dl>
+
+<dl><dt><a name="Manager-remove_agentcolumns"><strong>remove_agentcolumns</strong></a>(self, colnames: list) -&gt; None</dt><dd><tt>removes&nbsp;specified&nbsp;column&nbsp;names&nbsp;from&nbsp;agents&nbsp;table&nbsp;and&nbsp;commits&nbsp;changes</tt></dd></dl>
+
+<dl><dt><a name="Manager-remove_column"><strong>remove_column</strong></a>(self, colname: str, table: str) -&gt; None</dt><dd><tt>removes&nbsp;specified&nbsp;column&nbsp;from&nbsp;specified&nbsp;table;&nbsp;WARNING&nbsp;does&nbsp;not&nbsp;commit&nbsp;query</tt></dd></dl>
+
+<dl><dt><a name="Manager-remove_environmentcolumn"><strong>remove_environmentcolumn</strong></a>(self, colname: str) -&gt; None</dt><dd><tt>removes&nbsp;specified&nbsp;column&nbsp;from&nbsp;environment&nbsp;table&nbsp;and&nbsp;commits&nbsp;change</tt></dd></dl>
+
+<dl><dt><a name="Manager-remove_environmentcolumns"><strong>remove_environmentcolumns</strong></a>(self, colnames: list) -&gt; None</dt><dd><tt>removes&nbsp;specified&nbsp;columns&nbsp;from&nbsp;environment&nbsp;table&nbsp;and&nbsp;commits&nbsp;changes</tt></dd></dl>
+
+<dl><dt><a name="Manager-reset_table"><strong>reset_table</strong></a>(self, table: str) -&gt; None</dt><dd><tt>deletes&nbsp;any&nbsp;old&nbsp;data&nbsp;in&nbsp;table&nbsp;first,&nbsp;and&nbsp;then&nbsp;any&nbsp;columns&nbsp;that&nbsp;might&nbsp;have&nbsp;been&nbsp;added&nbsp;in&nbsp;excess&nbsp;of&nbsp;the&nbsp;default&nbsp;columns</tt></dd></dl>
+
+<dl><dt><a name="Manager-reset_tables"><strong>reset_tables</strong></a>(self) -&gt; None</dt><dd><tt>deletes&nbsp;any&nbsp;columns&nbsp;that&nbsp;might&nbsp;have&nbsp;been&nbsp;added&nbsp;in&nbsp;excess&nbsp;of&nbsp;default,&nbsp;in&nbsp;agents&nbsp;and&nbsp;environment&nbsp;tables</tt></dd></dl>
+
+<dl><dt><a name="Manager-write_agentvalue"><strong>write_agentvalue</strong></a>(self, simtime: int, agent) -&gt; None</dt><dd><tt>for&nbsp;the&nbsp;given&nbsp;agent,&nbsp;attribute&nbsp;values&nbsp;are&nbsp;written&nbsp;into&nbsp;database&nbsp;for&nbsp;the&nbsp;respective&nbsp;simulation&nbsp;time</tt></dd></dl>
+
+<dl><dt><a name="Manager-write_agentvalues"><strong>write_agentvalues</strong></a>(self, simtime: int, agents: list) -&gt; None</dt><dd><tt>method&nbsp;writes&nbsp;attributes&nbsp;values&nbsp;of&nbsp;all&nbsp;agents&nbsp;in&nbsp;list&nbsp;into&nbsp;database,&nbsp;for&nbsp;specified&nbsp;simtime</tt></dd></dl>
+
+<dl><dt><a name="Manager-write_densitycell"><strong>write_densitycell</strong></a>(self, simtime: int, row: int, col: int, vals: list = []) -&gt; None</dt><dd><tt>writes&nbsp;specified&nbsp;list&nbsp;of&nbsp;values&nbsp;into&nbsp;density&nbsp;table,&nbsp;for&nbsp;the&nbsp;specified&nbsp;simulation&nbsp;time&nbsp;and&nbsp;cell</tt></dd></dl>
+
+<dl><dt><a name="Manager-write_environmentcell"><strong>write_environmentcell</strong></a>(self, simtime: int, row: int, col: int, vals: list = []) -&gt; None</dt><dd><tt>writes&nbsp;specified&nbsp;list&nbsp;of&nbsp;values&nbsp;into&nbsp;environment&nbsp;table,&nbsp;for&nbsp;the&nbsp;specified&nbsp;simulation&nbsp;time&nbsp;and&nbsp;cell</tt></dd></dl>
+
+<dl><dt><a name="Manager-write_to_table"><strong>write_to_table</strong></a>(self, table: str, vals: list) -&gt; None</dt><dd><tt>function&nbsp;writes&nbsp;vals&nbsp;into&nbsp;specified&nbsp;table,&nbsp;assuming&nbsp;vals&nbsp;string&nbsp;specifies&nbsp;values&nbsp;for&nbsp;every&nbsp;column&nbsp;in&nbsp;the&nbsp;table</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Database': &lt;class 'data.Database'&gt;}</dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-warning"><strong>warning</strong></a>(msg: str) -&gt; None</dt></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__email__</strong> = 'LinnartSF@gmail.com'</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">Linnart&nbsp;Felkl</td></tr></table>
+</body></html>
