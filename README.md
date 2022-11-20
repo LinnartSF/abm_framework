@@ -1,3 +1,5 @@
+FRAMEWORK.PY, STATS.PY, DATA.PY, and ANIMATION.PY are not available in this open repository anymore. Instead, you can download the updated and professionally maintained repository here: <a href="https://www.supplychaindataanalytics.com/product/album/">SCDA abm_framework</a>
+
 # abm_framework
 
 <img src="https://github.com/LinnartSF/logos/blob/main/main1.png" alt="SCDA - Supply Chain Data Analytics" title="">
